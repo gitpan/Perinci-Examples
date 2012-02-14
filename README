@@ -1,0 +1,32 @@
+NAME
+    Perinci::Examples - Example modules containing metadata and various
+    example functions
+
+VERSION
+    version 0.06
+
+SYNOPSIS
+     use Perinci::Examples qw(delay);
+     delay();
+
+DESCRIPTION
+    This module and its submodules contain an odd mix of various functions,
+    variables, and other code entities, along with their Rinci metadata.
+    Mostly used for testing Rinci specification and the various Perinci
+    modules.
+
+FUNCTIONS
+    None are exported by default, but they are exportable.
+
+SEE ALSO
+    Perinci
+
+AUTHOR
+    Steven Haryanto <stevenharyanto@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2012 by Steven Haryanto.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
