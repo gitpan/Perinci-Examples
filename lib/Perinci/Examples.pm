@@ -7,7 +7,7 @@ use warnings;
 use List::Util qw(min max);
 use Log::Any '$log';
 
-our $VERSION = '0.06'; # VERSION
+our $VERSION = '0.07'; # VERSION
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -216,9 +216,54 @@ _
     },
     features => {pure => 1},
 };
+
 sub noop {
     my %args = @_;
     [200, "OK", $args{arg}];
+}
+
+$SPEC{test_completion} = {
+    v => 1.1,
+    summary => "Do nothing, return nothing",
+    description => <<'_',
+
+This function is used to test argument completion.
+
+_
+    args => {
+        i1 => {
+            schema => ['int*', min=>1, xmax=>100],
+        },
+        i2 => {
+            schema => ['int*', min=>1, max=>1000],
+        },
+        f1 => {
+            schema => ['int*', xmin=>1, xmax=>10],
+        },
+        s1 => {
+            schema => [str => {
+                in=>[qw/apple apricot banana grape grapefruit/,
+                     "red date", "red grape", "green grape",
+                 ],
+            }],
+        },
+        s2 => {
+            schema => 'str',
+            completion => sub {
+                my %args = @_;
+                my $word = $args{word} // "";
+                [ map {$word . $_} "a".."z" ],
+            },
+        },
+        s3 => {
+            schema => 'str',
+            completion => sub { die },
+        },
+    },
+    features => {pure => 1},
+};
+sub test_completion {
+    [200, "OK"];
 }
 
 1;
@@ -233,7 +278,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 
