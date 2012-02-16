@@ -7,7 +7,7 @@ use warnings;
 use List::Util qw(min max);
 use Log::Any '$log';
 
-our $VERSION = '0.07'; # VERSION
+our $VERSION = '0.08'; # VERSION
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -232,13 +232,13 @@ This function is used to test argument completion.
 _
     args => {
         i1 => {
-            schema => ['int*', min=>1, xmax=>100],
+            schema => ['int*' => {min=>1, xmax=>100}],
         },
         i2 => {
-            schema => ['int*', min=>1, max=>1000],
+            schema => ['int*' => {min=>1, max=>1000}],
         },
         f1 => {
-            schema => ['int*', xmin=>1, xmax=>10],
+            schema => ['int*' => {xmin=>1, xmax=>10}],
         },
         s1 => {
             schema => [str => {
@@ -278,7 +278,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 

@@ -22,7 +22,7 @@ sub gen_array {
     \@res;
 }
 
-our $VERSION = '0.07'; # VERSION
+our $VERSION = '0.08'; # VERSION
 
 1;
 #ABSTRACT: Example of module without any metadata
@@ -36,7 +36,7 @@ Perinci::Examples::NoMeta - Example of module without any metadata
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 AUTHOR
 
