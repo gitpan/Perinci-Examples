@@ -3,8 +3,10 @@ Changes
 LICENSE
 MANIFEST
 MANIFEST.SKIP
+META.json
 META.yml
 README
+bin/peri-ex-test-completion
 dist.ini
 lib/Perinci/Examples.pm
 lib/Perinci/Examples/NoMeta.pm

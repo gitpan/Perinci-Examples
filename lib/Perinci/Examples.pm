@@ -3,11 +3,12 @@ package Perinci::Examples;
 use 5.010;
 use strict;
 use warnings;
-
-use List::Util qw(min max);
 use Log::Any '$log';
 
-our $VERSION = '0.08'; # VERSION
+use List::Util qw(min max);
+use Scalar::Util qw(looks_like_number);
+
+our $VERSION = '0.09'; # VERSION
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -21,6 +22,17 @@ our %SPEC;
 $SPEC{':package'} = {
     v => 1.1,
     summary => 'This package contains various examples',
+    "summary.alt.lang.id_ID" => 'Paket ini berisi berbagai contoh',
+    description => <<'_',
+
+A sample description
+
+    verbatim
+    line2
+
+Another paragraph with *bold*, _italic_ text.
+
+_
 };
 
 # variable metadata
@@ -30,22 +42,33 @@ $SPEC{'$Var1'} = {
 };
 our $Var1 = 42;
 
+# as well as testing default_lang and *.alt.lang.XX properties
 $SPEC{delay} = {
     v => 1.1,
-    summary => "Sleep, by default for 10 seconds",
-    description => <<'_',
+    default_lang => 'id_ID',
+    "summary.alt.lang.en_US" => "Sleep, by default for 10 seconds",
+    "description.alt.lang.en_US" => <<'_',
 
 Can be used to test the *time_limit* property.
 
 _
+    summary => "Tidur, defaultnya 10 detik",
+    description => <<'_',
+
+Dapat dipakai untuk menguji properti *time_limit*.
+
+_
     args => {
         n => {
+            default_lang => 'en_US',
             summary => 'Number of seconds to sleep',
+            "summary.alt.lang.id_ID" => 'Jumlah detik',
             schema => ['int', {default=>10, min=>0, max=>7200}],
             pos => 0,
         },
         per_second => {
-            summary => 'Whether to sleep(1) for n times instead of sleep(n)',
+            "summary.alt.lang.en_US" => 'Whether to sleep(1) for n times instead of sleep(n)',
+            summary => 'Jika diset ya, lakukan sleep(1) n kali, bukan sleep(n)',
             schema => ['bool', {default=>0}],
         },
     },
@@ -129,9 +152,9 @@ sub randlog {
     my $n         = $args{n} // 10;
     $n = 1000 if $n > 1000;
     my $min_level = $args{min_level};
-    $min_level = 1 if !defined($min_level) || !$str_levels{$min_level};
+    $min_level = 1 if !defined($min_level) || $min_level < 0;
     my $max_level = $args{max_level};
-    $max_level = 1 if !defined($max_level) || !$str_levels{$max_level};
+    $max_level = 6 if !defined($max_level) || $max_level > 6;
 
     for my $i (1..$n) {
         my $num_level = int($min_level + rand()*($max_level-$min_level+1));
@@ -238,7 +261,7 @@ _
             schema => ['int*' => {min=>1, max=>1000}],
         },
         f1 => {
-            schema => ['int*' => {xmin=>1, xmax=>10}],
+            schema => ['float*' => {xmin=>1, xmax=>10}],
         },
         s1 => {
             schema => [str => {
@@ -266,6 +289,34 @@ sub test_completion {
     [200, "OK"];
 }
 
+$SPEC{sum} = {
+    v => 1.1,
+    summary => "Sum numbers in array",
+    description => <<'_',
+
+This function can be used to test passing nonscalar (array) arguments.
+
+_
+    args => {
+        array => {
+            summary => 'Array',
+            schema => ['array*'],
+            req => 1,
+            pos => 0,
+        },
+    },
+    features => {},
+};
+sub sum {
+    my %args = @_;
+
+    my $sum = 0;
+    for (@{$args{array}}) {
+        $sum += $_ if defined && looks_like_number($_);
+    }
+    [200, "OK", $sum];
+}
+
 1;
 # ABSTRACT: Example modules containing metadata and various example functions
 
@@ -278,7 +329,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-version 0.08
+version 0.09
 
 =head1 SYNOPSIS
 

@@ -7,7 +7,8 @@ use Module::Build 0.3601;
 
 my %module_build_args = (
   "build_requires" => {
-    "Module::Build" => "0.3601"
+    "Module::Build" => "0.3601",
+    "Test::More" => "0.96"
   },
   "configure_requires" => {
     "Module::Build" => "0.3601"
@@ -17,7 +18,7 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Perinci-Examples",
-  "dist_version" => "0.08",
+  "dist_version" => "0.09",
   "license" => "perl",
   "module_name" => "Perinci::Examples",
   "recommends" => {},
@@ -25,10 +26,11 @@ my %module_build_args = (
   "requires" => {
     "Log::Any" => 0,
     "Rinci" => "1.1.1",
-    "Test::More" => "0.96",
     "perl" => "5.010000"
   },
-  "script_files" => []
+  "script_files" => [
+    "bin/peri-ex-test-completion"
+  ]
 );
 
 

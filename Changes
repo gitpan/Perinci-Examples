@@ -1,16 +1,25 @@
 Revision history for Perinci-Examples
 
-0.08     2012-02-17
+0.09     2012-07-19 (SHARYANTO)
+
+         - Add function: sum
+
+         - Add script: peri-ex-test-completion
+
+         - Tweak some metadata
+
+
+0.08     2012-02-17 (SHARYANTO)
 
          No functional changes. Fix schema for 'test_completion'.
 
 
-0.07     2012-02-16
+0.07     2012-02-16 (SHARYANTO)
 
          Add function: test_completion.
 
 
-0.06     2012-02-13
+0.06     2012-02-13 (SHARYANTO)
 
          First release of Perinci-Examples. Rename distribution from
          Sub-Spec-Examples.
