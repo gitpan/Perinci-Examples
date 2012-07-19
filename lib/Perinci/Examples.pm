@@ -8,7 +8,7 @@ use Log::Any '$log';
 use List::Util qw(min max);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.09'; # VERSION
+our $VERSION = '0.10'; # VERSION
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -317,6 +317,38 @@ sub sum {
     [200, "OK", $sum];
 }
 
+$SPEC{merge_hash} = {
+    v => 1.1,
+    summary => "Merge two hashes",
+    description => <<'_',
+
+This function can be used to test passing nonscalar (hash) arguments.
+
+_
+    args => {
+        h1 => {
+            summary => 'First hash (left-hand side)',
+            schema => ['hash*'],
+            req => 1,
+            pos => 0,
+        },
+        h2 => {
+            summary => 'First hash (right-hand side)',
+            schema => ['hash*'],
+            req => 1,
+            pos => 1,
+        },
+    },
+    features => {},
+};
+sub merge_hash {
+    my %args = @_;
+    my $h1 = $args{h1};
+    my $h2 = $args{h2};
+
+    [200, "OK", {%$h1, %$h2}];
+}
+
 1;
 # ABSTRACT: Example modules containing metadata and various example functions
 
@@ -329,7 +361,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 SYNOPSIS
 
