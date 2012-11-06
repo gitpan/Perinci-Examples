@@ -3,7 +3,7 @@ NAME
     example functions
 
 VERSION
-    version 0.10
+    version 0.11
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -15,11 +15,231 @@ DESCRIPTION
     Mostly used for testing Rinci specification and the various Perinci
     modules.
 
-FUNCTIONS
-    None are exported by default, but they are exportable.
-
 SEE ALSO
     Perinci
+
+DESCRIPTION
+    A sample description
+
+        verbatim
+        line2
+
+    Another paragraph with bold, italic text.
+
+FUNCTIONS
+  delay(%args) -> [status, msg, result, meta]
+    Sleep, by default for 10 seconds.
+
+    Can be used to test the time_limit property.
+
+    Arguments ('*' denotes required arguments):
+
+    *   n => *int* (default: 10)
+
+        Number of seconds to sleep.
+
+    *   per_second => *bool* (default: 0)
+
+        Whether to sleep(1) for n times instead of sleep(n).
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
+  dies() -> [status, msg, result, meta]
+    Dies tragically.
+
+    Can be used to test exception handling.
+
+    No arguments.
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
+  err(%args) -> [status, msg, result, meta]
+    Return error response.
+
+    Arguments ('*' denotes required arguments):
+
+    *   code => *int* (default: 500)
+
+        Error code to return.
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
+  gen_array(%args) -> [status, msg, result, meta]
+    Generate an array of specified length.
+
+    Arguments ('*' denotes required arguments):
+
+    *   len => *int* (default: 10)
+
+        Array length.
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
+  gen_hash(%args) -> [status, msg, result, meta]
+    Generate a hash with specified number of pairs.
+
+    Arguments ('*' denotes required arguments):
+
+    *   pairs* => *int*
+
+        Number of pairs.
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
+  merge_hash(%args) -> [status, msg, result, meta]
+    Merge two hashes.
+
+    This function can be used to test passing nonscalar (hash) arguments.
+
+    Arguments ('*' denotes required arguments):
+
+    *   h1* => *hash*
+
+        First hash (left-hand side).
+
+    *   h2* => *hash*
+
+        First hash (right-hand side).
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
+  noop(%args) -> [status, msg, result, meta]
+    Do nothing, return original argument.
+
+    Arguments ('*' denotes required arguments):
+
+    *   arg => *any*
+
+        Argument.
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
+  randlog(%args) -> [status, msg, result, meta]
+    Produce some random Log::Any log messages.
+
+    Arguments ('*' denotes required arguments):
+
+    *   max_level* => *int* (default: 6)
+
+        Maximum level.
+
+    *   min_level* => *int* (default: 1)
+
+        Minimum level.
+
+    *   n => *int* (default: 10)
+
+        Number of log messages to produce.
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
+  sum(%args) -> [status, msg, result, meta]
+    Sum numbers in array.
+
+    This function can be used to test passing nonscalar (array) arguments.
+
+    Arguments ('*' denotes required arguments):
+
+    *   array* => *array*
+
+        Array.
+
+    *   round => *bool* (default: 0)
+
+        Whether to round result to integer.
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
+  test_completion(%args) -> [status, msg, result, meta]
+    Do nothing, return nothing.
+
+    This function is used to test argument completion.
+
+    Arguments ('*' denotes required arguments):
+
+    *   f1* => *float*
+
+    *   i1* => *int*
+
+    *   i2* => *int*
+
+    *   s1 => *str*
+
+    *   s2 => *str*
+
+    *   s3 => *str*
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
 
 AUTHOR
     Steven Haryanto <stevenharyanto@gmail.com>

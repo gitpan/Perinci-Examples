@@ -8,7 +8,7 @@ use Log::Any '$log';
 use List::Util qw(min max);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.10'; # VERSION
+our $VERSION = '0.11'; # VERSION
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -300,11 +300,35 @@ _
     args => {
         array => {
             summary => 'Array',
-            schema => ['array*'],
-            req => 1,
-            pos => 0,
+            schema  => ['array*', of => 'float*'],
+            req     => 1,
+            pos     => 0,
+            greedy  => 1,
+        },
+        round => {
+            summary => 'Whether to round result to integer',
+            schema  => [bool => default => 0],
         },
     },
+    examples => [
+        {
+            summary => 'First example',
+            args    => {array=>[1, 2, 3]},
+            status  => 200,
+            result  => 6,
+        },
+        {
+            summary => 'Second example, using argv',
+            argv    => [qw/--round 1.1 2.1 3.1/],
+            status  => 200,
+            result  => 6,
+        },
+        {
+            summary => 'Third example, invalid arguments',
+            args    => {array=>[qw/a/]},
+            status  => 400,
+        },
+    ],
     features => {},
 };
 sub sum {
@@ -314,6 +338,7 @@ sub sum {
     for (@{$args{array}}) {
         $sum += $_ if defined && looks_like_number($_);
     }
+    $sum = int($sum) if $args{round};
     [200, "OK", $sum];
 }
 
@@ -361,7 +386,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 
@@ -374,13 +399,232 @@ This module and its submodules contain an odd mix of various functions,
 variables, and other code entities, along with their L<Rinci> metadata. Mostly
 used for testing Rinci specification and the various L<Perinci> modules.
 
-=head1 FUNCTIONS
-
-None are exported by default, but they are exportable.
-
 =head1 SEE ALSO
 
 L<Perinci>
+
+=head1 DESCRIPTION
+
+
+A sample description
+
+    verbatim
+    line2
+
+Another paragraph with B<bold>, B<italic> text.
+
+=head1 FUNCTIONS
+
+
+=head2 delay(%args) -> [status, msg, result, meta]
+
+Sleep, by default for 10 seconds.
+
+Can be used to test the B<time_limit> property.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<n> => I<int> (default: 10)
+
+Number of seconds to sleep.
+
+=item * B<per_second> => I<bool> (default: 0)
+
+Whether to sleep(1) for n times instead of sleep(n).
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head2 dies() -> [status, msg, result, meta]
+
+Dies tragically.
+
+Can be used to test exception handling.
+
+No arguments.
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head2 err(%args) -> [status, msg, result, meta]
+
+Return error response.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<code> => I<int> (default: 500)
+
+Error code to return.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head2 gen_array(%args) -> [status, msg, result, meta]
+
+Generate an array of specified length.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<len> => I<int> (default: 10)
+
+Array length.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head2 gen_hash(%args) -> [status, msg, result, meta]
+
+Generate a hash with specified number of pairs.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<pairs>* => I<int>
+
+Number of pairs.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head2 merge_hash(%args) -> [status, msg, result, meta]
+
+Merge two hashes.
+
+This function can be used to test passing nonscalar (hash) arguments.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<h1>* => I<hash>
+
+First hash (left-hand side).
+
+=item * B<h2>* => I<hash>
+
+First hash (right-hand side).
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head2 noop(%args) -> [status, msg, result, meta]
+
+Do nothing, return original argument.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<arg> => I<any>
+
+Argument.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head2 randlog(%args) -> [status, msg, result, meta]
+
+Produce some random Log::Any log messages.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<max_level>* => I<int> (default: 6)
+
+Maximum level.
+
+=item * B<min_level>* => I<int> (default: 1)
+
+Minimum level.
+
+=item * B<n> => I<int> (default: 10)
+
+Number of log messages to produce.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head2 sum(%args) -> [status, msg, result, meta]
+
+Sum numbers in array.
+
+This function can be used to test passing nonscalar (array) arguments.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<array>* => I<array>
+
+Array.
+
+=item * B<round> => I<bool> (default: 0)
+
+Whether to round result to integer.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head2 test_completion(%args) -> [status, msg, result, meta]
+
+Do nothing, return nothing.
+
+This function is used to test argument completion.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<f1>* => I<float>
+
+=item * B<i1>* => I<int>
+
+=item * B<i2>* => I<int>
+
+=item * B<s1> => I<str>
+
+=item * B<s2> => I<str>
+
+=item * B<s3> => I<str>
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
 
 =head1 AUTHOR
 

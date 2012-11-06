@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-our $VERSION = '0.10'; # VERSION
+our $VERSION = '0.11'; # VERSION
 
 # since Perinci::CmdLine requires us for testing, if we don't have
 # Perinci::CmdLine yet, we exit 0 so we don't fail compile tests.
@@ -20,7 +20,7 @@ peri-ex-test-completion - A script to test bash completion
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 AUTHOR
 
