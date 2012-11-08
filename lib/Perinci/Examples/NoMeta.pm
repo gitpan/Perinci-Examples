@@ -22,10 +22,11 @@ sub gen_array {
     \@res;
 }
 
-our $VERSION = '0.11'; # VERSION
+our $VERSION = '0.12'; # VERSION
 
 1;
 #ABSTRACT: Example of module without any metadata
+
 
 __END__
 =pod
@@ -36,9 +37,19 @@ Perinci::Examples::NoMeta - Example of module without any metadata
 
 =head1 VERSION
 
-version 0.11
+version 0.12
+
+=for Pod::Coverage .*
+
+=head1 DESCRIPTION
+
+
+This module has L<Rinci> metadata.
 
 =head1 FUNCTIONS
+
+
+None are exported by default, but they are exportable.
 
 =head1 AUTHOR
 

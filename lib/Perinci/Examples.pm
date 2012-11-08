@@ -8,7 +8,7 @@ use Log::Any '$log';
 use List::Util qw(min max);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.11'; # VERSION
+our $VERSION = '0.12'; # VERSION
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -74,7 +74,7 @@ _
     },
 };
 sub delay {
-    my %args = @_;
+    my %args = @_; # NO_VALIDATE_ARGS
     my $n = $args{n} // 10;
 
     if ($args{per_second}) {
@@ -116,7 +116,7 @@ _
     },
 };
 sub err {
-    my %args = @_;
+    my %args = @_; # NO_VALIDATE_ARGS
     my $code = int($args{code}) // 0;
     $code = 500 if $code < 100 || $code > 555;
     [$code, "Response $code"];
@@ -148,7 +148,7 @@ _
     },
 };
 sub randlog {
-    my %args      = @_;
+    my %args      = @_; # NO_VALIDATE_ARGS
     my $n         = $args{n} // 10;
     $n = 1000 if $n > 1000;
     my $min_level = $args{min_level};
@@ -171,6 +171,7 @@ $SPEC{gen_array} = {
     summary => "Generate an array of specified length",
     description => <<'_',
 
+Also tests result schema.
 
 _
     args => {
@@ -181,9 +182,12 @@ _
             req => 1,
         },
     },
+    result => {
+        schema => ['array*', of => 'int*'],
+    },
 };
 sub gen_array {
-    my %args = @_;
+    my %args = @_; # NO_VALIDATE_ARGS
     my $len = int($args{len});
     defined($len) or return [400, "Please specify len"];
     $len = 1000 if $len > 1000;
@@ -200,6 +204,7 @@ $SPEC{gen_hash} = {
     summary => "Generate a hash with specified number of pairs",
     description => <<'_',
 
+Also tests result schema.
 
 _
     args => {
@@ -209,9 +214,12 @@ _
             pos => 0,
         },
     },
+    result => {
+        schema => ['array*', of => 'int*'],
+    },
 };
 sub gen_hash {
-    my %args = @_;
+    my %args = @_; # NO_VALIDATE_ARGS
     my $pairs = int($args{pairs});
     defined($pairs) or return [400, "Please specify pairs"];
     $pairs = 1000 if $pairs > 1000;
@@ -241,7 +249,7 @@ _
 };
 
 sub noop {
-    my %args = @_;
+    my %args = @_; # NO_VALIDATE_ARGS
     [200, "OK", $args{arg}];
 }
 
@@ -286,6 +294,7 @@ _
     features => {pure => 1},
 };
 sub test_completion {
+    # NO_VALIDATE_ARGS
     [200, "OK"];
 }
 
@@ -332,7 +341,7 @@ _
     features => {},
 };
 sub sum {
-    my %args = @_;
+    my %args = @_; # NO_VALIDATE_ARGS
 
     my $sum = 0;
     for (@{$args{array}}) {
@@ -364,12 +373,16 @@ _
             pos => 1,
         },
     },
+    result => {
+        schema => 'hash*',
+    },
     features => {},
+    "_perinci.sub.wrapper.validate_args" => 0,
 };
 sub merge_hash {
     my %args = @_;
-    my $h1 = $args{h1};
-    my $h2 = $args{h2};
+    my $h1 = $args{h1}; my $arg_err; ((defined($h1)) ? 1 : (($arg_err = 'TMPERRMSG: required data not specified'),0)) && ((ref($h1) eq 'HASH') ? 1 : (($arg_err = 'TMPERRMSG: type check failed'),0)); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } # VALIDATE_ARG
+    my $h2 = $args{h2}; ((defined($h2)) ? 1 : (($arg_err = 'TMPERRMSG: required data not specified'),0)) && ((ref($h2) eq 'HASH') ? 1 : (($arg_err = 'TMPERRMSG: type check failed'),0)); if ($arg_err) { return [400, "Invalid argument value for h2: $arg_err"] } # VALIDATE_ARG
 
     [200, "OK", {%$h1, %$h2}];
 }
@@ -386,7 +399,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 
@@ -411,16 +424,20 @@ A sample description
     verbatim
     line2
 
-Another paragraph with B<bold>, B<italic> text.
+Another paragraph with I<bold>, I<italic> text.
+
+This module has L<Rinci> metadata.
 
 =head1 FUNCTIONS
 
+
+None are exported by default, but they are exportable.
 
 =head2 delay(%args) -> [status, msg, result, meta]
 
 Sleep, by default for 10 seconds.
 
-Can be used to test the B<time_limit> property.
+Can be used to test the I<time_limit> property.
 
 Arguments ('*' denotes required arguments):
 
@@ -474,11 +491,13 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 Generate an array of specified length.
 
+Also tests result schema.
+
 Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<len> => I<int> (default: 10)
+=item * B<len>* => I<int> (default: 10)
 
 Array length.
 
@@ -492,11 +511,13 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 Generate a hash with specified number of pairs.
 
+Also tests result schema.
+
 Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<pairs>* => I<int>
+=item * B<pairs> => I<int>
 
 Number of pairs.
 
@@ -534,6 +555,9 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 Do nothing, return original argument.
 
+This function is pure (produce no side effects).
+
+
 Arguments ('*' denotes required arguments):
 
 =over 4
@@ -556,11 +580,11 @@ Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<max_level>* => I<int> (default: 6)
+=item * B<max_level> => I<int> (default: 6)
 
 Maximum level.
 
-=item * B<min_level>* => I<int> (default: 1)
+=item * B<min_level> => I<int> (default: 1)
 
 Minimum level.
 
@@ -604,15 +628,18 @@ Do nothing, return nothing.
 
 This function is used to test argument completion.
 
+This function is pure (produce no side effects).
+
+
 Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<f1>* => I<float>
+=item * B<f1> => I<float>
 
-=item * B<i1>* => I<int>
+=item * B<i1> => I<int>
 
-=item * B<i2>* => I<int>
+=item * B<i2> => I<int>
 
 =item * B<s1> => I<str>
 

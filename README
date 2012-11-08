@@ -3,7 +3,7 @@ NAME
     example functions
 
 VERSION
-    version 0.11
+    version 0.12
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -24,13 +24,17 @@ DESCRIPTION
         verbatim
         line2
 
-    Another paragraph with bold, italic text.
+    Another paragraph with *bold*, *italic* text.
+
+    This module has Rinci metadata.
 
 FUNCTIONS
+    None are exported by default, but they are exportable.
+
   delay(%args) -> [status, msg, result, meta]
     Sleep, by default for 10 seconds.
 
-    Can be used to test the time_limit property.
+    Can be used to test the *time_limit* property.
 
     Arguments ('*' denotes required arguments):
 
@@ -88,9 +92,11 @@ FUNCTIONS
   gen_array(%args) -> [status, msg, result, meta]
     Generate an array of specified length.
 
+    Also tests result schema.
+
     Arguments ('*' denotes required arguments):
 
-    *   len => *int* (default: 10)
+    *   len* => *int* (default: 10)
 
         Array length.
 
@@ -106,9 +112,11 @@ FUNCTIONS
   gen_hash(%args) -> [status, msg, result, meta]
     Generate a hash with specified number of pairs.
 
+    Also tests result schema.
+
     Arguments ('*' denotes required arguments):
 
-    *   pairs* => *int*
+    *   pairs => *int*
 
         Number of pairs.
 
@@ -148,6 +156,8 @@ FUNCTIONS
   noop(%args) -> [status, msg, result, meta]
     Do nothing, return original argument.
 
+    This function is pure (produce no side effects).
+
     Arguments ('*' denotes required arguments):
 
     *   arg => *any*
@@ -168,11 +178,11 @@ FUNCTIONS
 
     Arguments ('*' denotes required arguments):
 
-    *   max_level* => *int* (default: 6)
+    *   max_level => *int* (default: 6)
 
         Maximum level.
 
-    *   min_level* => *int* (default: 1)
+    *   min_level => *int* (default: 1)
 
         Minimum level.
 
@@ -218,13 +228,15 @@ FUNCTIONS
 
     This function is used to test argument completion.
 
+    This function is pure (produce no side effects).
+
     Arguments ('*' denotes required arguments):
 
-    *   f1* => *float*
+    *   f1 => *float*
 
-    *   i1* => *int*
+    *   i1 => *int*
 
-    *   i2* => *int*
+    *   i2 => *int*
 
     *   s1 => *str*
 
