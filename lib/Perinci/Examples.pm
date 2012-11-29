@@ -5,10 +5,11 @@ use strict;
 use warnings;
 use Log::Any '$log';
 
+use Data::Clone;
 use List::Util qw(min max);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.12'; # VERSION
+our $VERSION = '0.13'; # VERSION
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -166,6 +167,18 @@ sub randlog {
     [200, "OK"];
 }
 
+$SPEC{call_randlog} = clone($SPEC{randlog});
+$SPEC{call_randlog}{summary} = 'Call randlog()';
+$SPEC{call_randlog}{description} = <<'_';
+
+This is to test nested call (e.g. Log::Any::For::Package).
+
+_
+sub call_randlog {
+    # NO_VALIDATE_ARGS
+    randlog(@_);
+}
+
 $SPEC{gen_array} = {
     v => 1.1,
     summary => "Generate an array of specified length",
@@ -197,6 +210,18 @@ sub gen_array {
         push @$array, int(rand()*$len)+1;
     }
     [200, "OK", $array];
+}
+
+$SPEC{call_gen_array} = clone($SPEC{gen_array});
+$SPEC{call_gen_array}{summary} = 'Call gen_array()';
+$SPEC{call_gen_array}{description} = <<'_';
+
+This is to test nested call (e.g. Log::Any::For::Package).
+
+_
+sub call_gen_array {
+    # NO_VALIDATE_ARGS
+    gen_array(@_);
 }
 
 $SPEC{gen_hash} = {
@@ -381,8 +406,8 @@ _
 };
 sub merge_hash {
     my %args = @_;
-    my $h1 = $args{h1}; my $arg_err; ((defined($h1)) ? 1 : (($arg_err = 'TMPERRMSG: required data not specified'),0)) && ((ref($h1) eq 'HASH') ? 1 : (($arg_err = 'TMPERRMSG: type check failed'),0)); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } # VALIDATE_ARG
-    my $h2 = $args{h2}; ((defined($h2)) ? 1 : (($arg_err = 'TMPERRMSG: required data not specified'),0)) && ((ref($h2) eq 'HASH') ? 1 : (($arg_err = 'TMPERRMSG: type check failed'),0)); if ($arg_err) { return [400, "Invalid argument value for h2: $arg_err"] } # VALIDATE_ARG
+    my $h1 = $args{h1}; my $arg_err; ((defined($h1)) ? 1 : (($arg_err = "TMPERRMSG: required data not specified"),0)) && ((ref($h1) eq 'HASH') ? 1 : (($arg_err = "TMPERRMSG: type check failed"),0)); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } # VALIDATE_ARG
+    my $h2 = $args{h2}; ((defined($h2)) ? 1 : (($arg_err = "TMPERRMSG: required data not specified"),0)) && ((ref($h2) eq 'HASH') ? 1 : (($arg_err = "TMPERRMSG: type check failed"),0)); if ($arg_err) { return [400, "Invalid argument value for h2: $arg_err"] } # VALIDATE_ARG
 
     [200, "OK", {%$h1, %$h2}];
 }
@@ -399,7 +424,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-version 0.12
+version 0.13
 
 =head1 SYNOPSIS
 
@@ -432,6 +457,54 @@ This module has L<Rinci> metadata.
 
 
 None are exported by default, but they are exportable.
+
+=head2 call_gen_array(%args) -> [status, msg, result, meta]
+
+Call gen_array().
+
+This is to test nested call (e.g. Log::Any::For::Package).
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<len>* => I<int> (default: 10)
+
+Array length.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head2 call_randlog(%args) -> [status, msg, result, meta]
+
+Call randlog().
+
+This is to test nested call (e.g. Log::Any::For::Package).
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<max_level> => I<int> (default: 6)
+
+Maximum level.
+
+=item * B<min_level> => I<int> (default: 1)
+
+Minimum level.
+
+=item * B<n> => I<int> (default: 10)
+
+Number of log messages to produce.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
 
 =head2 delay(%args) -> [status, msg, result, meta]
 

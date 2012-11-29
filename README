@@ -3,7 +3,7 @@ NAME
     example functions
 
 VERSION
-    version 0.12
+    version 0.13
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -30,6 +30,54 @@ DESCRIPTION
 
 FUNCTIONS
     None are exported by default, but they are exportable.
+
+  call_gen_array(%args) -> [status, msg, result, meta]
+    Call gen_array().
+
+    This is to test nested call (e.g. Log::Any::For::Package).
+
+    Arguments ('*' denotes required arguments):
+
+    *   len* => *int* (default: 10)
+
+        Array length.
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
+  call_randlog(%args) -> [status, msg, result, meta]
+    Call randlog().
+
+    This is to test nested call (e.g. Log::Any::For::Package).
+
+    Arguments ('*' denotes required arguments):
+
+    *   max_level => *int* (default: 6)
+
+        Maximum level.
+
+    *   min_level => *int* (default: 1)
+
+        Minimum level.
+
+    *   n => *int* (default: 10)
+
+        Number of log messages to produce.
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
 
   delay(%args) -> [status, msg, result, meta]
     Sleep, by default for 10 seconds.

@@ -17,12 +17,13 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Perinci-Examples",
-  "dist_version" => "0.12",
+  "dist_version" => "0.13",
   "license" => "perl",
   "module_name" => "Perinci::Examples",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
+    "Data::Clone" => 0,
     "Log::Any" => 0,
     "Perinci::CmdLine" => "0.67",
     "Rinci" => "v1.1.32",

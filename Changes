@@ -1,5 +1,10 @@
 Revision history for Perinci-Examples
 
+0.13     2012-11-29 (SHARYANTO)
+
+         Add call_gen_array() and call_randlog().
+
+
 0.12     2012-11-08 (SHARYANTO)
 
          No functional changes. Add some # VALIDATE_ARG and rebuild with

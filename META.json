@@ -31,6 +31,7 @@
       },
       "runtime" : {
          "requires" : {
+            "Data::Clone" : 0,
             "Log::Any" : 0,
             "Perinci::CmdLine" : "0.67",
             "Rinci" : "v1.1.32",
@@ -45,6 +46,6 @@
          "url" : "http://github.com/sharyanto/perl-Perinci-Examples"
       }
    },
-   "version" : "0.12"
+   "version" : "0.13"
 }
 

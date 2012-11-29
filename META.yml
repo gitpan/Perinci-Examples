@@ -14,6 +14,7 @@ meta-spec:
   version: 1.4
 name: Perinci-Examples
 requires:
+  Data::Clone: 0
   Log::Any: 0
   Perinci::CmdLine: 0.67
   Rinci: v1.1.32
@@ -21,4 +22,4 @@ requires:
 resources:
   homepage: http://search.cpan.org/dist/Perinci-Examples/
   repository: http://github.com/sharyanto/perl-Perinci-Examples
-version: 0.12
+version: 0.13
