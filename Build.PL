@@ -17,7 +17,7 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Perinci-Examples",
-  "dist_version" => "0.13",
+  "dist_version" => "0.14",
   "license" => "perl",
   "module_name" => "Perinci::Examples",
   "recommends" => {},
@@ -25,13 +25,10 @@ my %module_build_args = (
   "requires" => {
     "Data::Clone" => 0,
     "Log::Any" => 0,
-    "Perinci::CmdLine" => "0.67",
     "Rinci" => "v1.1.32",
     "perl" => "5.010000"
   },
-  "script_files" => [
-    "bin/peri-eg-test-completion"
-  ]
+  "script_files" => []
 );
 
 

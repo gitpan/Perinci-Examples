@@ -1,5 +1,12 @@
 Revision history for Perinci-Examples
 
+0.14     2012-12-22 (SHARYANTO)
+
+         Split scripts (bin/) to Perinci-Examples-Bin to make dependencies for
+         this distribution minimal (e.g. not depending on Perinci::CmdLine)
+         since Perinci::Examples is used in tests for other modules.
+
+
 0.13     2012-11-29 (SHARYANTO)
 
          Add call_gen_array() and call_randlog().
