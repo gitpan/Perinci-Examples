@@ -1,6 +1,6 @@
 package Perinci::Examples;
 
-use 5.010;
+use 5.010001;
 use strict;
 use warnings;
 use Log::Any '$log';
@@ -9,7 +9,7 @@ use Data::Clone;
 use List::Util qw(min max);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.14'; # VERSION
+our $VERSION = '0.15'; # VERSION
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -362,6 +362,20 @@ _
             args    => {array=>[qw/a/]},
             status  => 400,
         },
+
+        {
+            summary   => 'Total numbers found in a file (4th example, bash)',
+            src       => q(grep '[0-9]' file.txt | xargs sum),
+            src_plang => 'bash',
+        },
+        {
+            summary   => '2-dice roll (5th example, perl)',
+            src       => <<'EOT',
+my $res = sum(array=>[map {int(rand()*6+1)} 1..2]);
+say $res->[2] >= 6 ? "high" : "low";
+EOT
+            src_plang => 'perl',
+        },
     ],
     features => {},
 };
@@ -406,17 +420,67 @@ _
 };
 sub merge_hash {
     my %args = @_;
-    my $h1 = $args{h1}; my $arg_err; ((defined($h1)) ? 1 : (($arg_err = "TMPERRMSG: required data not specified"),0)) && ((ref($h1) eq 'HASH') ? 1 : (($arg_err = "TMPERRMSG: type check failed"),0)); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } # VALIDATE_ARG
-    my $h2 = $args{h2}; ((defined($h2)) ? 1 : (($arg_err = "TMPERRMSG: required data not specified"),0)) && ((ref($h2) eq 'HASH') ? 1 : (($arg_err = "TMPERRMSG: type check failed"),0)); if ($arg_err) { return [400, "Invalid argument value for h2: $arg_err"] } # VALIDATE_ARG
+    my $h1 = $args{h1}; my $_sahv_dpath = []; my $arg_err; ((defined($h1)) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Required input not specified"),0)) && ((ref($h1) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type hash"),0)); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } # VALIDATE_ARG
+    my $h2 = $args{h2}; ((defined($h2)) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Required input not specified"),0)) && ((ref($h2) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type hash"),0)); if ($arg_err) { return [400, "Invalid argument value for h2: $arg_err"] } # VALIDATE_ARG
 
     [200, "OK", {%$h1, %$h2}];
+}
+
+$SPEC{test_validate_args} = {
+    v => 1.1,
+    summary => "Does nothing, only here to test # VALIDATE_ARGS",
+    args => {
+        a => {
+            schema => "int",
+        },
+        b => {
+            schema => [str => {min_len=>2}],
+        },
+        h1 => { # same as in merge_hash
+            schema => 'hash',
+        },
+    },
+    result => {
+        schema => 'str*',
+    },
+    features => {},
+    "_perinci.sub.wrapper.validate_args" => 0,
+};
+sub test_validate_args {
+    my %args = @_; my $_sahv_dpath = []; my $arg_err; if (exists($args{'h1'})) { (!defined($args{'h1'}) ? 1 :  ((ref($args{'h1'}) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type hash"),0))); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } }require Scalar::Util; if (exists($args{'a'})) { (!defined($args{'a'}) ? 1 :  ((Scalar::Util::looks_like_number($args{'a'}) =~ /^(?:1|2|9|10|4352)$/) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type integer"),0))); if ($arg_err) { return [400, "Invalid argument value for a: $arg_err"] } }if (exists($args{'b'})) { (!defined($args{'b'}) ? 1 :  ((!ref($args{'b'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type text"),0)) && ((length($args{'b'}) >= 2) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Length must be at least 2"),0))); if ($arg_err) { return [400, "Invalid argument value for b: $arg_err"] } }# VALIDATE_ARGS
+    [200];
+}
+
+$SPEC{undescribed_args} = {
+    v => 1.1,
+    summary => 'This function has several undescribed args',
+    description => <<'_',
+
+Originally added to see how peri-func-usage or Perinci::To::Text will display
+the usage or documentation for this function.
+
+_
+    args => {
+        arg1 => {},
+        arg2 => {},
+        arg3 => {},
+        arg4 => {
+            cmdline_aliases => {A=>{}},
+        },
+    },
+};
+sub undescribed_args {
+    [200];
 }
 
 1;
 # ABSTRACT: Example modules containing metadata and various example functions
 
+__END__
 
 =pod
+
+=encoding utf-8
 
 =head1 NAME
 
@@ -424,7 +488,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-version 0.14
+version 0.15
 
 =head1 SYNOPSIS
 
@@ -442,14 +506,6 @@ L<Perinci::Examples::Bin>) to make dependencies for this distribution minimal
 (e.g. not depending on L<Perinci::CmdLine>) since this example module(s) are
 usually used in the tests of other modules.
 
-=head1 SEE ALSO
-
-L<Perinci>
-
-L<Perinci::Examples::Bin>
-
-=head1 DESCRIPTION
-
 
 A sample description
 
@@ -458,7 +514,22 @@ A sample description
 
 Another paragraph with I<bold>, I<italic> text.
 
-This module has L<Rinci> metadata.
+=head1 SEE ALSO
+
+L<Perinci>
+
+L<Perinci::Examples::Bin>
+
+=head1 AUTHOR
+
+Steven Haryanto <stevenharyanto@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2013 by Steven Haryanto.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =head1 FUNCTIONS
 
@@ -682,6 +753,18 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 Sum numbers in array.
 
+Examples:
+
+ sum(array => [1, 2, 3]); # -> 6
+
+ sum(array => [1.1, 2.1, 3.1], round => 1); # -> 6
+
+ sum(array => ["a"]); # ERROR 400
+
+ sum();
+
+ sum();
+
 This function can be used to test passing nonscalar (array) arguments.
 
 Arguments ('*' denotes required arguments):
@@ -733,19 +816,49 @@ Return value:
 
 Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
 
-=head1 AUTHOR
+=head2 test_validate_args(%args) -> [status, msg, result, meta]
 
-Steven Haryanto <stevenharyanto@gmail.com>
+Does nothing, only here to test # VALIDATE_ARGS.
 
-=head1 COPYRIGHT AND LICENSE
+Arguments ('*' denotes required arguments):
 
-This software is copyright (c) 2012 by Steven Haryanto.
+=over 4
 
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
+=item * B<a> => I<int>
+
+=item * B<b> => I<str>
+
+=item * B<h1> => I<hash>
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
+=head2 undescribed_args(%args) -> [status, msg, result, meta]
+
+This function has several undescribed args.
+
+Originally added to see how peri-func-usage or Perinci::To::Text will display
+the usage or documentation for this function.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<arg1> => I<any>
+
+=item * B<arg2> => I<any>
+
+=item * B<arg3> => I<any>
+
+=item * B<arg4> => I<any>
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
 
 =cut
-
-
-__END__
-

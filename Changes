@@ -1,5 +1,12 @@
 Revision history for Perinci-Examples
 
+0.15     2013-10-15 (SHARYANTO)
+
+         - Add function: undescribed_args.
+
+         - sum: Add examples with 'src'.
+
+
 0.14     2012-12-22 (SHARYANTO)
 
          Split scripts (bin/) to Perinci-Examples-Bin to make dependencies for
