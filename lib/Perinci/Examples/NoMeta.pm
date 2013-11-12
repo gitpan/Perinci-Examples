@@ -22,7 +22,7 @@ sub gen_array {
     \@res;
 }
 
-our $VERSION = '0.15'; # VERSION
+our $VERSION = '0.16'; # VERSION
 
 1;
 #ABSTRACT: Example of module without any metadata
@@ -31,7 +31,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -39,9 +39,32 @@ Perinci::Examples::NoMeta - Example of module without any metadata
 
 =head1 VERSION
 
-version 0.15
+version 0.16
+
+=head1 DESCRIPTION
+
+=head1 FUNCTIONS
+
+
+None are exported by default, but they are exportable.
 
 =for Pod::Coverage .*
+
+=head1 HOMEPAGE
+
+Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Examples>.
+
+=head1 SOURCE
+
+Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website L<https://rt.cpan.org/Public/Dist/Display.html?Name=Perinci-Examples>
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
 
 =head1 AUTHOR
 
@@ -53,12 +76,5 @@ This software is copyright (c) 2013 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
-
-=head1 DESCRIPTION
-
-=head1 FUNCTIONS
-
-
-None are exported by default, but they are exportable.
 
 =cut

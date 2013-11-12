@@ -6,6 +6,7 @@ META.json
 META.yml
 Makefile.PL
 README
+build.log
 dist.ini
 lib/Perinci/Examples.pm
 lib/Perinci/Examples/NoMeta.pm
