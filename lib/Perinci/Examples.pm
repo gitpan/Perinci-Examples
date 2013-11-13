@@ -9,7 +9,7 @@ use Data::Clone;
 use List::Util qw(min max);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.16'; # VERSION
+our $VERSION = '0.17'; # VERSION
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -488,7 +488,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-version 0.16
+version 0.17
 
 =head1 SYNOPSIS
 
@@ -517,9 +517,9 @@ Another paragraph with I<bold>, I<italic> text.
 =head1 FUNCTIONS
 
 
-None are exported by default, but they are exportable.
-
 =head2 call_gen_array(%args) -> [status, msg, result, meta]
+
+Call gen_array().
 
 This is to test nested call (e.g. Log::Any::For::Package).
 
@@ -538,6 +538,8 @@ Return value:
 Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
 
 =head2 call_randlog(%args) -> [status, msg, result, meta]
+
+Call randlog().
 
 This is to test nested call (e.g. Log::Any::For::Package).
 
@@ -565,6 +567,8 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 delay(%args) -> [status, msg, result, meta]
 
+Sleep, by default for 10 seconds.
+
 Can be used to test the I<time_limit> property.
 
 Arguments ('*' denotes required arguments):
@@ -587,6 +591,8 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 dies() -> [status, msg, result, meta]
 
+Dies tragically.
+
 Can be used to test exception handling.
 
 No arguments.
@@ -596,6 +602,8 @@ Return value:
 Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
 
 =head2 err(%args) -> [status, msg, result, meta]
+
+Return error response.
 
 Arguments ('*' denotes required arguments):
 
@@ -612,6 +620,8 @@ Return value:
 Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
 
 =head2 gen_array(%args) -> [status, msg, result, meta]
+
+Generate an array of specified length.
 
 Also tests result schema.
 
@@ -631,6 +641,8 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 gen_hash(%args) -> [status, msg, result, meta]
 
+Generate a hash with specified number of pairs.
+
 Also tests result schema.
 
 Arguments ('*' denotes required arguments):
@@ -648,6 +660,8 @@ Return value:
 Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
 
 =head2 merge_hash(%args) -> [status, msg, result, meta]
+
+Merge two hashes.
 
 This function can be used to test passing nonscalar (hash) arguments.
 
@@ -671,6 +685,8 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 noop(%args) -> [status, msg, result, meta]
 
+Do nothing, return original argument.
+
 This function is pure (produce no side effects).
 
 
@@ -689,6 +705,8 @@ Return value:
 Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
 
 =head2 randlog(%args) -> [status, msg, result, meta]
+
+Produce some random Log::Any log messages.
 
 Arguments ('*' denotes required arguments):
 
@@ -714,6 +732,20 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 sum(%args) -> [status, msg, result, meta]
 
+Sum numbers in array.
+
+Examples:
+
+ sum(array => [1, 2, 3]); # -> 6
+
+ sum(array => [1.1, 2.1, 3.1], round => 1); # -> 6
+
+ sum(array => ["a"]); # ERROR 400
+
+ sum();
+
+ sum();
+
 This function can be used to test passing nonscalar (array) arguments.
 
 Arguments ('*' denotes required arguments):
@@ -735,6 +767,8 @@ Return value:
 Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
 
 =head2 test_completion(%args) -> [status, msg, result, meta]
+
+Do nothing, return nothing.
 
 This function is used to test argument completion.
 
@@ -765,6 +799,8 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 test_validate_args(%args) -> [status, msg, result, meta]
 
+Does nothing, only here to test # VALIDATE_ARGS.
+
 Arguments ('*' denotes required arguments):
 
 =over 4
@@ -782,6 +818,8 @@ Return value:
 Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
 
 =head2 undescribed_args(%args) -> [status, msg, result, meta]
+
+This function has several undescribed args.
 
 Originally added to see how peri-func-usage or Perinci::To::Text will display
 the usage or documentation for this function.
