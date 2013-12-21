@@ -9,7 +9,7 @@ use Data::Clone;
 use List::Util qw(min max);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.17'; # VERSION
+our $VERSION = '0.18'; # VERSION
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -164,7 +164,7 @@ sub randlog {
                              "level=$num_level ($str_level): ".
                                  int(rand()*9000+1000));
     }
-    [200, "OK"];
+    [200, "OK", "$n log message(s) produced"];
 }
 
 $SPEC{call_randlog} = clone($SPEC{randlog});
@@ -447,7 +447,7 @@ $SPEC{test_validate_args} = {
     "_perinci.sub.wrapper.validate_args" => 0,
 };
 sub test_validate_args {
-    my %args = @_; my $_sahv_dpath = []; my $arg_err; if (exists($args{'h1'})) { (!defined($args{'h1'}) ? 1 :  ((ref($args{'h1'}) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type hash"),0))); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } }require Scalar::Util;if (exists($args{'a'})) { (!defined($args{'a'}) ? 1 :  ((Scalar::Util::looks_like_number($args{'a'}) =~ /^(?:1|2|9|10|4352)$/) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type integer"),0))); if ($arg_err) { return [400, "Invalid argument value for a: $arg_err"] } }if (exists($args{'b'})) { (!defined($args{'b'}) ? 1 :  ((!ref($args{'b'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type text"),0)) && ((length($args{'b'}) >= 2) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Length must be at least 2"),0))); if ($arg_err) { return [400, "Invalid argument value for b: $arg_err"] } }# VALIDATE_ARGS
+    my %args = @_; require Scalar::Util;my $_sahv_dpath = []; my $arg_err; if (exists($args{'a'})) { (!defined($args{'a'}) ? 1 :  ((Scalar::Util::looks_like_number($args{'a'}) =~ /^(?:1|2|9|10|4352)$/) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type integer"),0))); if ($arg_err) { return [400, "Invalid argument value for a: $arg_err"] } }if (exists($args{'b'})) { (!defined($args{'b'}) ? 1 :  ((!ref($args{'b'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type text"),0)) && ((length($args{'b'}) >= 2) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Length must be at least 2"),0))); if ($arg_err) { return [400, "Invalid argument value for b: $arg_err"] } }if (exists($args{'h1'})) { (!defined($args{'h1'}) ? 1 :  ((ref($args{'h1'}) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type hash"),0))); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } }# VALIDATE_ARGS
     [200];
 }
 
@@ -473,6 +473,40 @@ sub undescribed_args {
     [200];
 }
 
+$SPEC{arg_default} = {
+    v => 1.1,
+    summary => 'Demonstrate argument default value from default and/or schema',
+    args => {
+        a => {
+            summary => 'No defaults',
+            schema  => ['int'],
+        },
+        b => {
+            summary => 'Default from "default" property',
+            default => 2,
+            schema  => ['int'],
+        },
+        c => {
+            summary => 'Default from schema',
+            schema  => ['int', default => 3],
+        },
+        d => {
+            summary => 'Default from "default" property as well as schema',
+            description => <<'_',
+
+"Default" property overrides default value from schema.
+
+_
+            default => 4,
+            schema  => ['int', default=>-4],
+        },
+    },
+};
+sub arg_default {
+    my %args = @_;
+    [200, "OK", join("\n", map { "$_=" . ($args{$_} // "") } (qw/a b c d/))];
+}
+
 1;
 # ABSTRACT: Example modules containing metadata and various example functions
 
@@ -488,7 +522,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-version 0.17
+version 0.18
 
 =head1 SYNOPSIS
 
@@ -507,21 +541,55 @@ L<Perinci::Examples::Bin>) to make dependencies for this distribution minimal
 usually used in the tests of other modules.
 
 
+{en_US 
 A sample description
 
     verbatim
     line2
 
 Another paragraph with I<bold>, I<italic> text.
+}
 
 =head1 FUNCTIONS
 
 
+=head2 arg_default(%args) -> [status, msg, result, meta]
+
+{en_US Demonstrate argument default value from default and/or schema}.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<a> => I<int>
+
+{en_US Demonstrate argument default value from default and/or schema}.
+
+=item * B<b> => I<int> (default: 2)
+
+{en_US Demonstrate argument default value from default and/or schema}.
+
+=item * B<c> => I<int> (default: 3)
+
+{en_US Demonstrate argument default value from default and/or schema}.
+
+=item * B<d> => I<int> (default: 4)
+
+{en_US Demonstrate argument default value from default and/or schema}.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+
 =head2 call_gen_array(%args) -> [status, msg, result, meta]
 
-Call gen_array().
+{en_US Call gen_array()}.
 
+{en_US 
 This is to test nested call (e.g. Log::Any::For::Package).
+}
 
 Arguments ('*' denotes required arguments):
 
@@ -529,7 +597,11 @@ Arguments ('*' denotes required arguments):
 
 =item * B<len>* => I<int> (default: 10)
 
-Array length.
+{en_US Call gen_array()}.
+
+{en_US 
+This is to test nested call (e.g. Log::Any::For::Package).
+}
 
 =back
 
@@ -539,9 +611,11 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 call_randlog(%args) -> [status, msg, result, meta]
 
-Call randlog().
+{en_US Call randlog()}.
 
+{en_US 
 This is to test nested call (e.g. Log::Any::For::Package).
+}
 
 Arguments ('*' denotes required arguments):
 
@@ -549,15 +623,27 @@ Arguments ('*' denotes required arguments):
 
 =item * B<max_level> => I<int> (default: 6)
 
-Maximum level.
+{en_US Call randlog()}.
+
+{en_US 
+This is to test nested call (e.g. Log::Any::For::Package).
+}
 
 =item * B<min_level> => I<int> (default: 1)
 
-Minimum level.
+{en_US Call randlog()}.
+
+{en_US 
+This is to test nested call (e.g. Log::Any::For::Package).
+}
 
 =item * B<n> => I<int> (default: 10)
 
-Number of log messages to produce.
+{en_US Call randlog()}.
+
+{en_US 
+This is to test nested call (e.g. Log::Any::For::Package).
+}
 
 =back
 
@@ -567,9 +653,11 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 delay(%args) -> [status, msg, result, meta]
 
-Sleep, by default for 10 seconds.
+{id_ID Tidur, defaultnya 10 detik}.
 
-Can be used to test the I<time_limit> property.
+{idI<ID 
+Dapat dipakai untuk menguji properti *time>limit*.
+}
 
 Arguments ('*' denotes required arguments):
 
@@ -577,11 +665,19 @@ Arguments ('*' denotes required arguments):
 
 =item * B<n> => I<int> (default: 10)
 
-Number of seconds to sleep.
+{id_ID Tidur, defaultnya 10 detik}.
+
+{idI<ID 
+Dapat dipakai untuk menguji properti *time>limit*.
+}
 
 =item * B<per_second> => I<bool> (default: 0)
 
-Whether to sleep(1) for n times instead of sleep(n).
+{id_ID Tidur, defaultnya 10 detik}.
+
+{idI<ID 
+Dapat dipakai untuk menguji properti *time>limit*.
+}
 
 =back
 
@@ -591,9 +687,11 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 dies() -> [status, msg, result, meta]
 
-Dies tragically.
+{en_US Dies tragically}.
 
+{en_US 
 Can be used to test exception handling.
+}
 
 No arguments.
 
@@ -603,7 +701,10 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 err(%args) -> [status, msg, result, meta]
 
-Return error response.
+{en_US Return error response}.
+
+{en_US 
+}
 
 Arguments ('*' denotes required arguments):
 
@@ -611,7 +712,10 @@ Arguments ('*' denotes required arguments):
 
 =item * B<code> => I<int> (default: 500)
 
-Error code to return.
+{en_US Return error response}.
+
+{en_US 
+}
 
 =back
 
@@ -621,9 +725,11 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 gen_array(%args) -> [status, msg, result, meta]
 
-Generate an array of specified length.
+{en_US Generate an array of specified length}.
 
+{en_US 
 Also tests result schema.
+}
 
 Arguments ('*' denotes required arguments):
 
@@ -631,7 +737,11 @@ Arguments ('*' denotes required arguments):
 
 =item * B<len>* => I<int> (default: 10)
 
-Array length.
+{en_US Generate an array of specified length}.
+
+{en_US 
+Also tests result schema.
+}
 
 =back
 
@@ -641,9 +751,11 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 gen_hash(%args) -> [status, msg, result, meta]
 
-Generate a hash with specified number of pairs.
+{en_US Generate a hash with specified number of pairs}.
 
+{en_US 
 Also tests result schema.
+}
 
 Arguments ('*' denotes required arguments):
 
@@ -651,7 +763,11 @@ Arguments ('*' denotes required arguments):
 
 =item * B<pairs> => I<int>
 
-Number of pairs.
+{en_US Generate a hash with specified number of pairs}.
+
+{en_US 
+Also tests result schema.
+}
 
 =back
 
@@ -661,9 +777,11 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 merge_hash(%args) -> [status, msg, result, meta]
 
-Merge two hashes.
+{en_US Merge two hashes}.
 
+{en_US 
 This function can be used to test passing nonscalar (hash) arguments.
+}
 
 Arguments ('*' denotes required arguments):
 
@@ -671,11 +789,19 @@ Arguments ('*' denotes required arguments):
 
 =item * B<h1>* => I<hash>
 
-First hash (left-hand side).
+{en_US Merge two hashes}.
+
+{en_US 
+This function can be used to test passing nonscalar (hash) arguments.
+}
 
 =item * B<h2>* => I<hash>
 
-First hash (right-hand side).
+{en_US Merge two hashes}.
+
+{en_US 
+This function can be used to test passing nonscalar (hash) arguments.
+}
 
 =back
 
@@ -685,7 +811,10 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 noop(%args) -> [status, msg, result, meta]
 
-Do nothing, return original argument.
+{en_US Do nothing, return original argument}.
+
+{en_US 
+}
 
 This function is pure (produce no side effects).
 
@@ -696,7 +825,10 @@ Arguments ('*' denotes required arguments):
 
 =item * B<arg> => I<any>
 
-Argument.
+{en_US Do nothing, return original argument}.
+
+{en_US 
+}
 
 =back
 
@@ -706,7 +838,9 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 randlog(%args) -> [status, msg, result, meta]
 
-Produce some random Log::Any log messages.
+{en_US Produce some random Log::Any log messages}.
+
+{en_US }
 
 Arguments ('*' denotes required arguments):
 
@@ -714,15 +848,21 @@ Arguments ('*' denotes required arguments):
 
 =item * B<max_level> => I<int> (default: 6)
 
-Maximum level.
+{en_US Produce some random Log::Any log messages}.
+
+{en_US }
 
 =item * B<min_level> => I<int> (default: 1)
 
-Minimum level.
+{en_US Produce some random Log::Any log messages}.
+
+{en_US }
 
 =item * B<n> => I<int> (default: 10)
 
-Number of log messages to produce.
+{en_US Produce some random Log::Any log messages}.
+
+{en_US }
 
 =back
 
@@ -732,7 +872,7 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 sum(%args) -> [status, msg, result, meta]
 
-Sum numbers in array.
+{en_US Sum numbers in array}.
 
 Examples:
 
@@ -746,7 +886,9 @@ Examples:
 
  sum();
 
+{en_US 
 This function can be used to test passing nonscalar (array) arguments.
+}
 
 Arguments ('*' denotes required arguments):
 
@@ -754,11 +896,19 @@ Arguments ('*' denotes required arguments):
 
 =item * B<array>* => I<array>
 
-Array.
+{en_US Sum numbers in array}.
+
+{en_US 
+This function can be used to test passing nonscalar (array) arguments.
+}
 
 =item * B<round> => I<bool> (default: 0)
 
-Whether to round result to integer.
+{en_US Sum numbers in array}.
+
+{en_US 
+This function can be used to test passing nonscalar (array) arguments.
+}
 
 =back
 
@@ -768,9 +918,11 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 test_completion(%args) -> [status, msg, result, meta]
 
-Do nothing, return nothing.
+{en_US Do nothing, return nothing}.
 
+{en_US 
 This function is used to test argument completion.
+}
 
 This function is pure (produce no side effects).
 
@@ -781,15 +933,51 @@ Arguments ('*' denotes required arguments):
 
 =item * B<f1> => I<float>
 
+{en_US Do nothing, return nothing}.
+
+{en_US 
+This function is used to test argument completion.
+}
+
 =item * B<i1> => I<int>
+
+{en_US Do nothing, return nothing}.
+
+{en_US 
+This function is used to test argument completion.
+}
 
 =item * B<i2> => I<int>
 
+{en_US Do nothing, return nothing}.
+
+{en_US 
+This function is used to test argument completion.
+}
+
 =item * B<s1> => I<str>
+
+{en_US Do nothing, return nothing}.
+
+{en_US 
+This function is used to test argument completion.
+}
 
 =item * B<s2> => I<str>
 
+{en_US Do nothing, return nothing}.
+
+{en_US 
+This function is used to test argument completion.
+}
+
 =item * B<s3> => I<str>
+
+{en_US Do nothing, return nothing}.
+
+{en_US 
+This function is used to test argument completion.
+}
 
 =back
 
@@ -799,7 +987,7 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 test_validate_args(%args) -> [status, msg, result, meta]
 
-Does nothing, only here to test # VALIDATE_ARGS.
+{en_US Does nothing, only here to test # VALIDATE_ARGS}.
 
 Arguments ('*' denotes required arguments):
 
@@ -807,9 +995,15 @@ Arguments ('*' denotes required arguments):
 
 =item * B<a> => I<int>
 
+{en_US Does nothing, only here to test # VALIDATE_ARGS}.
+
 =item * B<b> => I<str>
 
+{en_US Does nothing, only here to test # VALIDATE_ARGS}.
+
 =item * B<h1> => I<hash>
+
+{en_US Does nothing, only here to test # VALIDATE_ARGS}.
 
 =back
 
@@ -819,10 +1013,12 @@ Returns an enveloped result (an array). First element (status) is an integer con
 
 =head2 undescribed_args(%args) -> [status, msg, result, meta]
 
-This function has several undescribed args.
+{en_US This function has several undescribed args}.
 
+{en_US 
 Originally added to see how peri-func-usage or Perinci::To::Text will display
 the usage or documentation for this function.
+}
 
 Arguments ('*' denotes required arguments):
 
@@ -830,11 +1026,39 @@ Arguments ('*' denotes required arguments):
 
 =item * B<arg1> => I<any>
 
+{en_US This function has several undescribed args}.
+
+{en_US 
+Originally added to see how peri-func-usage or Perinci::To::Text will display
+the usage or documentation for this function.
+}
+
 =item * B<arg2> => I<any>
+
+{en_US This function has several undescribed args}.
+
+{en_US 
+Originally added to see how peri-func-usage or Perinci::To::Text will display
+the usage or documentation for this function.
+}
 
 =item * B<arg3> => I<any>
 
+{en_US This function has several undescribed args}.
+
+{en_US 
+Originally added to see how peri-func-usage or Perinci::To::Text will display
+the usage or documentation for this function.
+}
+
 =item * B<arg4> => I<any>
+
+{en_US This function has several undescribed args}.
+
+{en_US 
+Originally added to see how peri-func-usage or Perinci::To::Text will display
+the usage or documentation for this function.
+}
 
 =back
 

@@ -1,5 +1,13 @@
 Revision history for Perinci-Examples
 
+0.18    2013-12-21 (SHARYANTO)
+
+	- Add some response content to call_randlog().
+
+        - Add function arg_default to test default value from default and/or
+          schema.
+
+
 0.17    2013-11-14 (SHARYANTO)
 
 	- Add module: Perinci::Examples::Completion.

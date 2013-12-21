@@ -3,7 +3,7 @@ NAME
     example functions
 
 VERSION
-    version 0.17
+    version 0.18
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -20,24 +20,60 @@ DESCRIPTION
     minimal (e.g. not depending on Perinci::CmdLine) since this example
     module(s) are usually used in the tests of other modules.
 
-    A sample description
+    {en_US A sample description
 
         verbatim
         line2
 
-    Another paragraph with *bold*, *italic* text.
+    Another paragraph with *bold*, *italic* text. }
 
 FUNCTIONS
-  call_gen_array(%args) -> [status, msg, result, meta]
-    Call gen_array().
+  arg_default(%args) -> [status, msg, result, meta]
+    {en_US Demonstrate argument default value from default and/or schema}.
 
-    This is to test nested call (e.g. Log::Any::For::Package).
+    Arguments ('*' denotes required arguments):
+
+    *   a => *int*
+
+        {en_US Demonstrate argument default value from default and/or
+        schema}.
+
+    *   b => *int* (default: 2)
+
+        {en_US Demonstrate argument default value from default and/or
+        schema}.
+
+    *   c => *int* (default: 3)
+
+        {en_US Demonstrate argument default value from default and/or
+        schema}.
+
+    *   d => *int* (default: 4)
+
+        {en_US Demonstrate argument default value from default and/or
+        schema}.
+
+    Return value:
+
+    Returns an enveloped result (an array). First element (status) is an
+    integer containing HTTP status code (200 means OK, 4xx caller error, 5xx
+    function error). Second element (msg) is a string containing error
+    message, or 'OK' if status is 200. Third element (result) is optional,
+    the actual result. Fourth element (meta) is called result metadata and
+    is optional, a hash that contains extra information.
+
+  call_gen_array(%args) -> [status, msg, result, meta]
+    {en_US Call gen_array()}.
+
+    {en_US This is to test nested call (e.g. Log::Any::For::Package). }
 
     Arguments ('*' denotes required arguments):
 
     *   len* => *int* (default: 10)
 
-        Array length.
+        {en_US Call gen_array()}.
+
+        {en_US This is to test nested call (e.g. Log::Any::For::Package). }
 
     Return value:
 
@@ -49,23 +85,29 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   call_randlog(%args) -> [status, msg, result, meta]
-    Call randlog().
+    {en_US Call randlog()}.
 
-    This is to test nested call (e.g. Log::Any::For::Package).
+    {en_US This is to test nested call (e.g. Log::Any::For::Package). }
 
     Arguments ('*' denotes required arguments):
 
     *   max_level => *int* (default: 6)
 
-        Maximum level.
+        {en_US Call randlog()}.
+
+        {en_US This is to test nested call (e.g. Log::Any::For::Package). }
 
     *   min_level => *int* (default: 1)
 
-        Minimum level.
+        {en_US Call randlog()}.
+
+        {en_US This is to test nested call (e.g. Log::Any::For::Package). }
 
     *   n => *int* (default: 10)
 
-        Number of log messages to produce.
+        {en_US Call randlog()}.
+
+        {en_US This is to test nested call (e.g. Log::Any::For::Package). }
 
     Return value:
 
@@ -77,19 +119,23 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   delay(%args) -> [status, msg, result, meta]
-    Sleep, by default for 10 seconds.
+    {id_ID Tidur, defaultnya 10 detik}.
 
-    Can be used to test the *time_limit* property.
+    {id*ID Dapat dipakai untuk menguji properti *time*limit*. }
 
     Arguments ('*' denotes required arguments):
 
     *   n => *int* (default: 10)
 
-        Number of seconds to sleep.
+        {id_ID Tidur, defaultnya 10 detik}.
+
+        {id*ID Dapat dipakai untuk menguji properti *time*limit*. }
 
     *   per_second => *bool* (default: 0)
 
-        Whether to sleep(1) for n times instead of sleep(n).
+        {id_ID Tidur, defaultnya 10 detik}.
+
+        {id*ID Dapat dipakai untuk menguji properti *time*limit*. }
 
     Return value:
 
@@ -101,9 +147,9 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   dies() -> [status, msg, result, meta]
-    Dies tragically.
+    {en_US Dies tragically}.
 
-    Can be used to test exception handling.
+    {en_US Can be used to test exception handling. }
 
     No arguments.
 
@@ -117,13 +163,17 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   err(%args) -> [status, msg, result, meta]
-    Return error response.
+    {en_US Return error response}.
+
+    {en_US }
 
     Arguments ('*' denotes required arguments):
 
     *   code => *int* (default: 500)
 
-        Error code to return.
+        {en_US Return error response}.
+
+        {en_US }
 
     Return value:
 
@@ -135,15 +185,17 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   gen_array(%args) -> [status, msg, result, meta]
-    Generate an array of specified length.
+    {en_US Generate an array of specified length}.
 
-    Also tests result schema.
+    {en_US Also tests result schema. }
 
     Arguments ('*' denotes required arguments):
 
     *   len* => *int* (default: 10)
 
-        Array length.
+        {en_US Generate an array of specified length}.
+
+        {en_US Also tests result schema. }
 
     Return value:
 
@@ -155,15 +207,17 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   gen_hash(%args) -> [status, msg, result, meta]
-    Generate a hash with specified number of pairs.
+    {en_US Generate a hash with specified number of pairs}.
 
-    Also tests result schema.
+    {en_US Also tests result schema. }
 
     Arguments ('*' denotes required arguments):
 
     *   pairs => *int*
 
-        Number of pairs.
+        {en_US Generate a hash with specified number of pairs}.
+
+        {en_US Also tests result schema. }
 
     Return value:
 
@@ -175,19 +229,26 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   merge_hash(%args) -> [status, msg, result, meta]
-    Merge two hashes.
+    {en_US Merge two hashes}.
 
-    This function can be used to test passing nonscalar (hash) arguments.
+    {en_US This function can be used to test passing nonscalar (hash)
+    arguments. }
 
     Arguments ('*' denotes required arguments):
 
     *   h1* => *hash*
 
-        First hash (left-hand side).
+        {en_US Merge two hashes}.
+
+        {en_US This function can be used to test passing nonscalar (hash)
+        arguments. }
 
     *   h2* => *hash*
 
-        First hash (right-hand side).
+        {en_US Merge two hashes}.
+
+        {en_US This function can be used to test passing nonscalar (hash)
+        arguments. }
 
     Return value:
 
@@ -199,7 +260,9 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   noop(%args) -> [status, msg, result, meta]
-    Do nothing, return original argument.
+    {en_US Do nothing, return original argument}.
+
+    {en_US }
 
     This function is pure (produce no side effects).
 
@@ -207,7 +270,9 @@ FUNCTIONS
 
     *   arg => *any*
 
-        Argument.
+        {en_US Do nothing, return original argument}.
+
+        {en_US }
 
     Return value:
 
@@ -219,21 +284,29 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   randlog(%args) -> [status, msg, result, meta]
-    Produce some random Log::Any log messages.
+    {en_US Produce some random Log::Any log messages}.
+
+    {en_US }
 
     Arguments ('*' denotes required arguments):
 
     *   max_level => *int* (default: 6)
 
-        Maximum level.
+        {en_US Produce some random Log::Any log messages}.
+
+        {en_US }
 
     *   min_level => *int* (default: 1)
 
-        Minimum level.
+        {en_US Produce some random Log::Any log messages}.
+
+        {en_US }
 
     *   n => *int* (default: 10)
 
-        Number of log messages to produce.
+        {en_US Produce some random Log::Any log messages}.
+
+        {en_US }
 
     Return value:
 
@@ -245,7 +318,7 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   sum(%args) -> [status, msg, result, meta]
-    Sum numbers in array.
+    {en_US Sum numbers in array}.
 
     Examples:
 
@@ -259,17 +332,24 @@ FUNCTIONS
 
      sum();
 
-    This function can be used to test passing nonscalar (array) arguments.
+    {en_US This function can be used to test passing nonscalar (array)
+    arguments. }
 
     Arguments ('*' denotes required arguments):
 
     *   array* => *array*
 
-        Array.
+        {en_US Sum numbers in array}.
+
+        {en_US This function can be used to test passing nonscalar (array)
+        arguments. }
 
     *   round => *bool* (default: 0)
 
-        Whether to round result to integer.
+        {en_US Sum numbers in array}.
+
+        {en_US This function can be used to test passing nonscalar (array)
+        arguments. }
 
     Return value:
 
@@ -281,9 +361,9 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   test_completion(%args) -> [status, msg, result, meta]
-    Do nothing, return nothing.
+    {en_US Do nothing, return nothing}.
 
-    This function is used to test argument completion.
+    {en_US This function is used to test argument completion. }
 
     This function is pure (produce no side effects).
 
@@ -291,15 +371,39 @@ FUNCTIONS
 
     *   f1 => *float*
 
+        {en_US Do nothing, return nothing}.
+
+        {en_US This function is used to test argument completion. }
+
     *   i1 => *int*
+
+        {en_US Do nothing, return nothing}.
+
+        {en_US This function is used to test argument completion. }
 
     *   i2 => *int*
 
+        {en_US Do nothing, return nothing}.
+
+        {en_US This function is used to test argument completion. }
+
     *   s1 => *str*
+
+        {en_US Do nothing, return nothing}.
+
+        {en_US This function is used to test argument completion. }
 
     *   s2 => *str*
 
+        {en_US Do nothing, return nothing}.
+
+        {en_US This function is used to test argument completion. }
+
     *   s3 => *str*
+
+        {en_US Do nothing, return nothing}.
+
+        {en_US This function is used to test argument completion. }
 
     Return value:
 
@@ -311,15 +415,21 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   test_validate_args(%args) -> [status, msg, result, meta]
-    Does nothing, only here to test # VALIDATE_ARGS.
+    {en_US Does nothing, only here to test # VALIDATE_ARGS}.
 
     Arguments ('*' denotes required arguments):
 
     *   a => *int*
 
+        {en_US Does nothing, only here to test # VALIDATE_ARGS}.
+
     *   b => *str*
 
+        {en_US Does nothing, only here to test # VALIDATE_ARGS}.
+
     *   h1 => *hash*
+
+        {en_US Does nothing, only here to test # VALIDATE_ARGS}.
 
     Return value:
 
@@ -331,20 +441,44 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   undescribed_args(%args) -> [status, msg, result, meta]
-    This function has several undescribed args.
+    {en_US This function has several undescribed args}.
 
-    Originally added to see how peri-func-usage or Perinci::To::Text will
-    display the usage or documentation for this function.
+    {en_US Originally added to see how peri-func-usage or Perinci::To::Text
+    will display the usage or documentation for this function. }
 
     Arguments ('*' denotes required arguments):
 
     *   arg1 => *any*
 
+        {en_US This function has several undescribed args}.
+
+        {en_US Originally added to see how peri-func-usage or
+        Perinci::To::Text will display the usage or documentation for this
+        function. }
+
     *   arg2 => *any*
+
+        {en_US This function has several undescribed args}.
+
+        {en_US Originally added to see how peri-func-usage or
+        Perinci::To::Text will display the usage or documentation for this
+        function. }
 
     *   arg3 => *any*
 
+        {en_US This function has several undescribed args}.
+
+        {en_US Originally added to see how peri-func-usage or
+        Perinci::To::Text will display the usage or documentation for this
+        function. }
+
     *   arg4 => *any*
+
+        {en_US This function has several undescribed args}.
+
+        {en_US Originally added to see how peri-func-usage or
+        Perinci::To::Text will display the usage or documentation for this
+        function. }
 
     Return value:
 

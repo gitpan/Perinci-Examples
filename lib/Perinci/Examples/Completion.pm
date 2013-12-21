@@ -40,7 +40,7 @@ sub fruits {
     [200];
 }
 
-our $VERSION = '0.17'; # VERSION
+our $VERSION = '0.18'; # VERSION
 
 1;
 #ABSTRACT: More completion examples
@@ -57,20 +57,26 @@ Perinci::Examples::Completion - More completion examples
 
 =head1 VERSION
 
-version 0.17
+version 0.18
 
 =head1 FUNCTIONS
 
 
 =head2 fruits(%args) -> [status, msg, result, meta]
 
+{en_US 
 Demonstrates completion of array elements.
+}
 
 Arguments ('*' denotes required arguments):
 
 =over 4
 
 =item * B<fruits> => I<array>
+
+{en_US 
+Demonstrates completion of array elements.
+}
 
 =back
 
