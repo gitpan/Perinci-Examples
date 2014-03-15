@@ -3,7 +3,7 @@ NAME
     example functions
 
 VERSION
-    version 0.18
+    version 0.19
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -20,38 +20,36 @@ DESCRIPTION
     minimal (e.g. not depending on Perinci::CmdLine) since this example
     module(s) are usually used in the tests of other modules.
 
-    {en_US A sample description
+    A sample description
 
         verbatim
         line2
 
-    Another paragraph with *bold*, *italic* text. }
+    Another paragraph with *bold*, *italic* text.
 
 FUNCTIONS
   arg_default(%args) -> [status, msg, result, meta]
-    {en_US Demonstrate argument default value from default and/or schema}.
+    Demonstrate argument default value from default and/or schema.
 
     Arguments ('*' denotes required arguments):
 
     *   a => *int*
 
-        {en_US Demonstrate argument default value from default and/or
-        schema}.
+        No defaults.
 
     *   b => *int* (default: 2)
 
-        {en_US Demonstrate argument default value from default and/or
-        schema}.
+        Default from "default" property.
 
     *   c => *int* (default: 3)
 
-        {en_US Demonstrate argument default value from default and/or
-        schema}.
+        Default from schema.
 
     *   d => *int* (default: 4)
 
-        {en_US Demonstrate argument default value from default and/or
-        schema}.
+        Default from "default" property as well as schema.
+
+        "Default" property overrides default value from schema.
 
     Return value:
 
@@ -63,17 +61,15 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   call_gen_array(%args) -> [status, msg, result, meta]
-    {en_US Call gen_array()}.
+    Call gen_array().
 
-    {en_US This is to test nested call (e.g. Log::Any::For::Package). }
+    This is to test nested call (e.g. Log::Any::For::Package).
 
     Arguments ('*' denotes required arguments):
 
     *   len* => *int* (default: 10)
 
-        {en_US Call gen_array()}.
-
-        {en_US This is to test nested call (e.g. Log::Any::For::Package). }
+        Array length.
 
     Return value:
 
@@ -85,29 +81,23 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   call_randlog(%args) -> [status, msg, result, meta]
-    {en_US Call randlog()}.
+    Call randlog().
 
-    {en_US This is to test nested call (e.g. Log::Any::For::Package). }
+    This is to test nested call (e.g. Log::Any::For::Package).
 
     Arguments ('*' denotes required arguments):
 
     *   max_level => *int* (default: 6)
 
-        {en_US Call randlog()}.
-
-        {en_US This is to test nested call (e.g. Log::Any::For::Package). }
+        Maximum level.
 
     *   min_level => *int* (default: 1)
 
-        {en_US Call randlog()}.
-
-        {en_US This is to test nested call (e.g. Log::Any::For::Package). }
+        Minimum level.
 
     *   n => *int* (default: 10)
 
-        {en_US Call randlog()}.
-
-        {en_US This is to test nested call (e.g. Log::Any::For::Package). }
+        Number of log messages to produce.
 
     Return value:
 
@@ -119,23 +109,19 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   delay(%args) -> [status, msg, result, meta]
-    {id_ID Tidur, defaultnya 10 detik}.
+    Sleep, by default for 10 seconds.
 
-    {id*ID Dapat dipakai untuk menguji properti *time*limit*. }
+    Can be used to test the *time_limit* property.
 
     Arguments ('*' denotes required arguments):
 
     *   n => *int* (default: 10)
 
-        {id_ID Tidur, defaultnya 10 detik}.
-
-        {id*ID Dapat dipakai untuk menguji properti *time*limit*. }
+        Number of seconds to sleep.
 
     *   per_second => *bool* (default: 0)
 
-        {id_ID Tidur, defaultnya 10 detik}.
-
-        {id*ID Dapat dipakai untuk menguji properti *time*limit*. }
+        Whether to sleep(1) for n times instead of sleep(n).
 
     Return value:
 
@@ -147,9 +133,9 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   dies() -> [status, msg, result, meta]
-    {en_US Dies tragically}.
+    Dies tragically.
 
-    {en_US Can be used to test exception handling. }
+    Can be used to test exception handling.
 
     No arguments.
 
@@ -163,17 +149,13 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   err(%args) -> [status, msg, result, meta]
-    {en_US Return error response}.
-
-    {en_US }
+    Return error response.
 
     Arguments ('*' denotes required arguments):
 
     *   code => *int* (default: 500)
 
-        {en_US Return error response}.
-
-        {en_US }
+        Error code to return.
 
     Return value:
 
@@ -185,17 +167,15 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   gen_array(%args) -> [status, msg, result, meta]
-    {en_US Generate an array of specified length}.
+    Generate an array of specified length.
 
-    {en_US Also tests result schema. }
+    Also tests result schema.
 
     Arguments ('*' denotes required arguments):
 
     *   len* => *int* (default: 10)
 
-        {en_US Generate an array of specified length}.
-
-        {en_US Also tests result schema. }
+        Array length.
 
     Return value:
 
@@ -207,17 +187,15 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   gen_hash(%args) -> [status, msg, result, meta]
-    {en_US Generate a hash with specified number of pairs}.
+    Generate a hash with specified number of pairs.
 
-    {en_US Also tests result schema. }
+    Also tests result schema.
 
     Arguments ('*' denotes required arguments):
 
     *   pairs => *int*
 
-        {en_US Generate a hash with specified number of pairs}.
-
-        {en_US Also tests result schema. }
+        Number of pairs.
 
     Return value:
 
@@ -229,26 +207,19 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   merge_hash(%args) -> [status, msg, result, meta]
-    {en_US Merge two hashes}.
+    Merge two hashes.
 
-    {en_US This function can be used to test passing nonscalar (hash)
-    arguments. }
+    This function can be used to test passing nonscalar (hash) arguments.
 
     Arguments ('*' denotes required arguments):
 
     *   h1* => *hash*
 
-        {en_US Merge two hashes}.
-
-        {en_US This function can be used to test passing nonscalar (hash)
-        arguments. }
+        First hash (left-hand side).
 
     *   h2* => *hash*
 
-        {en_US Merge two hashes}.
-
-        {en_US This function can be used to test passing nonscalar (hash)
-        arguments. }
+        First hash (right-hand side).
 
     Return value:
 
@@ -260,9 +231,7 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   noop(%args) -> [status, msg, result, meta]
-    {en_US Do nothing, return original argument}.
-
-    {en_US }
+    Do nothing, return original argument.
 
     This function is pure (produce no side effects).
 
@@ -270,9 +239,7 @@ FUNCTIONS
 
     *   arg => *any*
 
-        {en_US Do nothing, return original argument}.
-
-        {en_US }
+        Argument.
 
     Return value:
 
@@ -284,29 +251,21 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   randlog(%args) -> [status, msg, result, meta]
-    {en_US Produce some random Log::Any log messages}.
-
-    {en_US }
+    Produce some random Log::Any log messages.
 
     Arguments ('*' denotes required arguments):
 
     *   max_level => *int* (default: 6)
 
-        {en_US Produce some random Log::Any log messages}.
-
-        {en_US }
+        Maximum level.
 
     *   min_level => *int* (default: 1)
 
-        {en_US Produce some random Log::Any log messages}.
-
-        {en_US }
+        Minimum level.
 
     *   n => *int* (default: 10)
 
-        {en_US Produce some random Log::Any log messages}.
-
-        {en_US }
+        Number of log messages to produce.
 
     Return value:
 
@@ -318,7 +277,7 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   sum(%args) -> [status, msg, result, meta]
-    {en_US Sum numbers in array}.
+    Sum numbers in array.
 
     Examples:
 
@@ -332,24 +291,17 @@ FUNCTIONS
 
      sum();
 
-    {en_US This function can be used to test passing nonscalar (array)
-    arguments. }
+    This function can be used to test passing nonscalar (array) arguments.
 
     Arguments ('*' denotes required arguments):
 
     *   array* => *array*
 
-        {en_US Sum numbers in array}.
-
-        {en_US This function can be used to test passing nonscalar (array)
-        arguments. }
+        Array.
 
     *   round => *bool* (default: 0)
 
-        {en_US Sum numbers in array}.
-
-        {en_US This function can be used to test passing nonscalar (array)
-        arguments. }
+        Whether to round result to integer.
 
     Return value:
 
@@ -361,9 +313,9 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   test_completion(%args) -> [status, msg, result, meta]
-    {en_US Do nothing, return nothing}.
+    Do nothing, return nothing.
 
-    {en_US This function is used to test argument completion. }
+    This function is used to test argument completion.
 
     This function is pure (produce no side effects).
 
@@ -371,39 +323,15 @@ FUNCTIONS
 
     *   f1 => *float*
 
-        {en_US Do nothing, return nothing}.
-
-        {en_US This function is used to test argument completion. }
-
     *   i1 => *int*
-
-        {en_US Do nothing, return nothing}.
-
-        {en_US This function is used to test argument completion. }
 
     *   i2 => *int*
 
-        {en_US Do nothing, return nothing}.
-
-        {en_US This function is used to test argument completion. }
-
     *   s1 => *str*
-
-        {en_US Do nothing, return nothing}.
-
-        {en_US This function is used to test argument completion. }
 
     *   s2 => *str*
 
-        {en_US Do nothing, return nothing}.
-
-        {en_US This function is used to test argument completion. }
-
     *   s3 => *str*
-
-        {en_US Do nothing, return nothing}.
-
-        {en_US This function is used to test argument completion. }
 
     Return value:
 
@@ -415,21 +343,15 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   test_validate_args(%args) -> [status, msg, result, meta]
-    {en_US Does nothing, only here to test # VALIDATE_ARGS}.
+    Does nothing, only here to test # VALIDATE_ARGS.
 
     Arguments ('*' denotes required arguments):
 
     *   a => *int*
 
-        {en_US Does nothing, only here to test # VALIDATE_ARGS}.
-
     *   b => *str*
 
-        {en_US Does nothing, only here to test # VALIDATE_ARGS}.
-
     *   h1 => *hash*
-
-        {en_US Does nothing, only here to test # VALIDATE_ARGS}.
 
     Return value:
 
@@ -441,44 +363,20 @@ FUNCTIONS
     is optional, a hash that contains extra information.
 
   undescribed_args(%args) -> [status, msg, result, meta]
-    {en_US This function has several undescribed args}.
+    This function has several undescribed args.
 
-    {en_US Originally added to see how peri-func-usage or Perinci::To::Text
-    will display the usage or documentation for this function. }
+    Originally added to see how peri-func-usage or Perinci::To::Text will
+    display the usage or documentation for this function.
 
     Arguments ('*' denotes required arguments):
 
     *   arg1 => *any*
 
-        {en_US This function has several undescribed args}.
-
-        {en_US Originally added to see how peri-func-usage or
-        Perinci::To::Text will display the usage or documentation for this
-        function. }
-
     *   arg2 => *any*
-
-        {en_US This function has several undescribed args}.
-
-        {en_US Originally added to see how peri-func-usage or
-        Perinci::To::Text will display the usage or documentation for this
-        function. }
 
     *   arg3 => *any*
 
-        {en_US This function has several undescribed args}.
-
-        {en_US Originally added to see how peri-func-usage or
-        Perinci::To::Text will display the usage or documentation for this
-        function. }
-
     *   arg4 => *any*
-
-        {en_US This function has several undescribed args}.
-
-        {en_US Originally added to see how peri-func-usage or
-        Perinci::To::Text will display the usage or documentation for this
-        function. }
 
     Return value:
 
@@ -513,7 +411,7 @@ AUTHOR
     Steven Haryanto <stevenharyanto@gmail.com>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2013 by Steven Haryanto.
+    This software is copyright (c) 2014 by Steven Haryanto.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.
