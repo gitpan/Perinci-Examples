@@ -9,6 +9,9 @@ use experimental 'smartmatch';
 
 our %SPEC;
 
+our $VERSION = '0.20'; # VERSION
+our $DATE = '2014-06-11'; # DATE
+
 $SPEC{fruits} = {
     v => 1.1,
     args => {
@@ -40,8 +43,6 @@ sub fruits {
     [200];
 }
 
-our $VERSION = '0.19'; # VERSION
-
 1;
 #ABSTRACT: More completion examples
 
@@ -57,7 +58,7 @@ Perinci::Examples::Completion - More completion examples
 
 =head1 VERSION
 
-version 0.19
+This document describes version 0.20 of Perinci::Examples::Completion (from Perl distribution Perinci-Examples), released on 2014-06-11.
 
 =head1 FUNCTIONS
 
@@ -76,7 +77,14 @@ Arguments ('*' denotes required arguments):
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
 
 =for Pod::Coverage .*
 

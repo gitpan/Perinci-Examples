@@ -9,7 +9,8 @@ use Data::Clone;
 use List::Util qw(min max);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.19'; # VERSION
+our $VERSION = '0.20'; # VERSION
+our $DATE = '2014-06-11'; # DATE
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -261,6 +262,7 @@ $SPEC{noop} = {
     summary => "Do nothing, return original argument",
     description => <<'_',
 
+Will also return argument passed to it.
 
 _
     args => {
@@ -507,6 +509,30 @@ sub arg_default {
     [200, "OK", join("\n", map { "$_=" . ($args{$_} // "") } (qw/a b c d/))];
 }
 
+$SPEC{return_args} = {
+    v => 1.1,
+    summary => "Return arguments",
+    description => <<'_',
+
+Can be useful to check what arguments the function gets. Aside from normal
+arguments, sometimes function will receive special arguments (those prefixed
+with dash, `-`).
+
+_
+    args => {
+        arg => {
+            summary => 'Argument',
+            schema => ['any'],
+            pos => 0,
+        },
+    },
+};
+sub return_args {
+    my %args = @_; # NO_VALIDATE_ARGS
+    $log->tracef("return_args() is called with arguments: %s", \%args);
+    [200, "OK", \%args];
+}
+
 1;
 # ABSTRACT: Example modules containing metadata and various example functions
 
@@ -522,7 +548,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-version 0.19
+This document describes version 0.20 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-06-11.
 
 =head1 SYNOPSIS
 
@@ -581,7 +607,15 @@ Default from "default" property as well as schema.
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 call_gen_array(%args) -> [status, msg, result, meta]
 
@@ -601,7 +635,15 @@ Array length.
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 call_randlog(%args) -> [status, msg, result, meta]
 
@@ -629,7 +671,15 @@ Number of log messages to produce.
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 delay(%args) -> [status, msg, result, meta]
 
@@ -653,7 +703,15 @@ Whether to sleep(1) for n times instead of sleep(n).
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 dies() -> [status, msg, result, meta]
 
@@ -665,7 +723,15 @@ No arguments.
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 err(%args) -> [status, msg, result, meta]
 
@@ -683,7 +749,15 @@ Error code to return.
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 gen_array(%args) -> [status, msg, result, meta]
 
@@ -703,7 +777,15 @@ Array length.
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 gen_hash(%args) -> [status, msg, result, meta]
 
@@ -723,7 +805,15 @@ Number of pairs.
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 merge_hash(%args) -> [status, msg, result, meta]
 
@@ -747,11 +837,21 @@ First hash (right-hand side).
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 noop(%args) -> [status, msg, result, meta]
 
 Do nothing, return original argument.
+
+Will also return argument passed to it.
 
 This function is pure (produce no side effects).
 
@@ -768,7 +868,15 @@ Argument.
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 randlog(%args) -> [status, msg, result, meta]
 
@@ -794,7 +902,45 @@ Number of log messages to produce.
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+
+=head2 return_args(%args) -> [status, msg, result, meta]
+
+Return arguments.
+
+Can be useful to check what arguments the function gets. Aside from normal
+arguments, sometimes function will receive special arguments (those prefixed
+with dash, C<->).
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<arg> => I<any>
+
+Argument.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 sum(%args) -> [status, msg, result, meta]
 
@@ -802,15 +948,35 @@ Sum numbers in array.
 
 Examples:
 
- sum(array => [1, 2, 3]); # -> 6
+ sum( array => [1, 2, 3]); # -> 6
 
- sum(array => [1.1, 2.1, 3.1], round => 1); # -> 6
 
- sum(array => ["a"]); # ERROR 400
+First example.
+
+
+ sum( array => [1.1, 2.1, 3.1], round => 1); # -> 6
+
+
+Second example, using argv.
+
+
+ sum( array => ["a"]); # ERROR 400
+
+
+Third example, invalid arguments.
+
 
  sum();
 
+
+Total numbers found in a file (4th example, bash).
+
+
  sum();
+
+
+2-dice roll (5th example, perl).
+
 
 This function can be used to test passing nonscalar (array) arguments.
 
@@ -830,7 +996,15 @@ Whether to round result to integer.
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 test_completion(%args) -> [status, msg, result, meta]
 
@@ -861,7 +1035,15 @@ Arguments ('*' denotes required arguments):
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 test_validate_args(%args) -> [status, msg, result, meta]
 
@@ -881,7 +1063,15 @@ Arguments ('*' denotes required arguments):
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
 
 =head2 undescribed_args(%args) -> [status, msg, result, meta]
 
@@ -906,7 +1096,14 @@ Arguments ('*' denotes required arguments):
 
 Return value:
 
-Returns an enveloped result (an array). First element (status) is an integer containing HTTP status code (200 means OK, 4xx caller error, 5xx function error). Second element (msg) is a string containing error message, or 'OK' if status is 200. Third element (result) is optional, the actual result. Fourth element (meta) is called result metadata and is optional, a hash that contains extra information.
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
 
 =head1 SEE ALSO
 

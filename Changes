@@ -1,10 +1,14 @@
 Revision history for Perinci-Examples
 
+0.20     2014-06-11 (SHARYANTO)
+
+         - Add function: return_args.
+
+
 0.19     2014-03-15 (SHARYANTO)
 
          - No functional changes. Rebuild to fix POD documentation (function
            argument documentation was broken in Perinci-To-POD < 0.42).
-
 
 0.18    2013-12-21 (SHARYANTO)
 

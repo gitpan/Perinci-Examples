@@ -9,6 +9,9 @@ use warnings;
 
 our $Var1 = 1;
 
+our $VERSION = '0.20'; # VERSION
+our $DATE = '2014-06-11'; # DATE
+
 sub pyth($$) {
     my ($a, $b) = @_;
     ($a*$a + $b*$b)**0.5;
@@ -21,8 +24,6 @@ sub gen_array {
     for (1..$len) { push @res, int(rand $len)+1 }
     \@res;
 }
-
-our $VERSION = '0.19'; # VERSION
 
 1;
 #ABSTRACT: Example of module without any metadata
@@ -39,7 +40,7 @@ Perinci::Examples::NoMeta - Example of module without any metadata
 
 =head1 VERSION
 
-version 0.19
+This document describes version 0.20 of Perinci::Examples::NoMeta (from Perl distribution Perinci-Examples), released on 2014-06-11.
 
 =for Pod::Coverage .*
 
