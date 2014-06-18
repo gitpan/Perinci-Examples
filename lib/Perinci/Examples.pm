@@ -9,8 +9,8 @@ use Data::Clone;
 use List::Util qw(min max);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.20'; # VERSION
-our $DATE = '2014-06-11'; # DATE
+our $VERSION = '0.21'; # VERSION
+our $DATE = '2014-06-18'; # DATE
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -317,12 +317,20 @@ _
             schema => 'str',
             completion => sub { die },
         },
+        a1 => {
+            summary => 'For testing complete_arg_elem',
+            schema => [array => of => [str => {
+                in=>[qw/apple apricot banana grape grapefruit/,
+                     "red date", "red grape", "green grape",
+                 ],
+            }]],
+        },
     },
     features => {pure => 1},
 };
 sub test_completion {
-    # NO_VALIDATE_ARGS
-    [200, "OK"];
+    my %args = @_; # NO_VALIDATE_ARGS
+    [200, "OK", \%args];
 }
 
 $SPEC{sum} = {
@@ -548,7 +556,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.20 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-06-11.
+This document describes version 0.21 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-06-18.
 
 =head1 SYNOPSIS
 
@@ -1018,6 +1026,10 @@ This function is pure (produce no side effects).
 Arguments ('*' denotes required arguments):
 
 =over 4
+
+=item * B<a1> => I<array>
+
+For testing complete_arg_elem.
 
 =item * B<f1> => I<float>
 

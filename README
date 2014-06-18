@@ -3,8 +3,8 @@ NAME
     example functions
 
 VERSION
-    This document describes version 0.20 of Perinci::Examples (from Perl
-    distribution Perinci-Examples), released on 2014-06-11.
+    This document describes version 0.21 of Perinci::Examples (from Perl
+    distribution Perinci-Examples), released on 2014-06-18.
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -381,6 +381,10 @@ FUNCTIONS
     This function is pure (produce no side effects).
 
     Arguments ('*' denotes required arguments):
+
+    *   a1 => *array*
+
+        For testing complete_arg_elem.
 
     *   f1 => *float*
 
