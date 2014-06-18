@@ -1,5 +1,10 @@
 Revision history for Perinci-Examples
 
+0.22     2014-06-18 (SHARYANTO)
+
+         - Add a2 argument to test_completion() to test element_completion.
+
+
 0.21     2014-06-18 (SHARYANTO)
 
          - Add a1 argument to test_completion() to test complete_arg_elem.

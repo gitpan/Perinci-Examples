@@ -9,7 +9,7 @@ use Data::Clone;
 use List::Util qw(min max);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.21'; # VERSION
+our $VERSION = '0.22'; # VERSION
 our $DATE = '2014-06-18'; # DATE
 
 our @ISA = qw(Exporter);
@@ -325,6 +325,14 @@ _
                  ],
             }]],
         },
+        a2 => {
+            schema => ['array' => of => 'str'],
+            element_completion => sub {
+                my %args = @_;
+                my $word = $args{word} // "";
+                [ map {$word . $_} "a".."z" ],
+            },
+        },
     },
     features => {pure => 1},
 };
@@ -556,7 +564,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.21 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-06-18.
+This document describes version 0.22 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-06-18.
 
 =head1 SYNOPSIS
 
@@ -1030,6 +1038,8 @@ Arguments ('*' denotes required arguments):
 =item * B<a1> => I<array>
 
 For testing complete_arg_elem.
+
+=item * B<a2> => I<array>
 
 =item * B<f1> => I<float>
 

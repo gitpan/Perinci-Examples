@@ -3,7 +3,7 @@ NAME
     example functions
 
 VERSION
-    This document describes version 0.21 of Perinci::Examples (from Perl
+    This document describes version 0.22 of Perinci::Examples (from Perl
     distribution Perinci-Examples), released on 2014-06-18.
 
 SYNOPSIS
@@ -385,6 +385,8 @@ FUNCTIONS
     *   a1 => *array*
 
         For testing complete_arg_elem.
+
+    *   a2 => *array*
 
     *   f1 => *float*
 
