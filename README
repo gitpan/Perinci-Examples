@@ -3,8 +3,8 @@ NAME
     example functions
 
 VERSION
-    This document describes version 0.22 of Perinci::Examples (from Perl
-    distribution Perinci-Examples), released on 2014-06-18.
+    This document describes version 0.23 of Perinci::Examples (from Perl
+    distribution Perinci-Examples), released on 2014-06-26.
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -374,7 +374,7 @@ FUNCTIONS
     information.
 
   test_completion(%args) -> [status, msg, result, meta]
-    Do nothing, return nothing.
+    Do nothing, return args.
 
     This function is used to test argument completion.
 
@@ -384,21 +384,59 @@ FUNCTIONS
 
     *   a1 => *array*
 
-        For testing complete_arg_elem.
+        Array of strings, where the string has "in" schema clause.
 
     *   a2 => *array*
 
+        Array with element_completion routine that generate random letter.
+
+    *   a3 => *array*
+
+        Array with element_completion routine that dies.
+
+    *   arg0 => *any*
+
+        Argument without any schema.
+
+    *   f0 => *float*
+
+        Float with just "float" schema defined.
+
     *   f1 => *float*
+
+        Float with xmin/xmax on the schema.
+
+    *   i0 => *int*
+
+        Integer with just "int" schema defined.
 
     *   i1 => *int*
 
+        Integer with min/xmax on the schema.
+
     *   i2 => *int*
+
+        Integer with large range min/max on the schema.
 
     *   s1 => *str*
 
+        String with possible values in "in" schema clause.
+
+    *   s1b => *str*
+
+        String with possible values in "in" schema clause, contains special
+        characters.
+
+        This argument is intended to test how special characters are
+        escaped.
+
     *   s2 => *str*
 
+        String with completion routine that generate random letter.
+
     *   s3 => *str*
+
+        String with completion routine that dies.
 
     Return value:
 
