@@ -3,8 +3,8 @@ NAME
     example functions
 
 VERSION
-    This document describes version 0.23 of Perinci::Examples (from Perl
-    distribution Perinci-Examples), released on 2014-06-26.
+    This document describes version 0.24 of Perinci::Examples (from Perl
+    distribution Perinci-Examples), released on 2014-07-03.
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -361,6 +361,53 @@ FUNCTIONS
     *   round => *bool* (default: 0)
 
         Whether to round result to integer.
+
+    Return value:
+
+    Returns an enveloped result (an array).
+
+    First element (status) is an integer containing HTTP status code (200
+    means OK, 4xx caller error, 5xx function error). Second element (msg) is
+    a string containing error message, or 'OK' if status is 200. Third
+    element (result) is optional, the actual result. Fourth element (meta)
+    is called result metadata and is optional, a hash that contains extra
+    information.
+
+  test_common_opts(%args) -> [status, msg, result, meta]
+    This function has arguments with the same name as Perinci::CmdLine
+    common options.
+
+    Arguments ('*' denotes required arguments):
+
+    *   action => *str*
+
+    *   cmd => *str*
+
+    *   debug => *bool*
+
+    *   format => *str*
+
+    *   format_options => *str*
+
+    *   help => *bool*
+
+    *   json => *bool*
+
+    *   log_level => *str*
+
+    *   perl => *bool*
+
+    *   quiet => *bool*
+
+    *   subcommands => *str*
+
+    *   trace => *bool*
+
+    *   verbose => *bool*
+
+    *   version => *str*
+
+    *   yaml => *bool*
 
     Return value:
 

@@ -5,12 +5,10 @@ use strict;
 use warnings;
 use experimental 'smartmatch';
 
-#use SHARYANTO::Complete::Util qw(complete_array);
-
 our %SPEC;
 
-our $VERSION = '0.23'; # VERSION
-our $DATE = '2014-06-26'; # DATE
+our $VERSION = '0.24'; # VERSION
+our $DATE = '2014-07-03'; # DATE
 
 $SPEC{fruits} = {
     v => 1.1,
@@ -58,7 +56,7 @@ Perinci::Examples::Completion - More completion examples
 
 =head1 VERSION
 
-This document describes version 0.23 of Perinci::Examples::Completion (from Perl distribution Perinci-Examples), released on 2014-06-26.
+This document describes version 0.24 of Perinci::Examples::Completion (from Perl distribution Perinci-Examples), released on 2014-07-03.
 
 =head1 FUNCTIONS
 

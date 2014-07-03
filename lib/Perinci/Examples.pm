@@ -5,12 +5,12 @@ use strict;
 use warnings;
 use Log::Any '$log';
 
-use Data::Clone;
 use List::Util qw(min max);
+use Perinci::Sub::Util qw(gen_modified_sub);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.23'; # VERSION
-our $DATE = '2014-06-26'; # DATE
+our $VERSION = '0.24'; # VERSION
+our $DATE = '2014-07-03'; # DATE
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -168,17 +168,21 @@ sub randlog {
     [200, "OK", "$n log message(s) produced"];
 }
 
-$SPEC{call_randlog} = clone($SPEC{randlog});
-$SPEC{call_randlog}{summary} = 'Call randlog()';
-$SPEC{call_randlog}{description} = <<'_';
+gen_modified_sub(
+    output_name  => 'call_randlog',
+    base_name    => 'randlog',
+    summary      => 'Call randlog()',
+    description  => <<'_',
 
 This is to test nested call (e.g. Log::Any::For::Package).
 
 _
-sub call_randlog {
-    # NO_VALIDATE_ARGS
-    randlog(@_);
-}
+    output_code => sub {
+        # SUB: call_randlog
+        # NO_VALIDATE_ARGS
+        randlog(@_);
+    },
+);
 
 $SPEC{gen_array} = {
     v => 1.1,
@@ -213,17 +217,21 @@ sub gen_array {
     [200, "OK", $array];
 }
 
-$SPEC{call_gen_array} = clone($SPEC{gen_array});
-$SPEC{call_gen_array}{summary} = 'Call gen_array()';
-$SPEC{call_gen_array}{description} = <<'_';
+gen_modified_sub(
+    output_name  => 'call_gen_array',
+    base_name    => 'gen_array',
+    summary      => 'Call gen_array()',
+    description  => <<'_',
 
 This is to test nested call (e.g. Log::Any::For::Package).
 
 _
-sub call_gen_array {
-    # NO_VALIDATE_ARGS
-    gen_array(@_);
-}
+    output_code  => sub {
+        # SUB: call_gen_array
+        # NO_VALIDATE_ARGS
+        gen_array(@_);
+    },
+);
 
 $SPEC{gen_hash} = {
     v => 1.1,
@@ -525,7 +533,7 @@ $SPEC{test_validate_args} = {
     "_perinci.sub.wrapper.validate_args" => 0,
 };
 sub test_validate_args {
-    my %args = @_; require Scalar::Util;my $_sahv_dpath = []; my $arg_err; if (exists($args{'a'})) { (!defined($args{'a'}) ? 1 :  ((Scalar::Util::looks_like_number($args{'a'}) =~ /^(?:1|2|9|10|4352)$/) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type integer"),0))); if ($arg_err) { return [400, "Invalid argument value for a: $arg_err"] } }if (exists($args{'b'})) { (!defined($args{'b'}) ? 1 :  ((!ref($args{'b'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type text"),0)) && ((length($args{'b'}) >= 2) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Length must be at least 2"),0))); if ($arg_err) { return [400, "Invalid argument value for b: $arg_err"] } }if (exists($args{'h1'})) { (!defined($args{'h1'}) ? 1 :  ((ref($args{'h1'}) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type hash"),0))); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } }# VALIDATE_ARGS
+    my %args = @_; require Scalar::Util::Numeric;my $_sahv_dpath = []; my $arg_err; if (exists($args{'a'})) { (!defined($args{'a'}) ? 1 :  ((Scalar::Util::Numeric::isint($args{'a'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type integer"),0))); if ($arg_err) { return [400, "Invalid argument value for a: $arg_err"] } }if (exists($args{'b'})) { (!defined($args{'b'}) ? 1 :  ((!ref($args{'b'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type text"),0)) && ((length($args{'b'}) >= 2) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Length must be at least 2"),0))); if ($arg_err) { return [400, "Invalid argument value for b: $arg_err"] } }if (exists($args{'h1'})) { (!defined($args{'h1'}) ? 1 :  ((ref($args{'h1'}) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type hash"),0))); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } }# VALIDATE_ARGS
     [200];
 }
 
@@ -609,6 +617,33 @@ sub return_args {
     [200, "OK", \%args];
 }
 
+$SPEC{test_common_opts} = {
+    v => 1.1,
+    summary => 'This function has arguments with the same name as Perinci::CmdLine common options',
+    args => {
+        help    => { schema => 'bool' },
+        format  => { schema => 'str'  },
+        format_options => { schema => 'str'  },
+        action  => { schema => 'str'  },
+        version => { schema => 'str'  },
+        json    => { schema => 'bool' },
+        yaml    => { schema => 'bool' },
+        perl    => { schema => 'bool' },
+        subcommands => { schema => 'str'  },
+        cmd     => { schema => 'str'  },
+
+        quiet   => { schema => 'bool' },
+        verbose => { schema => 'bool' },
+        debug   => { schema => 'bool' },
+        trace   => { schema => 'bool' },
+        log_level => { schema => 'str' },
+    },
+};
+sub test_common_opts {
+    my %args = @_;
+    [200, "OK", \%args];
+}
+
 1;
 # ABSTRACT: Example modules containing metadata and various example functions
 
@@ -624,7 +659,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.23 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-06-26.
+This document describes version 0.24 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-07-03.
 
 =head1 SYNOPSIS
 
@@ -1067,6 +1102,58 @@ Array.
 =item * B<round> => I<bool> (default: 0)
 
 Whether to round result to integer.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+
+=head2 test_common_opts(%args) -> [status, msg, result, meta]
+
+This function has arguments with the same name as Perinci::CmdLine common options.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<action> => I<str>
+
+=item * B<cmd> => I<str>
+
+=item * B<debug> => I<bool>
+
+=item * B<format> => I<str>
+
+=item * B<format_options> => I<str>
+
+=item * B<help> => I<bool>
+
+=item * B<json> => I<bool>
+
+=item * B<log_level> => I<str>
+
+=item * B<perl> => I<bool>
+
+=item * B<quiet> => I<bool>
+
+=item * B<subcommands> => I<str>
+
+=item * B<trace> => I<bool>
+
+=item * B<verbose> => I<bool>
+
+=item * B<version> => I<str>
+
+=item * B<yaml> => I<bool>
 
 =back
 
