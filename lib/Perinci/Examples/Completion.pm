@@ -7,8 +7,8 @@ use experimental 'smartmatch';
 
 our %SPEC;
 
-our $VERSION = '0.24'; # VERSION
-our $DATE = '2014-07-03'; # DATE
+our $VERSION = '0.25'; # VERSION
+our $DATE = '2014-07-23'; # DATE
 
 $SPEC{fruits} = {
     v => 1.1,
@@ -56,7 +56,7 @@ Perinci::Examples::Completion - More completion examples
 
 =head1 VERSION
 
-This document describes version 0.24 of Perinci::Examples::Completion (from Perl distribution Perinci-Examples), released on 2014-07-03.
+This document describes version 0.25 of Perinci::Examples::Completion (from Perl distribution Perinci-Examples), released on 2014-07-23.
 
 =head1 FUNCTIONS
 
@@ -83,6 +83,8 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (any)
 
 =for Pod::Coverage .*
 

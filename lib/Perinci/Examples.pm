@@ -9,8 +9,8 @@ use List::Util qw(min max);
 use Perinci::Sub::Util qw(gen_modified_sub);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.24'; # VERSION
-our $DATE = '2014-07-03'; # DATE
+our $VERSION = '0.25'; # VERSION
+our $DATE = '2014-07-23'; # DATE
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -245,6 +245,7 @@ _
         pairs => {
             summary => 'Number of pairs',
             schema => ['int*' => {min => 0, max => 1000}],
+            default => 10,
             pos => 0,
         },
     },
@@ -644,6 +645,61 @@ sub test_common_opts {
     [200, "OK", \%args];
 }
 
+# first written to test Perinci::CmdLine::Lite text formatting rules
+$SPEC{gen_sample_data} = {
+    v => 1.1,
+    summary => "Generate sample data of various form",
+    args => {
+        form => {
+            schema => ['str*' => in => [qw/undef scalar aos aoaos aohos
+                                           hos hohos/]],
+            req => 1,
+            pos => 0,
+        },
+    },
+    result => {
+    },
+};
+sub gen_sample_data {
+    my %args = @_;
+    my $form = $args{form};
+
+    my $data;
+    if ($form eq 'undef') {
+        $data = undef;
+    } elsif ($form eq 'scalar') {
+        $data = 'Sample data';
+    } elsif ($form eq 'aos') {
+        $data = [qw/one two three four five/];
+    } elsif ($form eq 'aoaos') {
+        $data = [[qw/This is the first row/],
+                 [qw/This is the second row/],
+                 [qw/The third row this is/]];
+    } elsif ($form eq 'aohos') {
+        $data = [
+            {field1=>11, field2=>12},
+            {field1=>21, field3=>23},
+            {field1=>31, field2=>32, field3=>33},
+            {field2=>42},
+        ];
+    } elsif ($form eq 'hos') {
+        $data = {
+            key => 1,
+            key2 => 2,
+            key3 => 3,
+            key4 => 4,
+            key5 => 5,
+        };
+    } elsif ($form eq 'hohos') {
+        $data = {
+            {hashid=>1, key=>1},
+            {hashid=>2, key2=>2},
+        };
+    }
+    [200, "OK", $data];
+}
+
+
 1;
 # ABSTRACT: Example modules containing metadata and various example functions
 
@@ -659,7 +715,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.24 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-07-03.
+This document describes version 0.25 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-07-23.
 
 =head1 SYNOPSIS
 
@@ -680,8 +736,8 @@ usually used in the tests of other modules.
 
 A sample description
 
-    verbatim
-    line2
+ verbatim
+ line2
 
 Another paragraph with I<bold>, I<italic> text.
 
@@ -727,6 +783,8 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
+ (any)
+
 
 =head2 call_gen_array(%args) -> [status, msg, result, meta]
 
@@ -754,6 +812,8 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (array)
 
 
 =head2 call_randlog(%args) -> [status, msg, result, meta]
@@ -791,6 +851,8 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
+ (any)
+
 
 =head2 delay(%args) -> [status, msg, result, meta]
 
@@ -823,6 +885,8 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
+ (any)
+
 
 =head2 dies() -> [status, msg, result, meta]
 
@@ -842,6 +906,8 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (any)
 
 
 =head2 err(%args) -> [status, msg, result, meta]
@@ -868,6 +934,8 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (any)
 
 
 =head2 gen_array(%args) -> [status, msg, result, meta]
@@ -897,6 +965,8 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
+ (array)
+
 
 =head2 gen_hash(%args) -> [status, msg, result, meta]
 
@@ -908,7 +978,7 @@ Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<pairs> => I<int>
+=item * B<pairs> => I<int> (default: 10)
 
 Number of pairs.
 
@@ -924,6 +994,34 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (array)
+
+
+=head2 gen_sample_data(%args) -> [status, msg, result, meta]
+
+Generate sample data of various form.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<form>* => I<str>
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+ (any)
 
 
 =head2 merge_hash(%args) -> [status, msg, result, meta]
@@ -957,6 +1055,8 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
+ (hash)
+
 
 =head2 noop(%args) -> [status, msg, result, meta]
 
@@ -987,6 +1087,8 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (any)
 
 
 =head2 randlog(%args) -> [status, msg, result, meta]
@@ -1022,6 +1124,8 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
+ (any)
+
 
 =head2 return_args(%args) -> [status, msg, result, meta]
 
@@ -1051,6 +1155,8 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (any)
 
 
 =head2 sum(%args) -> [status, msg, result, meta]
@@ -1116,6 +1222,8 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
+ (any)
+
 
 =head2 test_common_opts(%args) -> [status, msg, result, meta]
 
@@ -1167,6 +1275,8 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (any)
 
 
 =head2 test_completion(%args) -> [status, msg, result, meta]
@@ -1249,6 +1359,8 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
+ (any)
+
 
 =head2 test_validate_args(%args) -> [status, msg, result, meta]
 
@@ -1276,6 +1388,8 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (str)
 
 
 =head2 undescribed_args(%args) -> [status, msg, result, meta]
@@ -1309,6 +1423,8 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (any)
 
 =head1 SEE ALSO
 

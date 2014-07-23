@@ -1,5 +1,10 @@
 Revision history for Perinci-Examples
 
+0.25     2014-07-23 (SHARYANTO)
+
+         - Add function: gen_sample_data().
+
+
 0.24     2014-07-03 (SHARYANTO)
 
          - Add function: test_common_opts().

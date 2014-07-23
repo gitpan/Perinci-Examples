@@ -57,7 +57,7 @@
          "web" : "https://github.com/sharyanto/perl-Perinci-Examples"
       }
    },
-   "version" : "0.24",
+   "version" : "0.25",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018001"
