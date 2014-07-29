@@ -9,8 +9,8 @@ use warnings;
 
 our $Var1 = 1;
 
-our $VERSION = '0.25'; # VERSION
-our $DATE = '2014-07-23'; # DATE
+our $VERSION = '0.26'; # VERSION
+our $DATE = '2014-07-29'; # DATE
 
 sub pyth($$) {
     my ($a, $b) = @_;
@@ -40,7 +40,7 @@ Perinci::Examples::NoMeta - Example of module without any metadata
 
 =head1 VERSION
 
-This document describes version 0.25 of Perinci::Examples::NoMeta (from Perl distribution Perinci-Examples), released on 2014-07-23.
+This document describes version 0.26 of Perinci::Examples::NoMeta (from Perl distribution Perinci-Examples), released on 2014-07-29.
 
 =for Pod::Coverage .*
 

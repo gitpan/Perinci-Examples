@@ -1,5 +1,11 @@
 Revision history for Perinci-Examples
 
+0.26     2014-07-29 (SHARYANTO)
+
+         - test_completion(): Add pos/greedy properties to help test
+           Perinci::Sub::Complete.
+
+
 0.25     2014-07-23 (SHARYANTO)
 
          - Add function: gen_sample_data().

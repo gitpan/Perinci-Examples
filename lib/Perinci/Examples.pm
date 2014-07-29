@@ -9,8 +9,8 @@ use List::Util qw(min max);
 use Perinci::Sub::Util qw(gen_modified_sub);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.25'; # VERSION
-our $DATE = '2014-07-23'; # DATE
+our $VERSION = '0.26'; # VERSION
+our $DATE = '2014-07-29'; # DATE
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -308,6 +308,7 @@ _
         i1 => {
             summary => 'Integer with min/xmax on the schema',
             schema  => ['int*' => {min=>1, xmax=>100}],
+            pos => 0,
         },
         i2 => {
             summary => 'Integer with large range min/max on the schema',
@@ -373,6 +374,8 @@ _
                 my $word = $args{word} // "";
                 [ map {$word . $_} "a".."z" ],
             },
+            pos => 1,
+            greedy => 1,
         },
         s3 => {
             summary => 'String with completion routine that dies',
@@ -715,7 +718,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.25 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-07-23.
+This document describes version 0.26 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-07-29.
 
 =head1 SYNOPSIS
 
