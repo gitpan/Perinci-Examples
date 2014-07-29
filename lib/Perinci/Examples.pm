@@ -9,7 +9,7 @@ use List::Util qw(min max);
 use Perinci::Sub::Util qw(gen_modified_sub);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.26'; # VERSION
+our $VERSION = '0.27'; # VERSION
 our $DATE = '2014-07-29'; # DATE
 
 our @ISA = qw(Exporter);
@@ -374,8 +374,6 @@ _
                 my $word = $args{word} // "";
                 [ map {$word . $_} "a".."z" ],
             },
-            pos => 1,
-            greedy => 1,
         },
         s3 => {
             summary => 'String with completion routine that dies',
@@ -389,6 +387,8 @@ _
                      "red date", "red grape", "green grape",
                  ],
             }]],
+            pos => 1,
+            greedy => 1,
         },
         a2 => {
             summary => 'Array with element_completion routine that generate random letter',
@@ -718,7 +718,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.26 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-07-29.
+This document describes version 0.27 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-07-29.
 
 =head1 SYNOPSIS
 

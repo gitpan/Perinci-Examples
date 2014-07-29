@@ -1,5 +1,11 @@
 Revision history for Perinci-Examples
 
+0.27     2014-07-29 (SHARYANTO)
+
+         - test_completion(): Fix putting 'greedy' metadata property on
+           non-array arg.
+
+
 0.26     2014-07-29 (SHARYANTO)
 
          - test_completion(): Add pos/greedy properties to help test
