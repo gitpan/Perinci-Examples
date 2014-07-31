@@ -9,8 +9,8 @@ use List::Util qw(min max);
 use Perinci::Sub::Util qw(gen_modified_sub);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.27'; # VERSION
-our $DATE = '2014-07-29'; # DATE
+our $VERSION = '0.28'; # VERSION
+our $DATE = '2014-07-31'; # DATE
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -702,6 +702,57 @@ sub gen_sample_data {
     [200, "OK", $data];
 }
 
+$SPEC{test_args_as_array} = {
+    v => 1.1,
+    args_as => 'array',
+    args => {
+        a0 => { pos=>0, schema=>'str*' },
+        a1 => { pos=>1, schema=>'str*' },
+        a2 => { pos=>2, schema=>'str*' },
+    },
+};
+sub test_args_as_array {
+    [200, "OK", \@_];
+}
+
+$SPEC{test_args_as_arrayref} = {
+    v => 1.1,
+    args_as => 'arrayref',
+    args => {
+        a0 => { pos=>0, schema=>'str*' },
+        a1 => { pos=>1, schema=>'str*' },
+        a2 => { pos=>2, schema=>'str*' },
+    },
+};
+sub test_args_as_arrayref {
+    [200, "OK", $_[0]];
+}
+
+$SPEC{test_args_as_hashref} = {
+    v => 1.1,
+    args_as => 'hashref',
+    args => {
+        a0 => { schema=>'str*' },
+        a1 => { schema=>'str*' },
+    },
+};
+sub test_args_as_hashref {
+    my $args = shift;
+    [200, "OK", $args];
+}
+
+$SPEC{test_result_naked} = {
+    v => 1.1,
+    args => {
+        a0 => { schema=>'str*' },
+        a1 => { schema=>'str*' },
+    },
+    result_naked => 1,
+};
+sub test_result_naked {
+    my %args = @_;
+    \%args;
+}
 
 1;
 # ABSTRACT: Example modules containing metadata and various example functions
@@ -718,7 +769,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.27 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-07-29.
+This document describes version 0.28 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-07-31.
 
 =head1 SYNOPSIS
 
@@ -1228,6 +1279,88 @@ that contains extra information.
  (any)
 
 
+=head2 test_args_as_array($a0, $a1, $a2) -> [status, msg, result, meta]
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<a0> => I<str>
+
+=item * B<a1> => I<str>
+
+=item * B<a2> => I<str>
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+ (any)
+
+
+=head2 test_args_as_arrayref([$a0, $a1, $a2]) -> [status, msg, result, meta]
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<a0> => I<str>
+
+=item * B<a1> => I<str>
+
+=item * B<a2> => I<str>
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+ (any)
+
+
+=head2 test_args_as_hashref(\%args) -> [status, msg, result, meta]
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<a0> => I<str>
+
+=item * B<a1> => I<str>
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+ (any)
+
+
 =head2 test_common_opts(%args) -> [status, msg, result, meta]
 
 This function has arguments with the same name as Perinci::CmdLine common options.
@@ -1361,6 +1494,23 @@ First element (status) is an integer containing HTTP status code
 200. Third element (result) is optional, the actual result. Fourth
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
+
+ (any)
+
+
+=head2 test_result_naked(%args) -> any
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<a0> => I<str>
+
+=item * B<a1> => I<str>
+
+=back
+
+Return value:
 
  (any)
 

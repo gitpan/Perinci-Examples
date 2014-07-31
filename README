@@ -3,8 +3,8 @@ NAME
     example functions
 
 VERSION
-    This document describes version 0.27 of Perinci::Examples (from Perl
-    distribution Perinci-Examples), released on 2014-07-29.
+    This document describes version 0.28 of Perinci::Examples (from Perl
+    distribution Perinci-Examples), released on 2014-07-31.
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -419,6 +419,70 @@ FUNCTIONS
 
      (any)
 
+  test_args_as_array($a0, $a1, $a2) -> [status, msg, result, meta]
+    Arguments ('*' denotes required arguments):
+
+    *   a0 => *str*
+
+    *   a1 => *str*
+
+    *   a2 => *str*
+
+    Return value:
+
+    Returns an enveloped result (an array).
+
+    First element (status) is an integer containing HTTP status code (200
+    means OK, 4xx caller error, 5xx function error). Second element (msg) is
+    a string containing error message, or 'OK' if status is 200. Third
+    element (result) is optional, the actual result. Fourth element (meta)
+    is called result metadata and is optional, a hash that contains extra
+    information.
+
+     (any)
+
+  test_args_as_arrayref([$a0, $a1, $a2]) -> [status, msg, result, meta]
+    Arguments ('*' denotes required arguments):
+
+    *   a0 => *str*
+
+    *   a1 => *str*
+
+    *   a2 => *str*
+
+    Return value:
+
+    Returns an enveloped result (an array).
+
+    First element (status) is an integer containing HTTP status code (200
+    means OK, 4xx caller error, 5xx function error). Second element (msg) is
+    a string containing error message, or 'OK' if status is 200. Third
+    element (result) is optional, the actual result. Fourth element (meta)
+    is called result metadata and is optional, a hash that contains extra
+    information.
+
+     (any)
+
+  test_args_as_hashref(\%args) -> [status, msg, result, meta]
+    Arguments ('*' denotes required arguments):
+
+    *   a0 => *str*
+
+    *   a1 => *str*
+
+    Return value:
+
+    Returns an enveloped result (an array).
+
+    First element (status) is an integer containing HTTP status code (200
+    means OK, 4xx caller error, 5xx function error). Second element (msg) is
+    a string containing error message, or 'OK' if status is 200. Third
+    element (result) is optional, the actual result. Fourth element (meta)
+    is called result metadata and is optional, a hash that contains extra
+    information.
+
+     (any)
+
   test_common_opts(%args) -> [status, msg, result, meta]
     This function has arguments with the same name as Perinci::CmdLine
     common options.
@@ -543,6 +607,17 @@ FUNCTIONS
     element (result) is optional, the actual result. Fourth element (meta)
     is called result metadata and is optional, a hash that contains extra
     information.
+
+     (any)
+
+  test_result_naked(%args) -> any
+    Arguments ('*' denotes required arguments):
+
+    *   a0 => *str*
+
+    *   a1 => *str*
+
+    Return value:
 
      (any)
 
