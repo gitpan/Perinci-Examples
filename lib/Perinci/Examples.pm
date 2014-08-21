@@ -9,8 +9,8 @@ use List::Util qw(min max);
 use Perinci::Sub::Util qw(gen_modified_sub);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.28'; # VERSION
-our $DATE = '2014-07-31'; # DATE
+our $VERSION = '0.29'; # VERSION
+our $DATE = '2014-08-21'; # DATE
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -754,6 +754,24 @@ sub test_result_naked {
     \%args;
 }
 
+$SPEC{test_dry_run} = {
+    v => 1.1,
+    summary => "Will return 'wet' if not run under dry run mode, or 'dry' if dry run",
+    args => {
+    },
+    features => {
+        dry_run => 1,
+    },
+};
+sub test_dry_run {
+    my %args = @_;
+    if ($args{-dry_run}) {
+        return [200, "OK", "dry"];
+    } else {
+        return [200, "OK", "wet"];
+    }
+}
+
 1;
 # ABSTRACT: Example modules containing metadata and various example functions
 
@@ -769,7 +787,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.28 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-07-31.
+This document describes version 0.29 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-08-21.
 
 =head1 SYNOPSIS
 
@@ -1481,6 +1499,39 @@ String with completion routine that generate random letter.
 =item * B<s3> => I<str>
 
 String with completion routine that dies.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+ (any)
+
+
+=head2 test_dry_run() -> [status, msg, result, meta]
+
+Will return 'wet' if not run under dry run mode, or 'dry' if dry run.
+
+This function supports dry-run operation.
+
+
+No arguments.
+
+Special arguments:
+
+=over 4
+
+=item * B<-dry_run> => I<bool>
+
+Pass -dry_run=>1 to enable simulation mode.
 
 =back
 
