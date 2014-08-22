@@ -1,5 +1,11 @@
 Revision history for Perinci-Examples
 
+0.30     2014-08-22 (SHARYANTO)
+
+         - Add modules: Perinci::Examples::{CmdLineSrc,Tx}. These are moved from
+           test script for Perinci::CmdLine.
+
+
 0.29     2014-08-21 (SHARYANTO)
 
          - Add function: test_dry_run.
