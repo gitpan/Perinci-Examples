@@ -1,5 +1,12 @@
 Revision history for Perinci-Examples
 
+0.31     2014-08-23 (SHARYANTO)
+
+         - Add module: Perinci::Examples::{CmdLineResMeta}. This contains
+           functions that set cmdline.* result metadata to be tested when
+           testing Perinci::CmdLine & Perinci::CmdLine::Lite.
+
+
 0.30     2014-08-22 (SHARYANTO)
 
          - Add modules: Perinci::Examples::{CmdLineSrc,Tx}. These are moved from

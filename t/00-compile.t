@@ -2,14 +2,15 @@ use 5.006;
 use strict;
 use warnings;
 
-# this test was generated with Dist::Zilla::Plugin::Test::Compile 2.040
+# this test was generated with Dist::Zilla::Plugin::Test::Compile 2.043
 
-use Test::More  tests => 5 + ($ENV{AUTHOR_TESTING} ? 1 : 0);
+use Test::More  tests => 6 + ($ENV{AUTHOR_TESTING} ? 1 : 0);
 
 
 
 my @module_files = (
     'Perinci/Examples.pm',
+    'Perinci/Examples/CmdLineResMeta.pm',
     'Perinci/Examples/CmdLineSrc.pm',
     'Perinci/Examples/Completion.pm',
     'Perinci/Examples/NoMeta.pm',

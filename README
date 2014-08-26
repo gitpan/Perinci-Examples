@@ -3,8 +3,8 @@ NAME
     example functions
 
 VERSION
-    This document describes version 0.30 of Perinci::Examples (from Perl
-    distribution Perinci-Examples), released on 2014-08-22.
+    This document describes version 0.31 of Perinci::Examples (from Perl
+    distribution Perinci-Examples), released on 2014-08-23.
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -348,7 +348,7 @@ FUNCTIONS
 
     Can be useful to check what arguments the function gets. Aside from
     normal arguments, sometimes function will receive special arguments
-    (those prefixed with dash, "-").
+    (those prefixed with dash, C&lt;->).
 
     Arguments ('*' denotes required arguments):
 
@@ -419,7 +419,7 @@ FUNCTIONS
 
      (any)
 
-  test_args_as_array($a0, $a1, $a2) -> [status, msg, result, meta]
+  test_args_as_array(@args) -> [status, msg, result, meta]
     Arguments ('*' denotes required arguments):
 
     *   a0 => *str*
@@ -441,7 +441,7 @@ FUNCTIONS
 
      (any)
 
-  test_args_as_arrayref([$a0, $a1, $a2]) -> [status, msg, result, meta]
+  test_args_as_arrayref(\@args) -> [status, msg, result, meta]
     Arguments ('*' denotes required arguments):
 
     *   a0 => *str*

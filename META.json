@@ -4,7 +4,7 @@
       "Steven Haryanto <stevenharyanto@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.141170",
+   "generated_by" : "Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.141520",
    "license" : [
       "perl_5"
    ],
@@ -57,7 +57,7 @@
          "web" : "https://github.com/sharyanto/perl-Perinci-Examples"
       }
    },
-   "version" : "0.30",
+   "version" : "0.31",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018002"
@@ -327,7 +327,7 @@
                }
             },
             "name" : "@Author::SHARYANTO/Test::Compile",
-            "version" : "2.040"
+            "version" : "2.043"
          },
          {
             "class" : "Dist::Zilla::Plugin::Test::Rinci",

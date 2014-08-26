@@ -9,8 +9,8 @@ use List::Util qw(min max);
 use Perinci::Sub::Util qw(gen_modified_sub);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.30'; # VERSION
-our $DATE = '2014-08-22'; # DATE
+our $VERSION = '0.31'; # VERSION
+our $DATE = '2014-08-23'; # DATE
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -787,7 +787,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.30 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-08-22.
+This document describes version 0.31 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-08-23.
 
 =head1 SYNOPSIS
 
@@ -1205,7 +1205,7 @@ Return arguments.
 
 Can be useful to check what arguments the function gets. Aside from normal
 arguments, sometimes function will receive special arguments (those prefixed
-with dash, C<->).
+with dash, C&lt;->).
 
 Arguments ('*' denotes required arguments):
 
@@ -1297,7 +1297,7 @@ that contains extra information.
  (any)
 
 
-=head2 test_args_as_array($a0, $a1, $a2) -> [status, msg, result, meta]
+=head2 test_args_as_array(@args) -> [status, msg, result, meta]
 
 Arguments ('*' denotes required arguments):
 
@@ -1325,7 +1325,7 @@ that contains extra information.
  (any)
 
 
-=head2 test_args_as_arrayref([$a0, $a1, $a2]) -> [status, msg, result, meta]
+=head2 test_args_as_arrayref(\@args) -> [status, msg, result, meta]
 
 Arguments ('*' denotes required arguments):
 

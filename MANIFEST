@@ -8,6 +8,7 @@ Makefile.PL
 README
 dist.ini
 lib/Perinci/Examples.pm
+lib/Perinci/Examples/CmdLineResMeta.pm
 lib/Perinci/Examples/CmdLineSrc.pm
 lib/Perinci/Examples/Completion.pm
 lib/Perinci/Examples/NoMeta.pm
