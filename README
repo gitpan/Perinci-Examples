@@ -3,8 +3,8 @@ NAME
     example functions
 
 VERSION
-    This document describes version 0.31 of Perinci::Examples (from Perl
-    distribution Perinci-Examples), released on 2014-08-23.
+    This document describes version 0.32 of Perinci::Examples (from Perl
+    distribution Perinci-Examples), released on 2014-09-11.
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -348,7 +348,7 @@ FUNCTIONS
 
     Can be useful to check what arguments the function gets. Aside from
     normal arguments, sometimes function will receive special arguments
-    (those prefixed with dash, C&lt;->).
+    (those prefixed with dash, "-").
 
     Arguments ('*' denotes required arguments):
 
@@ -419,7 +419,7 @@ FUNCTIONS
 
      (any)
 
-  test_args_as_array(@args) -> [status, msg, result, meta]
+  test_args_as_array($a0, $a1, $a2) -> [status, msg, result, meta]
     Arguments ('*' denotes required arguments):
 
     *   a0 => *str*
@@ -441,7 +441,7 @@ FUNCTIONS
 
      (any)
 
-  test_args_as_arrayref(\@args) -> [status, msg, result, meta]
+  test_args_as_arrayref([$a0, $a1, $a2]) -> [status, msg, result, meta]
     Arguments ('*' denotes required arguments):
 
     *   a0 => *str*
@@ -711,7 +711,7 @@ HOMEPAGE
 
 SOURCE
     Source repository is at
-    <https://github.com/sharyanto/perl-Perinci-Examples>.
+    <https://github.com/perlancar/perl-Perinci-Examples>.
 
 BUGS
     Please report any bugs or feature requests on the bugtracker website
@@ -721,10 +721,10 @@ BUGS
     to an existing test-file that illustrates the bug or desired feature.
 
 AUTHOR
-    Steven Haryanto <stevenharyanto@gmail.com>
+    perlancar <perlancar@cpan.org>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2014 by Steven Haryanto.
+    This software is copyright (c) 2014 by perlancar@cpan.org.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.

@@ -1,7 +1,7 @@
 package Perinci::Examples::Tx;
 
-our $DATE = '2014-08-23'; # DATE
-our $VERSION = '0.31'; # VERSION
+our $DATE = '2014-09-11'; # DATE
+our $VERSION = '0.32'; # VERSION
 
 use 5.010;
 use strict;
@@ -39,7 +39,7 @@ Perinci::Examples::Tx - Examples for using transaction
 
 =head1 VERSION
 
-This document describes version 0.31 of Perinci::Examples::Tx (from Perl distribution Perinci-Examples), released on 2014-08-23.
+This document describes version 0.32 of Perinci::Examples::Tx (from Perl distribution Perinci-Examples), released on 2014-09-11.
 
 =head1 FUNCTIONS
 
@@ -98,7 +98,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Ex
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
 
 =head1 BUGS
 
@@ -110,11 +110,11 @@ feature.
 
 =head1 AUTHOR
 
-Steven Haryanto <stevenharyanto@gmail.com>
+perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by Steven Haryanto.
+This software is copyright (c) 2014 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

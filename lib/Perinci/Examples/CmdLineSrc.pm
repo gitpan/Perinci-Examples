@@ -1,7 +1,7 @@
 package Perinci::Examples::CmdLineSrc;
 
-our $DATE = '2014-08-23'; # DATE
-our $VERSION = '0.31'; # VERSION
+our $DATE = '2014-09-11'; # DATE
+our $VERSION = '0.32'; # VERSION
 
 use 5.010;
 use strict;
@@ -112,6 +112,38 @@ sub cmdline_src_multi_stdin {
     [200, "OK", "a1=$args{a1}\na2=$args{a2}"];
 }
 
+$SPEC{cmdline_src_stdin_line} = {
+    v => 1.1,
+    summary => 'This function has a single stdin_line argument',
+    args => {
+        a1 => {schema=>'str*', req=>1, cmdline_src=>'stdin_line'},
+        a2 => {schema=>'str*', req=>1},
+    },
+};
+sub cmdline_src_stdin_line {
+    my %args = @_;
+    [200, "OK", "a1=$args{a1}\na2=$args{a2}"];
+}
+
+$SPEC{cmdline_src_multi_stdin_line} = {
+    v => 1.1,
+    summary => 'This function has several stdin_line arguments',
+    description => <<'_',
+
+And one also has its is_password property set to true.
+
+_
+    args => {
+        a1 => {schema=>'str*', req=>1, cmdline_src=>'stdin_line'},
+        a2 => {schema=>'str*', req=>1, cmdline_src=>'stdin_line', is_password=>1},
+        a3 => {schema=>'str*', req=>1},
+    },
+};
+sub cmdline_src_multi_stdin_line {
+    my %args = @_;
+    [200, "OK", "a1=$args{a1}\na2=$args{a2}\na3=$args{a3}"];
+}
+
 1;
 # ABSTRACT: Examples for using cmdline_src function property
 
@@ -127,7 +159,7 @@ Perinci::Examples::CmdLineSrc - Examples for using cmdline_src function property
 
 =head1 VERSION
 
-This document describes version 0.31 of Perinci::Examples::CmdLineSrc (from Perl distribution Perinci-Examples), released on 2014-08-23.
+This document describes version 0.32 of Perinci::Examples::CmdLineSrc (from Perl distribution Perinci-Examples), released on 2014-09-11.
 
 =head1 FUNCTIONS
 
@@ -214,6 +246,38 @@ that contains extra information.
  (any)
 
 
+=head2 cmdline_src_multi_stdin_line(%args) -> [status, msg, result, meta]
+
+This function has several stdin_line arguments.
+
+And one also has its is_password property set to true.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<a1>* => I<str>
+
+=item * B<a2>* => I<str>
+
+=item * B<a3>* => I<str>
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+ (any)
+
+
 =head2 cmdline_src_stdin_array(%args) -> [status, msg, result, meta]
 
 This function has arg with cmdline_src=stdin.
@@ -223,6 +287,34 @@ Arguments ('*' denotes required arguments):
 =over 4
 
 =item * B<a1> => I<array>
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+ (any)
+
+
+=head2 cmdline_src_stdin_line(%args) -> [status, msg, result, meta]
+
+This function has a single stdin_line argument.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<a1>* => I<str>
+
+=item * B<a2>* => I<str>
 
 =back
 
@@ -349,7 +441,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Ex
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
 
 =head1 BUGS
 
@@ -361,11 +453,11 @@ feature.
 
 =head1 AUTHOR
 
-Steven Haryanto <stevenharyanto@gmail.com>
+perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by Steven Haryanto.
+This software is copyright (c) 2014 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

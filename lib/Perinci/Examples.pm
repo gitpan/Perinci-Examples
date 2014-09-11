@@ -9,8 +9,8 @@ use List::Util qw(min max);
 use Perinci::Sub::Util qw(gen_modified_sub);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.31'; # VERSION
-our $DATE = '2014-08-23'; # DATE
+our $VERSION = '0.32'; # VERSION
+our $DATE = '2014-09-11'; # DATE
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -506,7 +506,7 @@ _
         schema => 'hash*',
     },
     features => {},
-    "_perinci.sub.wrapper.validate_args" => 0,
+    "x.perinci.sub.wrapper.disable_validate_args" => 1,
 };
 sub merge_hash {
     my %args = @_;
@@ -534,7 +534,7 @@ $SPEC{test_validate_args} = {
         schema => 'str*',
     },
     features => {},
-    "_perinci.sub.wrapper.validate_args" => 0,
+    "x.perinci.sub.wrapper.disable_validate_args" => 1,
 };
 sub test_validate_args {
     my %args = @_; require Scalar::Util::Numeric;my $_sahv_dpath = []; my $arg_err; if (exists($args{'a'})) { (!defined($args{'a'}) ? 1 :  ((Scalar::Util::Numeric::isint($args{'a'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type integer"),0))); if ($arg_err) { return [400, "Invalid argument value for a: $arg_err"] } }if (exists($args{'b'})) { (!defined($args{'b'}) ? 1 :  ((!ref($args{'b'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type text"),0)) && ((length($args{'b'}) >= 2) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Length must be at least 2"),0))); if ($arg_err) { return [400, "Invalid argument value for b: $arg_err"] } }if (exists($args{'h1'})) { (!defined($args{'h1'}) ? 1 :  ((ref($args{'h1'}) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type hash"),0))); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } }# VALIDATE_ARGS
@@ -560,6 +560,7 @@ _
     },
 };
 sub undescribed_args {
+    # NO_VALIDATE_ARGS
     [200];
 }
 
@@ -593,7 +594,7 @@ _
     },
 };
 sub arg_default {
-    my %args = @_;
+    my %args = @_; # NO_VALIDATE_ARGS
     [200, "OK", join("\n", map { "$_=" . ($args{$_} // "") } (qw/a b c d/))];
 }
 
@@ -644,7 +645,7 @@ $SPEC{test_common_opts} = {
     },
 };
 sub test_common_opts {
-    my %args = @_;
+    my %args = @_; # NO_VALIDATE_ARGS
     [200, "OK", \%args];
 }
 
@@ -664,7 +665,7 @@ $SPEC{gen_sample_data} = {
     },
 };
 sub gen_sample_data {
-    my %args = @_;
+    my %args = @_; # NO_VALIDATE_ARGS
     my $form = $args{form};
 
     my $data;
@@ -712,6 +713,7 @@ $SPEC{test_args_as_array} = {
     },
 };
 sub test_args_as_array {
+    # NO_VALIDATE_ARGS
     [200, "OK", \@_];
 }
 
@@ -725,6 +727,7 @@ $SPEC{test_args_as_arrayref} = {
     },
 };
 sub test_args_as_arrayref {
+     # NO_VALIDATE_ARGS
     [200, "OK", $_[0]];
 }
 
@@ -737,7 +740,7 @@ $SPEC{test_args_as_hashref} = {
     },
 };
 sub test_args_as_hashref {
-    my $args = shift;
+    my $args = shift; # NO_VALIDATE_ARGS
     [200, "OK", $args];
 }
 
@@ -750,7 +753,7 @@ $SPEC{test_result_naked} = {
     result_naked => 1,
 };
 sub test_result_naked {
-    my %args = @_;
+    my %args = @_; # NO_VALIDATE_ARGS
     \%args;
 }
 
@@ -764,7 +767,7 @@ $SPEC{test_dry_run} = {
     },
 };
 sub test_dry_run {
-    my %args = @_;
+    my %args = @_; # NO_VALIDATE_ARGS
     if ($args{-dry_run}) {
         return [200, "OK", "dry"];
     } else {
@@ -787,7 +790,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.31 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-08-23.
+This document describes version 0.32 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-09-11.
 
 =head1 SYNOPSIS
 
@@ -1205,7 +1208,7 @@ Return arguments.
 
 Can be useful to check what arguments the function gets. Aside from normal
 arguments, sometimes function will receive special arguments (those prefixed
-with dash, C&lt;->).
+with dash, C<->).
 
 Arguments ('*' denotes required arguments):
 
@@ -1297,7 +1300,7 @@ that contains extra information.
  (any)
 
 
-=head2 test_args_as_array(@args) -> [status, msg, result, meta]
+=head2 test_args_as_array($a0, $a1, $a2) -> [status, msg, result, meta]
 
 Arguments ('*' denotes required arguments):
 
@@ -1325,7 +1328,7 @@ that contains extra information.
  (any)
 
 
-=head2 test_args_as_arrayref(\@args) -> [status, msg, result, meta]
+=head2 test_args_as_arrayref([$a0, $a1, $a2]) -> [status, msg, result, meta]
 
 Arguments ('*' denotes required arguments):
 
@@ -1642,7 +1645,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Ex
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
 
 =head1 BUGS
 
@@ -1654,11 +1657,11 @@ feature.
 
 =head1 AUTHOR
 
-Steven Haryanto <stevenharyanto@gmail.com>
+perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by Steven Haryanto.
+This software is copyright (c) 2014 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

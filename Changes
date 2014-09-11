@@ -1,5 +1,17 @@
 Revision history for Perinci-Examples
 
+0.32     2014-09-11 (PERLANCAR)
+
+         - Add example to demonstrate cmdline_src=stdin_line and is_password
+           (Rinci 1.1.53).
+
+         - Adjust to Perinci::Sub::Wrapper 0.62
+           (_perinci.sub.wrapper.validate_args is now renamed).
+
+         - Add function: is_palindrome (another demonstration of
+           cmdline.result).
+
+
 0.31     2014-08-23 (SHARYANTO)
 
          - Add module: Perinci::Examples::{CmdLineResMeta}. This contains
