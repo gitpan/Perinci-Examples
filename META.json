@@ -31,7 +31,7 @@
          "requires" : {
             "Log::Any" : "0",
             "Perinci::Sub::Util" : "0.38",
-            "Rinci" : "v1.1.56",
+            "Rinci" : "v1.1.57",
             "experimental" : "0",
             "perl" : "5.010001"
          }
@@ -57,7 +57,7 @@
          "web" : "https://github.com/sharyanto/perl-Perinci-Examples"
       }
    },
-   "version" : "0.33",
+   "version" : "0.34",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018001"

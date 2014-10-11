@@ -9,7 +9,7 @@ use List::Util qw(min max);
 use Perinci::Sub::Util qw(gen_modified_sub);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.33'; # VERSION
+our $VERSION = '0.34'; # VERSION
 our $DATE = '2014-10-11'; # DATE
 
 our @ISA = qw(Exporter);
@@ -790,7 +790,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.33 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-10-11.
+This document describes version 0.34 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-10-11.
 
 =head1 SYNOPSIS
 

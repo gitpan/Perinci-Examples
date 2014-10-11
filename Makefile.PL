@@ -23,7 +23,7 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "Log::Any" => 0,
     "Perinci::Sub::Util" => "0.38",
-    "Rinci" => "v1.1.56",
+    "Rinci" => "v1.1.57",
     "experimental" => 0
   },
   "TEST_REQUIRES" => {
@@ -32,7 +32,7 @@ my %WriteMakefileArgs = (
     "IPC::Open3" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "0.33",
+  "VERSION" => "0.34",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -45,7 +45,7 @@ my %FallbackPrereqs = (
   "IPC::Open3" => 0,
   "Log::Any" => 0,
   "Perinci::Sub::Util" => "0.38",
-  "Rinci" => "v1.1.56",
+  "Rinci" => "v1.1.57",
   "Test::More" => 0,
   "experimental" => 0
 );

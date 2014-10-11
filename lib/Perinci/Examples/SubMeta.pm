@@ -1,7 +1,7 @@
 package Perinci::Examples::SubMeta;
 
 our $DATE = '2014-10-11'; # DATE
-our $VERSION = '0.33'; # VERSION
+our $VERSION = '0.34'; # VERSION
 
 use 5.010;
 use strict;
@@ -119,10 +119,10 @@ _
                         req=>1,
                         pos=>1,
                         cmdline_aliases=>{
-                            M      => {schema=>[bool=>is=>1], code=>sub { $_[0]{gender} = 'M'}},
-                            male   => {schema=>[bool=>is=>1], code=>sub { $_[0]{gender} = 'M'}},
-                            F      => {schema=>[bool=>is=>1], code=>sub { $_[0]{gender} = 'F'}},
-                            female => {schema=>[bool=>is=>1], code=>sub { $_[0]{gender} = 'F'}},
+                            M      => {is_flag=>1, code=>sub { $_[0]{gender} = 'M'}},
+                            male   => {is_flag=>1, code=>sub { $_[0]{gender} = 'M'}},
+                            F      => {is_flag=>1, code=>sub { $_[0]{gender} = 'F'}},
+                            female => {is_flag=>1, code=>sub { $_[0]{gender} = 'F'}},
                         },
                     },
                     age => {
@@ -167,7 +167,7 @@ Perinci::Examples::SubMeta - Test argument submetadata
 
 =head1 VERSION
 
-This document describes version 0.33 of Perinci::Examples::SubMeta (from Perl distribution Perinci-Examples), released on 2014-10-11.
+This document describes version 0.34 of Perinci::Examples::SubMeta (from Perl distribution Perinci-Examples), released on 2014-10-11.
 
 =head1 DESCRIPTION
 
