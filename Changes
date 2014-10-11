@@ -1,5 +1,10 @@
 Revision history for Perinci-Examples
 
+0.33     2014-10-11 (PERLANCAR)
+
+         - Add argument submetadata examples in Perinci::Examples::SubMeta.
+
+
 0.32     2014-09-11 (PERLANCAR)
 
          - Add example to demonstrate cmdline_src=stdin_line and is_password

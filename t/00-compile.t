@@ -2,9 +2,9 @@ use 5.006;
 use strict;
 use warnings;
 
-# this test was generated with Dist::Zilla::Plugin::Test::Compile 2.040
+# this test was generated with Dist::Zilla::Plugin::Test::Compile 2.039
 
-use Test::More  tests => 6 + ($ENV{AUTHOR_TESTING} ? 1 : 0);
+use Test::More  tests => 7 + ($ENV{AUTHOR_TESTING} ? 1 : 0);
 
 
 
@@ -14,6 +14,7 @@ my @module_files = (
     'Perinci/Examples/CmdLineSrc.pm',
     'Perinci/Examples/Completion.pm',
     'Perinci/Examples/NoMeta.pm',
+    'Perinci/Examples/SubMeta.pm',
     'Perinci/Examples/Tx.pm'
 );
 
