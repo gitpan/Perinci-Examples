@@ -9,8 +9,8 @@ use List::Util qw(min max);
 use Perinci::Sub::Util qw(gen_modified_sub);
 use Scalar::Util qw(looks_like_number);
 
-our $VERSION = '0.34'; # VERSION
-our $DATE = '2014-10-11'; # DATE
+our $VERSION = '0.35'; # VERSION
+our $DATE = '2014-10-23'; # DATE
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -775,6 +775,22 @@ sub test_dry_run {
     }
 }
 
+$SPEC{test_binary} = {
+    v => 1.1,
+    summary => "Accept and send binary data",
+    args => {
+        data => {schema=>"buf*"},
+    },
+    result => {
+        schema => "buf*",
+    },
+};
+sub test_binary {
+    my %args = @_; # NO_VALIDATE_ARGS
+    my $data = $args{data} // "\0\0\0";
+    return [200, "OK", $data];
+}
+
 1;
 # ABSTRACT: Example modules containing metadata and various example functions
 
@@ -790,7 +806,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.34 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-10-11.
+This document describes version 0.35 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-10-23.
 
 =head1 SYNOPSIS
 
@@ -1382,6 +1398,32 @@ that contains extra information.
  (any)
 
 
+=head2 test_binary(%args) -> [status, msg, result, meta]
+
+Accept and send binary data.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<data> => I<buf>
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+ (buf)
+
+
 =head2 test_common_opts(%args) -> [status, msg, result, meta]
 
 This function has arguments with the same name as Perinci::CmdLine common options.
@@ -1645,7 +1687,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Ex
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
 
 =head1 BUGS
 

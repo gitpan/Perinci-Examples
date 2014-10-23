@@ -1,7 +1,7 @@
 package Perinci::Examples::CmdLineResMeta;
 
-our $DATE = '2014-10-11'; # DATE
-our $VERSION = '0.34'; # VERSION
+our $DATE = '2014-10-23'; # DATE
+our $VERSION = '0.35'; # VERSION
 
 use 5.010;
 use strict;
@@ -88,7 +88,7 @@ Perinci::Examples::CmdLineResMeta - Functions in this package contains cmdline.*
 
 =head1 VERSION
 
-This document describes version 0.34 of Perinci::Examples::CmdLineResMeta (from Perl distribution Perinci-Examples), released on 2014-10-11.
+This document describes version 0.35 of Perinci::Examples::CmdLineResMeta (from Perl distribution Perinci-Examples), released on 2014-10-23.
 
 =head1 FUNCTIONS
 
@@ -204,7 +204,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Ex
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
 
 =head1 BUGS
 

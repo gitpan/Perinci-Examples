@@ -3,8 +3,8 @@ NAME
     example functions
 
 VERSION
-    This document describes version 0.34 of Perinci::Examples (from Perl
-    distribution Perinci-Examples), released on 2014-10-11.
+    This document describes version 0.35 of Perinci::Examples (from Perl
+    distribution Perinci-Examples), released on 2014-10-23.
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -483,6 +483,26 @@ FUNCTIONS
 
      (any)
 
+  test_binary(%args) -> [status, msg, result, meta]
+    Accept and send binary data.
+
+    Arguments ('*' denotes required arguments):
+
+    *   data => *buf*
+
+    Return value:
+
+    Returns an enveloped result (an array).
+
+    First element (status) is an integer containing HTTP status code (200
+    means OK, 4xx caller error, 5xx function error). Second element (msg) is
+    a string containing error message, or 'OK' if status is 200. Third
+    element (result) is optional, the actual result. Fourth element (meta)
+    is called result metadata and is optional, a hash that contains extra
+    information.
+
+     (buf)
+
   test_common_opts(%args) -> [status, msg, result, meta]
     This function has arguments with the same name as Perinci::CmdLine
     common options.
@@ -711,7 +731,7 @@ HOMEPAGE
 
 SOURCE
     Source repository is at
-    <https://github.com/sharyanto/perl-Perinci-Examples>.
+    <https://github.com/perlancar/perl-Perinci-Examples>.
 
 BUGS
     Please report any bugs or feature requests on the bugtracker website
