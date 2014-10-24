@@ -3,8 +3,8 @@ NAME
     example functions
 
 VERSION
-    This document describes version 0.35 of Perinci::Examples (from Perl
-    distribution Perinci-Examples), released on 2014-10-23.
+    This document describes version 0.36 of Perinci::Examples (from Perl
+    distribution Perinci-Examples), released on 2014-10-24.
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -31,6 +31,22 @@ DESCRIPTION
 FUNCTIONS
   arg_default(%args) -> [status, msg, result, meta]
     Demonstrate argument default value from default and/or schema.
+
+    Default value can be specified in the "default" property of argument
+    specification, e.g.:
+
+     args =E<gt> {
+         arg1 =E<gt> { schema=E<gt>'str', default=E<gt>'blah' },
+     },
+
+    or in the "default" clause of the argument's schema, e.g.:
+
+     args =E<gt> {
+         arg1 =E<gt> { schema=E<gt>['str', default=E<gt>'blah'] },
+     },
+
+    or even both. The "default" property in argument specification takes
+    precedence.
 
     Arguments ('*' denotes required arguments):
 
@@ -239,12 +255,52 @@ FUNCTIONS
 
      (array)
 
+  gen_random_bytes(%args) -> [status, msg, result, meta]
+    Generate random bytes of specified length.
+
+    This function can also be used to test binary data and Riap 1.2.
+
+    By default it will generate 1K worth of random garbage.
+
+    Arguments ('*' denotes required arguments):
+
+    *   len => *int* (default: 1024)
+
+    Return value:
+
+    Returns an enveloped result (an array).
+
+    First element (status) is an integer containing HTTP status code (200
+    means OK, 4xx caller error, 5xx function error). Second element (msg) is
+    a string containing error message, or 'OK' if status is 200. Third
+    element (result) is optional, the actual result. Fourth element (meta)
+    is called result metadata and is optional, a hash that contains extra
+    information.
+
+     (buf)
+
   gen_sample_data(%args) -> [status, msg, result, meta]
     Generate sample data of various form.
+
+    This function is first written to test "Perinci::CmdLine::Lite"'s text
+    formatting rules.
 
     Arguments ('*' denotes required arguments):
 
     *   form* => *str*
+
+        *   aos is array of scalar, e.g. "[1,2,3]".
+
+        *   aoaos is array of aos, e.g. "[ [1,2,3], [4,5,6] ]".
+
+        *   hos is hash of scalar (values), e.g. "{a=>1, b=>2}".
+
+        *   aohos is array of array of hos, e.g. "[{a=>1,b=>2}, {a=>2}]".
+
+        *   hohos is hash of hos as values, e.g. "{row1=>{a=>1,b=>2},
+            row2=>{}}".
+
+        The "aoaos" and "aohos" forms are commonly used for table data.
 
     Return value:
 
@@ -263,6 +319,14 @@ FUNCTIONS
     Merge two hashes.
 
     This function can be used to test passing nonscalar (hash) arguments.
+
+    This function also tests the
+    "x.perinci.sub.wrapper.disable_validate_args" attribute so that
+    "Perinci::Sub::Wrapper" does not generate argument validation code in
+    the wrapper. Note that by adding "# VALIDATE_ARG" in the source code,
+    the Dist::Zilla::Plugin::Rinci::Wrap already generates and embeds
+    argument validation code in the source code, so duplication is not
+    desired, thus the attribute.
 
     Arguments ('*' denotes required arguments):
 
@@ -291,6 +355,10 @@ FUNCTIONS
     Do nothing, return original argument.
 
     Will also return argument passed to it.
+
+    This function is also marked as "pure", meaning it will not cause any
+    side effects. Pure functions are safe to call directly in a transaction
+    (without going through the transaction manager) or during dry-run mode.
 
     This function is pure (produce no side effects).
 
@@ -420,6 +488,10 @@ FUNCTIONS
      (any)
 
   test_args_as_array($a0, $a1, $a2) -> [status, msg, result, meta]
+    This function's metadata sets "args_as" property to "array". This means
+    it wants to accept argument as an array, like a regular Perl subroutine
+    accepting positional arguments in @_.
+
     Arguments ('*' denotes required arguments):
 
     *   a0 => *str*
@@ -442,6 +514,9 @@ FUNCTIONS
      (any)
 
   test_args_as_arrayref([$a0, $a1, $a2]) -> [status, msg, result, meta]
+    This function's metadata sets "args_as" property to "arrayref". This is
+    just like "array", except the whole argument list is passed in $_[0].
+
     Arguments ('*' denotes required arguments):
 
     *   a0 => *str*
@@ -464,6 +539,9 @@ FUNCTIONS
      (any)
 
   test_args_as_hashref(\%args) -> [status, msg, result, meta]
+    This function's metadata sets "args_as" property to "hashref". This is
+    just like "hash", except the whole argument hash is passed in $_[0].
+
     Arguments ('*' denotes required arguments):
 
     *   a0 => *str*
@@ -486,9 +564,41 @@ FUNCTIONS
   test_binary(%args) -> [status, msg, result, meta]
     Accept and send binary data.
 
+    This function sets its argument's schema type as "buf" which indicates
+    the argument accepts binary data. Likewise it also sets its result's
+    schema type as "buf" which says that function will return binary data.
+
+    The function just returns its argument.
+
+    Note that since the metadata also contains null ("\0") in the "default"
+    property of the argument specification, the metadata is also not
+    JSON-safe.
+
+    To pass binary data over JSON/Riap, you can use Riap version 1.2 and
+    encode the argument with ":base64" suffix, e.g.:
+
+     $res = Perinci::Access-E<gt>new-E<gt>request(
+         call =E<gt> "http://example.com/api/Perinci/Examples/test_binary",
+         {v=E<gt>1.2, args=E<gt>{"data:base64"=E<gt>"/wA="}}); # send "\xff\0"
+
+    Without "v=>1.2", encoded argument won't be decoded by the server.
+
+    To pass binary data on the command-line, you can use "--ARG-base64" if
+    the command-line library provides it.
+
+    To receive binary result over JSON/Riap, you can use Riap version 1.2
+    which will automatically encode binary data with base64 so it is safe
+    when transformed as JSON. The client library will also decode the
+    encoded result back to the original, so the whole process is transparent
+    to you:
+
+     $res = Perinci::Access-E<gt>new-E<gt>request(
+         call =E<gt> "http://example.com/api/Perinci/Examples/test_binary",
+         {v=E<gt>1.2}); # =E<gt> [200,"OK","\0\0\0",{}]
+
     Arguments ('*' denotes required arguments):
 
-    *   data => *buf*
+    *   data => *buf* (default: "\0\0\0")
 
     Return value:
 
@@ -557,13 +667,27 @@ FUNCTIONS
 
     This function is used to test argument completion.
 
-    This function is pure (produce no side effects).
-
     Arguments ('*' denotes required arguments):
 
     *   a1 => *array*
 
         Array of strings, where the string has "in" schema clause.
+
+        Completion library can perhaps complete from the "in" value and
+        remember completed items when command-line option is repeated, e.g.
+        in:
+
+         --a1 E<lt>tabE<gt>
+
+        it will complete from any "in" value, but in:
+
+         --a1 apple --a1 E<lt>tabE<gt>
+
+        it can exclude "apple" from the completion candidate.
+
+        Currently the completion library "Perinci::Sub::Complete" does not
+        do this though. Perhaps there can be an option to toggle this
+        behavior.
 
     *   a2 => *array*
 
@@ -572,6 +696,8 @@ FUNCTIONS
     *   a3 => *array*
 
         Array with element_completion routine that dies.
+
+        See also "s3".
 
     *   arg0 => *any*
 
@@ -585,6 +711,10 @@ FUNCTIONS
 
         Float with xmin/xmax on the schema.
 
+        A completion library can attempt to provide some possible and
+        incremental completion (e.g. if word is currently at one decimal
+        digit like 1.2, it can provide completion of 1.20 .. 1.29).
+
     *   i0 => *int*
 
         Integer with just "int" schema defined.
@@ -593,9 +723,17 @@ FUNCTIONS
 
         Integer with min/xmax on the schema.
 
+        A completion library (like "Perinci::Sub::Complete") can generate a
+        list of completion from the low end to the high end of the range, as
+        long as it is not too long.
+
     *   i2 => *int*
 
         Integer with large range min/max on the schema.
+
+        Unlike in "i1", a completion library probably won't generate a
+        number sequence for this argument because they are considered too
+        long (1000+ items).
 
     *   s1 => *str*
 
@@ -617,6 +755,9 @@ FUNCTIONS
 
         String with completion routine that dies.
 
+        Completion should not display error (except perhaps under
+        debugging). It should just provide no completion.
+
     Return value:
 
     Returns an enveloped result (an array).
@@ -632,6 +773,9 @@ FUNCTIONS
 
   test_dry_run() -> [status, msg, result, meta]
     Will return 'wet' if not run under dry run mode, or 'dry' if dry run.
+
+    The way you detect whether we are running under dry-run mode is to check
+    the special argument $args{-dry_run}.
 
     This function supports dry-run operation.
 
@@ -657,6 +801,12 @@ FUNCTIONS
      (any)
 
   test_result_naked(%args) -> any
+    This function's metadata sets "result_naked" to true. This means
+    function returns just the value (e.g. 42) and not with envelope (e.g.
+    "[200,"OK",42]"). However, when served over network Riap protocol, the
+    function wrapper "Perinci::Sub::Wrapper" can generate an envelope for
+    the result, so the wrapped function wil still return "[200,"OK",42]".
+
     Arguments ('*' denotes required arguments):
 
     *   a0 => *str*
@@ -694,7 +844,7 @@ FUNCTIONS
   undescribed_args(%args) -> [status, msg, result, meta]
     This function has several undescribed args.
 
-    Originally added to see how peri-func-usage or Perinci::To::Text will
+    Originally added to see how peri-func-usage or "Perinci::To::Text" will
     display the usage or documentation for this function.
 
     Arguments ('*' denotes required arguments):

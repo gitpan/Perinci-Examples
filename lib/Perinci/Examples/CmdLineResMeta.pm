@@ -1,7 +1,7 @@
 package Perinci::Examples::CmdLineResMeta;
 
-our $DATE = '2014-10-23'; # DATE
-our $VERSION = '0.35'; # VERSION
+our $DATE = '2014-10-24'; # DATE
+our $VERSION = '0.36'; # VERSION
 
 use 5.010;
 use strict;
@@ -88,7 +88,7 @@ Perinci::Examples::CmdLineResMeta - Functions in this package contains cmdline.*
 
 =head1 VERSION
 
-This document describes version 0.35 of Perinci::Examples::CmdLineResMeta (from Perl distribution Perinci-Examples), released on 2014-10-23.
+This document describes version 0.36 of Perinci::Examples::CmdLineResMeta (from Perl distribution Perinci-Examples), released on 2014-10-24.
 
 =head1 FUNCTIONS
 
