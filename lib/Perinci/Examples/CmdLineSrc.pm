@@ -1,7 +1,7 @@
 package Perinci::Examples::CmdLineSrc;
 
 our $DATE = '2014-10-24'; # DATE
-our $VERSION = '0.36'; # VERSION
+our $VERSION = '0.37'; # VERSION
 
 use 5.010;
 use strict;
@@ -144,6 +144,33 @@ sub cmdline_src_multi_stdin_line {
     [200, "OK", "a1=$args{a1}\na2=$args{a2}\na3=$args{a3}"];
 }
 
+$SPEC{test_binary} = {
+    v => 1.1,
+    summary => "Accept binary in stdin/file",
+    description => <<'_',
+
+This function is like the one in `Perinci::Examples` but argument is accepted
+via `stdin_or_files`.
+
+_
+    args => {
+        data => {
+            schema  => "buf*",
+            pos     => 0,
+            default => "\0\0\0",
+            cmdline_src => "stdin_or_files",
+        },
+    },
+    result => {
+        schema => "buf*",
+    },
+};
+sub test_binary {
+    my %args = @_; # NO_VALIDATE_ARGS
+    my $data = $args{data} // "\0\0\0";
+    return [200, "OK", $data];
+}
+
 1;
 # ABSTRACT: Examples for using cmdline_src function property
 
@@ -159,7 +186,7 @@ Perinci::Examples::CmdLineSrc - Examples for using cmdline_src function property
 
 =head1 VERSION
 
-This document describes version 0.36 of Perinci::Examples::CmdLineSrc (from Perl distribution Perinci-Examples), released on 2014-10-24.
+This document describes version 0.37 of Perinci::Examples::CmdLineSrc (from Perl distribution Perinci-Examples), released on 2014-10-24.
 
 =head1 FUNCTIONS
 
@@ -434,6 +461,35 @@ element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
  (any)
+
+
+=head2 test_binary(%args) -> [status, msg, result, meta]
+
+Accept binary in stdin/file.
+
+This function is like the one in C<Perinci::Examples> but argument is accepted
+via C<stdin_or_files>.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<data> => I<buf> (default: "\0\0\0")
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+ (buf)
 
 =head1 HOMEPAGE
 

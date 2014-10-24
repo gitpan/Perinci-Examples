@@ -1,5 +1,10 @@
 Revision history for Perinci-Examples
 
+0.37    2014-10-24 (PERLANCAR)
+
+	- Add function: test_binary (in Perinci::Examples::CmdLineSrc).
+
+
 0.36    2014-10-24 (PERLANCAR)
 
 	- Add more explanation about the functions/arguments; add function

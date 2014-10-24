@@ -1,7 +1,7 @@
 package Perinci::Examples;
 
 our $DATE = '2014-10-24'; # DATE
-our $VERSION = '0.36'; # VERSION
+our $VERSION = '0.37'; # VERSION
 
 use 5.010001;
 use strict;
@@ -1000,7 +1000,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.36 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-10-24.
+This document describes version 0.37 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-10-24.
 
 =head1 SYNOPSIS
 
