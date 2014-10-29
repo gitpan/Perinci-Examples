@@ -30,8 +30,9 @@
       "runtime" : {
          "requires" : {
             "Log::Any" : "0",
+            "Perinci::Object" : "0.18",
             "Perinci::Sub::Util" : "0.38",
-            "Rinci" : "v1.1.62",
+            "Rinci" : "v1.1.65",
             "experimental" : "0",
             "perl" : "5.010001"
          }
@@ -57,7 +58,7 @@
          "web" : "https://github.com/perlancar/perl-Perinci-Examples"
       }
    },
-   "version" : "0.37",
+   "version" : "0.38",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018002"
@@ -301,7 +302,7 @@
          {
             "class" : "Dist::Zilla::Plugin::Rinci::Validate",
             "name" : "@Author::PERLANCAR/Rinci::Validate",
-            "version" : "0.18"
+            "version" : "0.19"
          },
          {
             "class" : "Dist::Zilla::Plugin::SetScriptShebang",

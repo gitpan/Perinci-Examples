@@ -3,8 +3,8 @@ NAME
     example functions
 
 VERSION
-    This document describes version 0.37 of Perinci::Examples (from Perl
-    distribution Perinci-Examples), released on 2014-10-24.
+    This document describes version 0.38 of Perinci::Examples (from Perl
+    distribution Perinci-Examples), released on 2014-10-29.
 
 SYNOPSIS
      use Perinci::Examples qw(delay);
@@ -35,14 +35,14 @@ FUNCTIONS
     Default value can be specified in the "default" property of argument
     specification, e.g.:
 
-     args =E<gt> {
-         arg1 =E<gt> { schema=E<gt>'str', default=E<gt>'blah' },
+     args => {
+         arg1 => { schema=>'str', default=>'blah' },
      },
 
     or in the "default" clause of the argument's schema, e.g.:
 
-     args =E<gt> {
-         arg1 =E<gt> { schema=E<gt>['str', default=E<gt>'blah'] },
+     args => {
+         arg1 => { schema=>['str', default=>'blah'] },
      },
 
     or even both. The "default" property in argument specification takes
@@ -351,6 +351,31 @@ FUNCTIONS
 
      (hash)
 
+  multi_status(%args) -> [status, msg, result, meta]
+    Example for result metadata property `results`.
+
+    This function might return 200, 207, or 500, randomly. It will set
+    result metadata property "results" to contain per-item results. For more
+    details, see the corresponding specification in "results" property in
+    "Rinci::resmeta".
+
+    Arguments ('*' denotes required arguments):
+
+    *   n => *any* (default: 5)
+
+    Return value:
+
+    Returns an enveloped result (an array).
+
+    First element (status) is an integer containing HTTP status code (200
+    means OK, 4xx caller error, 5xx function error). Second element (msg) is
+    a string containing error message, or 'OK' if status is 200. Third
+    element (result) is optional, the actual result. Fourth element (meta)
+    is called result metadata and is optional, a hash that contains extra
+    information.
+
+     (any)
+
   noop(%args) -> [status, msg, result, meta]
     Do nothing, return original argument.
 
@@ -577,9 +602,9 @@ FUNCTIONS
     To pass binary data over JSON/Riap, you can use Riap version 1.2 and
     encode the argument with ":base64" suffix, e.g.:
 
-     $res = Perinci::Access-E<gt>new-E<gt>request(
-         call =E<gt> "http://example.com/api/Perinci/Examples/test_binary",
-         {v=E<gt>1.2, args=E<gt>{"data:base64"=E<gt>"/wA="}}); # send "\xff\0"
+     $res = Perinci::Access->new->request(
+         call => "http://example.com/api/Perinci/Examples/test_binary",
+         {v=>1.2, args=>{"data:base64"=>"/wA="}}); # send "\xff\0"
 
     Without "v=>1.2", encoded argument won't be decoded by the server.
 
@@ -592,9 +617,9 @@ FUNCTIONS
     encoded result back to the original, so the whole process is transparent
     to you:
 
-     $res = Perinci::Access-E<gt>new-E<gt>request(
-         call =E<gt> "http://example.com/api/Perinci/Examples/test_binary",
-         {v=E<gt>1.2}); # =E<gt> [200,"OK","\0\0\0",{}]
+     $res = Perinci::Access->new->request(
+         call => "http://example.com/api/Perinci/Examples/test_binary",
+         {v=>1.2}); # => [200,"OK","\0\0\0",{}]
 
     Arguments ('*' denotes required arguments):
 
@@ -677,11 +702,11 @@ FUNCTIONS
         remember completed items when command-line option is repeated, e.g.
         in:
 
-         --a1 E<lt>tabE<gt>
+         --a1 <tab>
 
         it will complete from any "in" value, but in:
 
-         --a1 apple --a1 E<lt>tabE<gt>
+         --a1 apple --a1 <tab>
 
         it can exclude "apple" from the completion candidate.
 

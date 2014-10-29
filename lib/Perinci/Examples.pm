@@ -1,7 +1,7 @@
 package Perinci::Examples;
 
-our $DATE = '2014-10-24'; # DATE
-our $VERSION = '0.37'; # VERSION
+our $DATE = '2014-10-29'; # DATE
+our $VERSION = '0.38'; # VERSION
 
 use 5.010001;
 use strict;
@@ -9,6 +9,7 @@ use warnings;
 use Log::Any '$log';
 
 use List::Util qw(min max);
+use Perinci::Object;
 use Perinci::Sub::Util qw(gen_modified_sub);
 use Scalar::Util qw(looks_like_number);
 
@@ -122,6 +123,7 @@ _
         code => {
             summary => 'Error code to return',
             schema => ['int' => {default => 500}],
+            pos => 0,
         },
     },
 };
@@ -985,6 +987,32 @@ sub gen_random_bytes {
     [200, "OK", join("", map {chr(256*rand())} 1..$len)];
 }
 
+$SPEC{multi_status} = {
+    v => 1.1,
+    summary => "Example for result metadata property `results`",
+    description => <<'_',
+
+This function might return 200, 207, or 500, randomly. It will set result
+metadata property `results` to contain per-item results. For more details, see
+the corresponding specification in `results` property in `Rinci::resmeta`.
+
+_
+    args => {
+        n => {default=>5},
+    },
+};
+sub multi_status {
+    my %args = @_; $args{'n'} //= 5;# VALIDATE_ARGS
+    my $res = envresmulti();
+
+    for (1..$args{n}) {
+        my $status  = [200,500]->[2*rand];
+        my $message = $status == 200 ? "OK" : "Failed";
+        $res->add_result($status, $message, {item_id=>$_});
+    }
+    $res->as_struct;
+}
+
 1;
 # ABSTRACT: Example modules containing metadata and various example functions
 
@@ -1000,7 +1028,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.37 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-10-24.
+This document describes version 0.38 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-10-29.
 
 =head1 SYNOPSIS
 
@@ -1036,14 +1064,14 @@ Demonstrate argument default value from default and/or schema.
 Default value can be specified in the C<default> property of argument
 specification, e.g.:
 
- args =E<gt> {
-     arg1 =E<gt> { schema=E<gt>'str', default=E<gt>'blah' },
+ args => {
+     arg1 => { schema=>'str', default=>'blah' },
  },
 
 or in the C<default> clause of the argument's schema, e.g.:
 
- args =E<gt> {
-     arg1 =E<gt> { schema=E<gt>['str', default=E<gt>'blah'] },
+ args => {
+     arg1 => { schema=>['str', default=>'blah'] },
  },
 
 or even both. The C<default> property in argument specification takes precedence.
@@ -1414,6 +1442,36 @@ that contains extra information.
  (hash)
 
 
+=head2 multi_status(%args) -> [status, msg, result, meta]
+
+Example for result metadata property `results`.
+
+This function might return 200, 207, or 500, randomly. It will set result
+metadata property C<results> to contain per-item results. For more details, see
+the corresponding specification in C<results> property in C<Rinci::resmeta>.
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<n> => I<any> (default: 5)
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+ (any)
+
+
 =head2 noop(%args) -> [status, msg, result, meta]
 
 Do nothing, return original argument.
@@ -1693,9 +1751,9 @@ of the argument specification, the metadata is also not JSON-safe.
 To pass binary data over JSON/Riap, you can use Riap version 1.2 and encode the
 argument with ":base64" suffix, e.g.:
 
- $res = Perinci::Access-E<gt>new-E<gt>request(
-     call =E<gt> "http://example.com/api/Perinci/Examples/test_binary",
-     {v=E<gt>1.2, args=E<gt>{"data:base64"=E<gt>"/wA="}}); # send "\xff\0"
+ $res = Perinci::Access->new->request(
+     call => "http://example.com/api/Perinci/Examples/test_binary",
+     {v=>1.2, args=>{"data:base64"=>"/wA="}}); # send "\xff\0"
 
 Without C<< v=E<gt>1.2 >>, encoded argument won't be decoded by the server.
 
@@ -1707,9 +1765,9 @@ automatically encode binary data with base64 so it is safe when transformed as
 JSON. The client library will also decode the encoded result back to the
 original, so the whole process is transparent to you:
 
- $res = Perinci::Access-E<gt>new-E<gt>request(
-     call =E<gt> "http://example.com/api/Perinci/Examples/test_binary",
-     {v=E<gt>1.2}); # =E<gt> [200,"OK","\0\0\0",{}]
+ $res = Perinci::Access->new->request(
+     call => "http://example.com/api/Perinci/Examples/test_binary",
+     {v=>1.2}); # => [200,"OK","\0\0\0",{}]
 
 Arguments ('*' denotes required arguments):
 
@@ -1804,11 +1862,11 @@ Array of strings, where the string has "in" schema clause.
 Completion library can perhaps complete from the C<in> value and remember
 completed items when command-line option is repeated, e.g. in:
 
- --a1 E<lt>tabE<gt>
+ --a1 <tab>
 
 it will complete from any C<in> value, but in:
 
- --a1 apple --a1 E<lt>tabE<gt>
+ --a1 apple --a1 <tab>
 
 it can exclude C<apple> from the completion candidate.
 

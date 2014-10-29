@@ -1,5 +1,12 @@
 Revision history for Perinci-Examples
 
+0.38    2014-10-29 (PERLANCAR)
+
+	- Add module: Perinci::Examples::File.
+
+	- Add function: multi_status().
+
+
 0.37    2014-10-24 (PERLANCAR)
 
 	- Add function: test_binary (in Perinci::Examples::CmdLineSrc).
