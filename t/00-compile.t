@@ -4,7 +4,7 @@ use warnings;
 
 # this test was generated with Dist::Zilla::Plugin::Test::Compile 2.040
 
-use Test::More  tests => 8 + ($ENV{AUTHOR_TESTING} ? 1 : 0);
+use Test::More  tests => 9 + ($ENV{AUTHOR_TESTING} ? 1 : 0);
 
 
 
@@ -13,7 +13,8 @@ my @module_files = (
     'Perinci/Examples/CmdLineResMeta.pm',
     'Perinci/Examples/CmdLineSrc.pm',
     'Perinci/Examples/Completion.pm',
-    'Perinci/Examples/File.pm',
+    'Perinci/Examples/FilePartial.pm',
+    'Perinci/Examples/FileStream.pm',
     'Perinci/Examples/NoMeta.pm',
     'Perinci/Examples/SubMeta.pm',
     'Perinci/Examples/Tx.pm'

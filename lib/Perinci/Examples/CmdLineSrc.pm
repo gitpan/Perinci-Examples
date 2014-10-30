@@ -1,7 +1,7 @@
 package Perinci::Examples::CmdLineSrc;
 
-our $DATE = '2014-10-29'; # DATE
-our $VERSION = '0.38'; # VERSION
+our $DATE = '2014-10-30'; # DATE
+our $VERSION = '0.39'; # VERSION
 
 use 5.010;
 use strict;
@@ -186,7 +186,7 @@ Perinci::Examples::CmdLineSrc - Examples for using cmdline_src function property
 
 =head1 VERSION
 
-This document describes version 0.38 of Perinci::Examples::CmdLineSrc (from Perl distribution Perinci-Examples), released on 2014-10-29.
+This document describes version 0.39 of Perinci::Examples::CmdLineSrc (from Perl distribution Perinci-Examples), released on 2014-10-30.
 
 =head1 FUNCTIONS
 

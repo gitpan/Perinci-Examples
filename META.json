@@ -32,7 +32,7 @@
             "Log::Any" : "0",
             "Perinci::Object" : "0.18",
             "Perinci::Sub::Util" : "0.38",
-            "Rinci" : "v1.1.65",
+            "Rinci" : "v1.1.69",
             "experimental" : "0",
             "perl" : "5.010001"
          }
@@ -58,7 +58,7 @@
          "web" : "https://github.com/perlancar/perl-Perinci-Examples"
       }
    },
-   "version" : "0.38",
+   "version" : "0.39",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018002"

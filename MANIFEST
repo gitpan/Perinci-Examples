@@ -11,7 +11,8 @@ lib/Perinci/Examples.pm
 lib/Perinci/Examples/CmdLineResMeta.pm
 lib/Perinci/Examples/CmdLineSrc.pm
 lib/Perinci/Examples/Completion.pm
-lib/Perinci/Examples/File.pm
+lib/Perinci/Examples/FilePartial.pm
+lib/Perinci/Examples/FileStream.pm
 lib/Perinci/Examples/NoMeta.pm
 lib/Perinci/Examples/SubMeta.pm
 lib/Perinci/Examples/Tx.pm

@@ -1,7 +1,7 @@
-package Perinci::Examples::File;
+package Perinci::Examples::FileStream;
 
-our $DATE = '2014-10-29'; # DATE
-our $VERSION = '0.38'; # VERSION
+our $DATE = '2014-10-30'; # DATE
+our $VERSION = '0.39'; # VERSION
 
 use 5.010;
 use strict;
@@ -16,12 +16,14 @@ $SPEC{':package'} = {
     summary => 'Examples for reading/writing files',
     description => <<'_',
 
-These functions support partial argument (`partial_arg` feature) and partial
-result (`partial_res` feature). It also demos handling binary data
+The functions in this package demos streaming input and output.
 
 The functions are separated into this module because these functions read/write
 files on the filesystem and might potentially be dangerous if
 `Perinci::Examples` is exposed to the network by accident.
+
+See also `Perinci::Examples::FilePartial` which uses partial technique instead
+of streaming.
 
 _
 };
@@ -31,73 +33,61 @@ $SPEC{read_file} = {
     args => {
         path => {schema=>'str*', req=>1, pos=>0},
     },
-    features => {partial_res=>1},
-    result => {schema=>'buf*'},
+    result => {schema=>'buf*', stream=>1},
 };
 sub read_file {
     my %args = @_; my $_sahv_dpath = []; my $arg_err; if (exists($args{'path'})) { ((defined($args{'path'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Required input not specified"),0)) && ((!ref($args{'path'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type text"),0)); if ($arg_err) { return [400, "Invalid argument value for path: $arg_err"] } }if (!exists($args{'path'})) { return [400, "Missing argument: path"] } # VALIDATE_ARGS
 
     my $path = $args{path};
     (-f $path) or return [404, "No such file '$path'"];
-    my $size = (-s _);
-    my $start = $args{-res_part_start} // 0;
-    $start = 0     if $start < 0;
-    $start = $size if $start > $size;
-    my $len   = $args{-res_part_len} // $size;
-    $len = $size-$start if $start+$len > $size;
-    $len = 0            if $len < 0;
-
-    my $is_partial = $start > 0 || $start+$len < $size;
 
     open my($fh), "<", $path or return [500, "Can't open '$path': $!"];
-    seek $fh, $start, 0;
-    my $data;
-    read $fh, $data, $len;
 
-    [$is_partial ? 206 : 200,
-     $is_partial ? "Partial content" : "OK (whole content)",
-     $data,
-     {res_part_start=>$start, res_part_len=>$len}];
+    [200, "OK", $fh, {stream=>1}];
 }
 
 $SPEC{write_file} = {
     v => 1.1,
+    description => <<'_',
+
+Overwrites existing file.
+
+_
     args => {
         path => {schema=>'str*', req=>1, pos=>0},
-        content => {schema=>'buf*', req=>1, pos=>1, partial=>1,
+        content => {schema=>'buf*', req=>1, pos=>1, stream=>1,
                     cmdline_src=>'stdin_or_files'},
     },
-    features => {partial_arg=>1},
 };
 sub write_file {
     my %args = @_; my $_sahv_dpath = []; my $arg_err; if (exists($args{'content'})) { ((defined($args{'content'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Required input not specified"),0)) && ((!ref($args{'content'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type buffer"),0)); if ($arg_err) { return [400, "Invalid argument value for content: $arg_err"] } }if (!exists($args{'content'})) { return [400, "Missing argument: content"] } if (exists($args{'path'})) { ((defined($args{'path'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Required input not specified"),0)) && ((!ref($args{'path'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type text"),0)); if ($arg_err) { return [400, "Invalid argument value for path: $arg_err"] } }if (!exists($args{'path'})) { return [400, "Missing argument: path"] } # VALIDATE_ARGS
 
     my $path = $args{path};
-    my $start = $args{"-arg_part_start/content"} // 0;
 
-    sysopen my($fh), $path, O_WRONLY | O_CREAT
+    open my($fh), ">", $path
         or return [500, "Can't open '$path' for writing: $!"];
-    sysseek $fh, $start, 0
-        or return [500, "Can't seek to $start: $!"];
-    my $written = syswrite $fh, $args{content};
-    defined($written) or return [500, "Can't write content to '$path': $!"];
+    my $content = $args{content};
+    my $written = 0;
+    if (ref($content)) {
+        my $fh = $content;
+        local $/ = \(64*1024);
+        while (<$fh>) { print $fh $_; $written += length($_) }
+    } else {
+        print $fh $content;
+        $written += length($content);
+    }
 
-    [200, "Wrote $written byte(s) from position $start"];
+    [200, "Wrote $written byte(s)"];
 }
 
 $SPEC{append_file} = {
     v => 1.1,
     description => <<'_',
 
-We don't set the `content` argument as `partial` because it's actually hard to
-handle unordered/non-contiguous partial arguments if we open the file in append
-mode. We'll need to put the whole argument to temporary file first, and then
-append that temporary file to the target file.
-
 _
     args => {
         path => {schema=>'str*', req=>1, pos=>0},
-        content => {schema=>'buf*', req=>1, pos=>1,
+        content => {schema=>'buf*', req=>1, pos=>1, stream=>1,
                     cmdline_src=>'stdin_or_files'},
     },
 };
@@ -106,16 +96,24 @@ sub append_file {
 
     my $path = $args{path};
 
-    sysopen my($fh), $path, O_WRONLY | O_APPEND | O_CREAT
-        or return [500, "Can't open '$path' for appending: $!"];
-    my $written = syswrite $fh, $args{content};
-    defined($written) or return [500, "Can't append content to '$path': $!"];
+    open my($fh), ">>", $path
+        or return [500, "Can't open '$path' for writing: $!"];
+    my $content = $args{content};
+    my $written = 0;
+    if (ref($content)) {
+        my $fh = $content;
+        local $/ = \(64*1024);
+        while (<$fh>) { print $fh $_; $written += length($_) }
+    } else {
+        print $fh $content;
+        $written += length($content);
+    }
 
     [200, "Appended $written byte(s)"];
 }
 
 1;
-# ABSTRACT: Examples for reading/writing files (demos partial_arg/partial_res)
+# ABSTRACT: Examples for reading/writing files (using streaming result)
 
 __END__
 
@@ -125,31 +123,28 @@ __END__
 
 =head1 NAME
 
-Perinci::Examples::File - Examples for reading/writing files (demos partial_arg/partial_res)
+Perinci::Examples::FileStream - Examples for reading/writing files (using streaming result)
 
 =head1 VERSION
 
-This document describes version 0.38 of Perinci::Examples::File (from Perl distribution Perinci-Examples), released on 2014-10-29.
+This document describes version 0.39 of Perinci::Examples::FileStream (from Perl distribution Perinci-Examples), released on 2014-10-30.
 
 =head1 DESCRIPTION
 
 
-These functions support partial argument (C<partial_arg> feature) and partial
-result (C<partial_res> feature). It also demos handling binary data
+The functions in this package demos streaming input and output.
 
 The functions are separated into this module because these functions read/write
 files on the filesystem and might potentially be dangerous if
 C<Perinci::Examples> is exposed to the network by accident.
 
+See also C<Perinci::Examples::FilePartial> which uses partial technique instead
+of streaming.
+
 =head1 FUNCTIONS
 
 
 =head2 append_file(%args) -> [status, msg, result, meta]
-
-We don't set the C<content> argument as C<partial> because it's actually hard to
-handle unordered/non-contiguous partial arguments if we open the file in append
-mode. We'll need to put the whole argument to temporary file first, and then
-append that temporary file to the target file.
 
 Arguments ('*' denotes required arguments):
 
@@ -200,6 +195,8 @@ that contains extra information.
 
 
 =head2 write_file(%args) -> [status, msg, result, meta]
+
+Overwrites existing file.
 
 Arguments ('*' denotes required arguments):
 
