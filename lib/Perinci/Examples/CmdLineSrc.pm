@@ -1,7 +1,7 @@
 package Perinci::Examples::CmdLineSrc;
 
 our $DATE = '2014-11-12'; # DATE
-our $VERSION = '0.40'; # VERSION
+our $VERSION = '0.41'; # VERSION
 
 use 5.010;
 use strict;
@@ -124,7 +124,7 @@ $SPEC{cmdline_src_stdin_line} = {
 };
 sub cmdline_src_stdin_line {
     my %args = @_;
-    [200, "OK", "a1=$args{a1}\na2=$args{a2}"];
+    [200, "OK", "a1=$args{a1}\na2=$args{a2}", {'func.args'=>\%args}];
 }
 
 $SPEC{cmdline_src_multi_stdin_line} = {
@@ -189,7 +189,7 @@ Perinci::Examples::CmdLineSrc - Examples for using cmdline_src function property
 
 =head1 VERSION
 
-This document describes version 0.40 of Perinci::Examples::CmdLineSrc (from Perl distribution Perinci-Examples), released on 2014-11-12.
+This document describes version 0.41 of Perinci::Examples::CmdLineSrc (from Perl distribution Perinci-Examples), released on 2014-11-12.
 
 =head1 FUNCTIONS
 
@@ -500,7 +500,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Ex
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
 
 =head1 BUGS
 

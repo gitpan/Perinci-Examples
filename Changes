@@ -1,5 +1,10 @@
 Revision history for Perinci-Examples
 
+0.41    2014-11-12 (PERLANCAR)
+
+	- Missed a function.
+
+
 0.40    2014-11-12 (PERLANCAR)
 
 	- CmdLineSrc: return raw args in extra result (in result metadata), to

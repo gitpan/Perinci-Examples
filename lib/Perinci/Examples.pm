@@ -1,7 +1,7 @@
 package Perinci::Examples;
 
 our $DATE = '2014-11-12'; # DATE
-our $VERSION = '0.40'; # VERSION
+our $VERSION = '0.41'; # VERSION
 
 use 5.010001;
 use strict;
@@ -1028,7 +1028,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.40 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-11-12.
+This document describes version 0.41 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-11-12.
 
 =head1 SYNOPSIS
 
@@ -2090,7 +2090,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Ex
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
 
 =head1 BUGS
 

@@ -54,11 +54,11 @@
       "homepage" : "https://metacpan.org/release/Perinci-Examples",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/sharyanto/perl-Perinci-Examples.git",
-         "web" : "https://github.com/sharyanto/perl-Perinci-Examples"
+         "url" : "git://github.com/perlancar/perl-Perinci-Examples.git",
+         "web" : "https://github.com/perlancar/perl-Perinci-Examples"
       }
    },
-   "version" : "0.40",
+   "version" : "0.41",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018001"

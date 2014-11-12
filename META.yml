@@ -26,8 +26,8 @@ requires:
 resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=Perinci-Examples
   homepage: https://metacpan.org/release/Perinci-Examples
-  repository: git://github.com/sharyanto/perl-Perinci-Examples.git
-version: '0.40'
+  repository: git://github.com/perlancar/perl-Perinci-Examples.git
+version: '0.41'
 x_Dist_Zilla:
   perl:
     version: '5.018001'
