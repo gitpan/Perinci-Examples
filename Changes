@@ -1,5 +1,11 @@
 Revision history for Perinci-Examples
 
+0.40    2014-11-12 (PERLANCAR)
+
+	- CmdLineSrc: return raw args in extra result (in result metadata), to
+          allow testing for special arguments (without breaking existing tests).
+
+
 0.39    2014-10-30 (PERLANCAR)
 
 	- Rename module Perinci::Examples::File to

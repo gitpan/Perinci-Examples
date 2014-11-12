@@ -1,7 +1,7 @@
 package Perinci::Examples;
 
-our $DATE = '2014-10-30'; # DATE
-our $VERSION = '0.39'; # VERSION
+our $DATE = '2014-11-12'; # DATE
+our $VERSION = '0.40'; # VERSION
 
 use 5.010001;
 use strict;
@@ -582,8 +582,8 @@ _
 };
 sub merge_hash {
     my %args = @_;
-    my $h1 = $args{h1}; my $_sahv_dpath = []; my $arg_err; ((defined($h1)) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Required input not specified"),0)) && ((ref($h1) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type hash"),0)); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } # VALIDATE_ARG
-    my $h2 = $args{h2}; ((defined($h2)) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Required input not specified"),0)) && ((ref($h2) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type hash"),0)); if ($arg_err) { return [400, "Invalid argument value for h2: $arg_err"] } # VALIDATE_ARG
+    my $h1 = $args{h1}; my $_sahv_dpath = []; my $arg_err; ((defined($h1)) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Required but not specified"),0)) && ((ref($h1) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Not of type hash"),0)); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } # VALIDATE_ARG
+    my $h2 = $args{h2}; ((defined($h2)) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Required but not specified"),0)) && ((ref($h2) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Not of type hash"),0)); if ($arg_err) { return [400, "Invalid argument value for h2: $arg_err"] } # VALIDATE_ARG
 
     [200, "OK", {%$h1, %$h2}];
 }
@@ -609,7 +609,7 @@ $SPEC{test_validate_args} = {
     "x.perinci.sub.wrapper.disable_validate_args" => 1,
 };
 sub test_validate_args {
-    my %args = @_; require Scalar::Util::Numeric;my $_sahv_dpath = []; my $arg_err; if (exists($args{'a'})) { (!defined($args{'a'}) ? 1 :  ((Scalar::Util::Numeric::isint($args{'a'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type integer"),0))); if ($arg_err) { return [400, "Invalid argument value for a: $arg_err"] } }if (exists($args{'b'})) { (!defined($args{'b'}) ? 1 :  ((!ref($args{'b'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type text"),0)) && ((length($args{'b'}) >= 2) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Length must be at least 2"),0))); if ($arg_err) { return [400, "Invalid argument value for b: $arg_err"] } }if (exists($args{'h1'})) { (!defined($args{'h1'}) ? 1 :  ((ref($args{'h1'}) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type hash"),0))); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } }# VALIDATE_ARGS
+    my %args = @_; require Scalar::Util::Numeric;my $_sahv_dpath = []; my $arg_err; if (exists($args{'a'})) { (!defined($args{'a'}) ? 1 :  ((Scalar::Util::Numeric::isint($args{'a'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Not of type integer"),0))); if ($arg_err) { return [400, "Invalid argument value for a: $arg_err"] } }if (exists($args{'b'})) { (!defined($args{'b'}) ? 1 :  ((!ref($args{'b'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Not of type text"),0)) && ((length($args{'b'}) >= 2) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Length must be at least 2"),0))); if ($arg_err) { return [400, "Invalid argument value for b: $arg_err"] } }if (exists($args{'h1'})) { (!defined($args{'h1'}) ? 1 :  ((ref($args{'h1'}) eq 'HASH') ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Not of type hash"),0))); if ($arg_err) { return [400, "Invalid argument value for h1: $arg_err"] } }# VALIDATE_ARGS
     [200];
 }
 
@@ -982,7 +982,7 @@ _
     },
 };
 sub gen_random_bytes {
-    my %args = @_; require Scalar::Util::Numeric;my $_sahv_dpath = []; my $arg_err; if (exists($args{'len'})) { ((defined($args{'len'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Required input not specified"),0)) && ((Scalar::Util::Numeric::isint($args{'len'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Input is not of type integer"),0)) && (($args{'len'} >= 0) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Must be at least 0"),0)); if ($arg_err) { return [400, "Invalid argument value for len: $arg_err"] } }# VALIDATE_ARGS
+    my %args = @_; require Scalar::Util::Numeric;my $_sahv_dpath = []; my $arg_err; if (exists($args{'len'})) { ((defined($args{'len'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Required but not specified"),0)) && ((Scalar::Util::Numeric::isint($args{'len'})) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Not of type integer"),0)) && (($args{'len'} >= 0) ? 1 : (($arg_err //= (@$_sahv_dpath ? '@'.join("/",@$_sahv_dpath).": " : "") . "Must be at least 0"),0)); if ($arg_err) { return [400, "Invalid argument value for len: $arg_err"] } }# VALIDATE_ARGS
     my $len = $args{len} // 1024;
     [200, "OK", join("", map {chr(256*rand())} 1..$len)];
 }
@@ -1028,7 +1028,7 @@ Perinci::Examples - Example modules containing metadata and various example func
 
 =head1 VERSION
 
-This document describes version 0.39 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-10-30.
+This document describes version 0.40 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-11-12.
 
 =head1 SYNOPSIS
 
@@ -2090,7 +2090,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Ex
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
 
 =head1 BUGS
 
