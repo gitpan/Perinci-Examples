@@ -1,5 +1,11 @@
 Revision history for Perinci-Examples
 
+0.43    2014-11-20 (PERLANCAR)
+
+	- Rename function: funcname -> demo_cli_opts (for better name when
+	  being made a CLI script).
+
+
 0.42    2014-11-20 (PERLANCAR)
 
 	- Add module: Perinci::Examples::CLI (for testing

@@ -1,7 +1,7 @@
 package Perinci::Examples::CLI;
 
 our $DATE = '2014-11-20'; # DATE
-our $VERSION = '0.42'; # VERSION
+our $VERSION = '0.43'; # VERSION
 
 use 5.010001;
 use strict;
@@ -24,12 +24,12 @@ section).
 _
 };
 
-$SPEC{funcname} = {
+$SPEC{demo_cli_opts} = {
     v => 1.1,
-    summary => "Summary for `funcname`",
+    summary => "Summary for `demo_cli_opts`",
     description => <<'_',
 
-Description for `funcname`.
+Description for `demo_cli_opts`.
 
 This is another paragraph from the description. Description by default is
 assumed to be marked up in *Markdown* (currently referring to CommonMark).
@@ -247,7 +247,7 @@ _
         },
     ],
 };
-sub funcname {
+sub demo_cli_opts {
     my %args = @_; # NO_VALIDATE_ARGS
     [200, "OK", \%args];
 }
@@ -267,7 +267,7 @@ Perinci::Examples::CLI - Example for CLI help/usage generation
 
 =head1 VERSION
 
-This document describes version 0.42 of Perinci::Examples::CLI (from Perl distribution Perinci-Examples), released on 2014-11-20.
+This document describes version 0.43 of Perinci::Examples::CLI (from Perl distribution Perinci-Examples), released on 2014-11-20.
 
 =head1 DESCRIPTION
 
@@ -280,25 +280,25 @@ section).
 =head1 FUNCTIONS
 
 
-=head2 funcname(%args) -> [status, msg, result, meta]
+=head2 demo_cli_opts(%args) -> [status, msg, result, meta]
 
-Summary for `funcname`.
+Summary for `demo_cli_opts`.
 
 Examples:
 
- funcname( array1 => ["elem1", "elem2"], int1 => 10, str1 => "a value");
+ demo_cli_opts( array1 => ["elem1", "elem2"], int1 => 10, str1 => "a value");
 
 
 Summary for an example.
 
 
- funcname( array1 => [1, 2], int1 => 20, str1 => "x");
+ demo_cli_opts( array1 => [1, 2], int1 => 20, str1 => "x");
 
 
 A second example.
 
 
-Description for C<funcname>.
+Description for C<demo_cli_opts>.
 
 This is another paragraph from the description. Description by default is
 assumed to be marked up in I<Markdown> (currently referring to CommonMark).

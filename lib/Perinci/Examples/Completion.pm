@@ -7,7 +7,7 @@ use experimental 'smartmatch';
 
 our %SPEC;
 
-our $VERSION = '0.42'; # VERSION
+our $VERSION = '0.43'; # VERSION
 our $DATE = '2014-11-20'; # DATE
 
 $SPEC{fruits} = {
@@ -56,7 +56,7 @@ Perinci::Examples::Completion - More completion examples
 
 =head1 VERSION
 
-This document describes version 0.42 of Perinci::Examples::Completion (from Perl distribution Perinci-Examples), released on 2014-11-20.
+This document describes version 0.43 of Perinci::Examples::Completion (from Perl distribution Perinci-Examples), released on 2014-11-20.
 
 =head1 FUNCTIONS
 
