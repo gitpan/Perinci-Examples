@@ -27,7 +27,7 @@ resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=Perinci-Examples
   homepage: https://metacpan.org/release/Perinci-Examples
   repository: git://github.com/perlancar/perl-Perinci-Examples.git
-version: '0.41'
+version: '0.42'
 x_Dist_Zilla:
   perl:
     version: '5.018001'
@@ -114,7 +114,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Rinci::InstallCompletion
       name: '@Author::PERLANCAR/Rinci::InstallCompletion'
-      version: '0.01'
+      version: '0.03'
     -
       class: Dist::Zilla::Plugin::OurDate
       name: '@Author::PERLANCAR/OurDate'
@@ -184,9 +184,13 @@ x_Dist_Zilla:
               name: '@Author::PERLANCAR/postlude'
               version: '4.006'
             -
+              class: Pod::Weaver::Section::BashCompletion::GetoptLongComplete
+              name: '@Author::PERLANCAR/BashCompletion::GetoptLongComplete'
+              version: '0.01'
+            -
               class: Pod::Weaver::Section::BashCompletion::PerinciCmdLine
               name: '@Author::PERLANCAR/BashCompletion::PerinciCmdLine'
-              version: '0.02'
+              version: '0.03'
             -
               class: Pod::Weaver::Section::Homepage::DefaultCPAN
               name: '@Author::PERLANCAR/Homepage::DefaultCPAN'

@@ -1,5 +1,11 @@
 Revision history for Perinci-Examples
 
+0.42    2014-11-20 (PERLANCAR)
+
+	- Add module: Perinci::Examples::CLI (for testing
+          Perinci-Sub-To-CLIOptSpec).
+
+
 0.41    2014-11-12 (PERLANCAR)
 
 	- Missed a function.
