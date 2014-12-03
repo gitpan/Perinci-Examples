@@ -1,5 +1,14 @@
 Revision history for Perinci-Examples
 
+0.44    2014-12-03 (PERLANCAR)
+
+	- Add function: demo_cli_opts_shorter.
+
+	- Tweak Rinci metadata, change summary.alt.neg ->
+	  summary.alt.bool.not to comply with DefHash 1.0.8; add
+	  summary.alt.numnoun.singular in example.
+
+
 0.43    2014-11-20 (PERLANCAR)
 
 	- Rename function: funcname -> demo_cli_opts (for better name when

@@ -3,8 +3,8 @@ NAME
     example functions
 
 VERSION
-    This document describes version 0.43 of Perinci::Examples (from Perl
-    distribution Perinci-Examples), released on 2014-11-20.
+    This document describes version 0.44 of Perinci::Examples (from Perl
+    distribution Perinci-Examples), released on 2014-12-03.
 
 SYNOPSIS
      use Perinci::Examples qw(delay);

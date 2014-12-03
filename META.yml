@@ -27,7 +27,7 @@ resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=Perinci-Examples
   homepage: https://metacpan.org/release/Perinci-Examples
   repository: git://github.com/perlancar/perl-Perinci-Examples.git
-version: '0.43'
+version: '0.44'
 x_Dist_Zilla:
   perl:
     version: '5.018002'
@@ -172,9 +172,9 @@ x_Dist_Zilla:
               name: FUNCTIONS
               version: '4.006'
             -
-              class: Pod::Weaver::Plugin::Perinci
-              name: '@Author::PERLANCAR/Perinci'
-              version: '0.15'
+              class: Pod::Weaver::Plugin::Rinci
+              name: '@Author::PERLANCAR/Rinci'
+              version: '0.20'
             -
               class: Pod::Weaver::Section::Leftovers
               name: '@Author::PERLANCAR/Leftovers'
@@ -184,13 +184,13 @@ x_Dist_Zilla:
               name: '@Author::PERLANCAR/postlude'
               version: '4.006'
             -
-              class: Pod::Weaver::Section::BashCompletion::GetoptLongComplete
-              name: '@Author::PERLANCAR/BashCompletion::GetoptLongComplete'
-              version: '0.01'
+              class: Pod::Weaver::Section::Completion::GetoptLongComplete
+              name: '@Author::PERLANCAR/Completion::GetoptLongComplete'
+              version: '0.04'
             -
-              class: Pod::Weaver::Section::BashCompletion::PerinciCmdLine
-              name: '@Author::PERLANCAR/BashCompletion::PerinciCmdLine'
-              version: '0.03'
+              class: Pod::Weaver::Section::Completion::PerinciCmdLine
+              name: '@Author::PERLANCAR/Completion::PerinciCmdLine'
+              version: '0.07'
             -
               class: Pod::Weaver::Section::Homepage::DefaultCPAN
               name: '@Author::PERLANCAR/Homepage::DefaultCPAN'

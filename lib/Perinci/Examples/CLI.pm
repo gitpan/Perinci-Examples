@@ -1,7 +1,7 @@
 package Perinci::Examples::CLI;
 
-our $DATE = '2014-11-20'; # DATE
-our $VERSION = '0.43'; # VERSION
+our $DATE = '2014-12-03'; # DATE
+our $VERSION = '0.44'; # VERSION
 
 use 5.010001;
 use strict;
@@ -83,7 +83,7 @@ _
 
         full => {
             summary => 'Turn on full processing',
-            'summary.alt.neg' => 'Turn off full processing',
+            'summary.alt.bool.not' => 'Turn off full processing',
             schema => 'bool',
             default => 1,
             tags => ['category:cat1'],
@@ -93,7 +93,7 @@ Another bool option with on default.
 
 CLI framework should perhaps show `--nobool2` instead of `--bool2` because
 `--bool2` is active by default. And if it does so, it should also show the
-negative summary in the `summary.alt.neg` attribute instead of the normal
+negative summary in the `summary.alt.bool.not` attribute instead of the normal
 `summary` property.
 
 _
@@ -105,7 +105,7 @@ _
             description => <<'_',
 
 Another bool option with on default. Because this option does not have
-`summary.alt.neg`, CLI framework should not show any summary, despite the
+`summary.alt.bool.not`, CLI framework should not show any summary, despite the
 existence of `summary`.
 
 _
@@ -115,6 +115,21 @@ _
             schema => ['int*', min=>1, max=>100],
             cmdline_aliases => {i=>{}},
             req => 1,
+            description => <<'_',
+
+Demonstrate an option with no summary. And a required option.
+
+_
+        },
+        int2 => {
+            summary => 'Another int option',
+            schema => ['int*', min=>-100, max=>100],
+            default => 10,
+            description => <<'_',
+
+Demonstrate a scalar/simple default value.
+
+_
         },
         str1 => {
             summary => 'A required option as well as positional argument',
@@ -147,7 +162,8 @@ _
             tags => ['category:negation'],
         },
         array1 => {
-            summary => 'Positional and greedy',
+            summary => 'Positional, greedy, and plural',
+            'summary.alt.numnoun.singular' => 'Positional, greedy, and singular',
             schema => ['array*', of => 'str*'],
             req => 1,
             pos => 1,
@@ -252,8 +268,48 @@ sub demo_cli_opts {
     [200, "OK", \%args];
 }
 
+# Originally used in Perinci::Sub::To::CLIDocData's Synopsis
+$SPEC{demo_cli_opts_shorter} = {
+    v => 1.1,
+    summary => "Function summary",
+    args => {
+        flag1 => {
+            schema  => [bool => is=>1],
+            cmdline_aliases => {f=>{}},
+            tags => ['category:cat1'],
+        },
+        bool1 => {
+            summary => 'Another bool option',
+            schema => 'bool',
+            cmdline_aliases => {
+                z => {
+                    summary => 'This is summary for option `-z`',
+                },
+            },
+            tags => ['category:cat1'],
+        },
+        str1 => {
+            summary => 'A required option as well as positional argument',
+            schema => 'str*',
+            req => 1,
+            pos => 0,
+        },
+    },
+    examples => [
+        {
+            argv => ['a value', '--bool1'],
+            summary => 'Summary for an example',
+            test => 0,
+        },
+    ],
+};
+sub demo_cli_opts_shorter {
+    my %args = @_; # NO_VALIDATE_ARGS
+    [200, "OK", \%args];
+}
+
 1;
-# ABSTRACT: Example for CLI help/usage generation
+# ABSTRACT: Examples for CLI help/usage generation
 
 __END__
 
@@ -263,11 +319,11 @@ __END__
 
 =head1 NAME
 
-Perinci::Examples::CLI - Example for CLI help/usage generation
+Perinci::Examples::CLI - Examples for CLI help/usage generation
 
 =head1 VERSION
 
-This document describes version 0.43 of Perinci::Examples::CLI (from Perl distribution Perinci-Examples), released on 2014-11-20.
+This document describes version 0.44 of Perinci::Examples::CLI (from Perl distribution Perinci-Examples), released on 2014-12-03.
 
 =head1 DESCRIPTION
 
@@ -315,7 +371,7 @@ This demonstrate negation of --are-foo to --arent-foo.
 
 =item * B<array1>* => I<array>
 
-Positional and greedy.
+Positional, greedy, and plural.
 
 Argument with non-scalar types (like array or hash) can be specified in the CLI
 using C<--ARG-json> or C<--ARG-yaml>. Arguments with type of array of string can
@@ -353,7 +409,7 @@ Another bool option with on default.
 
 CLI framework should perhaps show C<--nobool2> instead of C<--bool2> because
 C<--bool2> is active by default. And if it does so, it should also show the
-negative summary in the C<summary.alt.neg> attribute instead of the normal
+negative summary in the C<summary.alt.bool.not> attribute instead of the normal
 C<summary> property.
 
 =item * B<full2> => I<bool> (default: 1)
@@ -361,7 +417,7 @@ C<summary> property.
 Use full processing (2).
 
 Another bool option with on default. Because this option does not have
-C<summary.alt.neg>, CLI framework should not show any summary, despite the
+C<summary.alt.bool.not>, CLI framework should not show any summary, despite the
 existence of C<summary>.
 
 =item * B<gender> => I<str>
@@ -383,6 +439,14 @@ C<buf>, we know that the value is binary data. CLI framework will provide
 C<--input-base64> to allow specifying binary data encoded in base64.
 
 =item * B<int1>* => I<int>
+
+Demonstrate an option with no summary. And a required option.
+
+=item * B<int2> => I<int> (default: 10)
+
+Another int option.
+
+Demonstrate a scalar/simple default value.
 
 =item * B<is_bar> => I<bool>
 
@@ -411,6 +475,48 @@ A required option as well as positional argument.
 =item * B<with_foo> => I<bool>
 
 This demonstrate negation of --with-foo to --without-foo.
+
+=back
+
+Return value:
+
+Returns an enveloped result (an array).
+
+First element (status) is an integer containing HTTP status code
+(200 means OK, 4xx caller error, 5xx function error). Second element
+(msg) is a string containing error message, or 'OK' if status is
+200. Third element (result) is optional, the actual result. Fourth
+element (meta) is called result metadata and is optional, a hash
+that contains extra information.
+
+ (any)
+
+
+=head2 demo_cli_opts_shorter(%args) -> [status, msg, result, meta]
+
+Function summary.
+
+Examples:
+
+ demo_cli_opts_shorter( bool1 => 1, str1 => "a value");
+
+
+Summary for an example.
+
+
+Arguments ('*' denotes required arguments):
+
+=over 4
+
+=item * B<bool1> => I<bool>
+
+Another bool option.
+
+=item * B<flag1> => I<bool>
+
+=item * B<str1>* => I<str>
+
+A required option as well as positional argument.
 
 =back
 

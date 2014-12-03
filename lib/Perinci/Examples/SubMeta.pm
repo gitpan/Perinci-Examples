@@ -1,7 +1,7 @@
 package Perinci::Examples::SubMeta;
 
-our $DATE = '2014-11-20'; # DATE
-our $VERSION = '0.43'; # VERSION
+our $DATE = '2014-12-03'; # DATE
+our $VERSION = '0.44'; # VERSION
 
 use 5.010;
 use strict;
@@ -167,7 +167,7 @@ Perinci::Examples::SubMeta - Test argument submetadata
 
 =head1 VERSION
 
-This document describes version 0.43 of Perinci::Examples::SubMeta (from Perl distribution Perinci-Examples), released on 2014-11-20.
+This document describes version 0.44 of Perinci::Examples::SubMeta (from Perl distribution Perinci-Examples), released on 2014-12-03.
 
 =head1 DESCRIPTION
 
