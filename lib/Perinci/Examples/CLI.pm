@@ -1,7 +1,7 @@
 package Perinci::Examples::CLI;
 
-our $DATE = '2014-12-03'; # DATE
-our $VERSION = '0.44'; # VERSION
+our $DATE = '2015-01-04'; # DATE
+our $VERSION = '0.45'; # VERSION
 
 use 5.010001;
 use strict;
@@ -309,7 +309,7 @@ sub demo_cli_opts_shorter {
 }
 
 1;
-# ABSTRACT: Examples for CLI help/usage generation
+# ABSTRACT: Example for CLI help/usage generation
 
 __END__
 
@@ -319,11 +319,11 @@ __END__
 
 =head1 NAME
 
-Perinci::Examples::CLI - Examples for CLI help/usage generation
+Perinci::Examples::CLI - Example for CLI help/usage generation
 
 =head1 VERSION
 
-This document describes version 0.44 of Perinci::Examples::CLI (from Perl distribution Perinci-Examples), released on 2014-12-03.
+This document describes version 0.45 of Perinci::Examples::CLI (from Perl distribution Perinci-Examples), released on 2015-01-04.
 
 =head1 DESCRIPTION
 
@@ -369,7 +369,7 @@ Arguments ('*' denotes required arguments):
 
 This demonstrate negation of --are-foo to --arent-foo.
 
-=item * B<array1>* => I<array>
+=item * B<array1>* => I<array[str]>
 
 Positional, greedy, and plural.
 
@@ -478,8 +478,6 @@ This demonstrate negation of --with-foo to --without-foo.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -489,8 +487,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 demo_cli_opts_shorter(%args) -> [status, msg, result, meta]
 
@@ -520,8 +517,6 @@ A required option as well as positional argument.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -531,16 +526,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
-=head1 TODO
-
-Argument submetadata and element submetadata.
-
-C<stream> property.
-
-C<partial> property.
-
+Return value:  (any)
 =head1 SEE ALSO
 
 L<Perinci>
@@ -553,7 +539,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Ex
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
 
 =head1 BUGS
 
@@ -569,7 +555,7 @@ perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by perlancar@cpan.org.
+This software is copyright (c) 2015 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

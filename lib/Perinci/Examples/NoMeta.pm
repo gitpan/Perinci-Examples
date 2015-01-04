@@ -1,5 +1,8 @@
 package Perinci::Examples::NoMeta;
 
+our $DATE = '2015-01-04'; # DATE
+our $VERSION = '0.45'; # VERSION
+
 # This is a sample of a "traditional" Perl module, with no metadata or enveloped
 # result.
 
@@ -8,9 +11,6 @@ use strict;
 use warnings;
 
 our $Var1 = 1;
-
-our $VERSION = '0.44'; # VERSION
-our $DATE = '2014-12-03'; # DATE
 
 sub pyth($$) {
     my ($a, $b) = @_;
@@ -26,7 +26,7 @@ sub gen_array {
 }
 
 1;
-#ABSTRACT: Example of module without any metadata
+# ABSTRACT: Example of module without any metadata
 
 __END__
 
@@ -40,7 +40,7 @@ Perinci::Examples::NoMeta - Example of module without any metadata
 
 =head1 VERSION
 
-This document describes version 0.44 of Perinci::Examples::NoMeta (from Perl distribution Perinci-Examples), released on 2014-12-03.
+This document describes version 0.45 of Perinci::Examples::NoMeta (from Perl distribution Perinci-Examples), released on 2015-01-04.
 
 =for Pod::Coverage .*
 
@@ -50,7 +50,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Ex
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
 
 =head1 BUGS
 
@@ -66,7 +66,7 @@ perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by perlancar@cpan.org.
+This software is copyright (c) 2015 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

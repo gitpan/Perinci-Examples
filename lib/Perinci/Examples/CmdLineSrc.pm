@@ -1,7 +1,7 @@
 package Perinci::Examples::CmdLineSrc;
 
-our $DATE = '2014-12-03'; # DATE
-our $VERSION = '0.44'; # VERSION
+our $DATE = '2015-01-04'; # DATE
+our $VERSION = '0.45'; # VERSION
 
 use 5.010;
 use strict;
@@ -189,7 +189,7 @@ Perinci::Examples::CmdLineSrc - Examples for using cmdline_src function property
 
 =head1 VERSION
 
-This document describes version 0.44 of Perinci::Examples::CmdLineSrc (from Perl distribution Perinci-Examples), released on 2014-12-03.
+This document describes version 0.45 of Perinci::Examples::CmdLineSrc (from Perl distribution Perinci-Examples), released on 2015-01-04.
 
 =head1 FUNCTIONS
 
@@ -208,8 +208,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -219,8 +217,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 cmdline_src_invalid_arg_type(%args) -> [status, msg, result, meta]
 
@@ -234,8 +231,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -245,8 +240,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 cmdline_src_multi_stdin(%args) -> [status, msg, result, meta]
 
@@ -262,8 +256,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -273,8 +265,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 cmdline_src_multi_stdin_line(%args) -> [status, msg, result, meta]
 
@@ -294,8 +285,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -305,8 +294,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 cmdline_src_stdin_array(%args) -> [status, msg, result, meta]
 
@@ -320,8 +308,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -331,8 +317,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 cmdline_src_stdin_line(%args) -> [status, msg, result, meta]
 
@@ -348,8 +333,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -359,8 +342,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 cmdline_src_stdin_or_files_array(%args) -> [status, msg, result, meta]
 
@@ -374,8 +356,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -385,8 +365,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 cmdline_src_stdin_or_files_str(%args) -> [status, msg, result, meta]
 
@@ -400,8 +379,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -411,8 +388,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 cmdline_src_stdin_str(%args) -> [status, msg, result, meta]
 
@@ -426,8 +402,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -437,8 +411,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 cmdline_src_unknown(%args) -> [status, msg, result, meta]
 
@@ -452,8 +425,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -463,8 +434,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 test_binary(%args) -> [status, msg, result, meta]
 
@@ -481,8 +451,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -492,15 +460,14 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (buf)
-
+Return value:  (buf)
 =head1 HOMEPAGE
 
 Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Examples>.
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
 
 =head1 BUGS
 
@@ -516,7 +483,7 @@ perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by perlancar@cpan.org.
+This software is copyright (c) 2015 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

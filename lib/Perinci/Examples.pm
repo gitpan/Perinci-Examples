@@ -1,7 +1,7 @@
 package Perinci::Examples;
 
-our $DATE = '2014-12-03'; # DATE
-our $VERSION = '0.44'; # VERSION
+our $DATE = '2015-01-04'; # DATE
+our $VERSION = '0.45'; # VERSION
 
 use 5.010001;
 use strict;
@@ -24,8 +24,8 @@ our %SPEC;
 # package metadata
 $SPEC{':package'} = {
     v => 1.1,
-    summary => 'This package contains various examples',
-    "summary.alt.lang.id_ID" => 'Paket ini berisi berbagai contoh',
+    summary => 'Various examples of Rinci metadata',
+    "summary.alt.lang.id_ID" => 'Berbagai contoh metadata Rinci',
     description => <<'_',
 
 A sample description
@@ -1014,7 +1014,7 @@ sub multi_status {
 }
 
 1;
-# ABSTRACT: Example modules containing metadata and various example functions
+# ABSTRACT: Various examples of Rinci metadata
 
 __END__
 
@@ -1024,11 +1024,11 @@ __END__
 
 =head1 NAME
 
-Perinci::Examples - Example modules containing metadata and various example functions
+Perinci::Examples - Various examples of Rinci metadata
 
 =head1 VERSION
 
-This document describes version 0.44 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2014-12-03.
+This document describes version 0.45 of Perinci::Examples (from Perl distribution Perinci-Examples), released on 2015-01-04.
 
 =head1 SYNOPSIS
 
@@ -1100,8 +1100,6 @@ Default from "default" property as well as schema.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1111,8 +1109,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 call_gen_array(%args) -> [status, msg, result, meta]
 
@@ -1130,8 +1127,6 @@ Array length.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1141,8 +1136,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (array)
-
+Return value:  (array[int])
 
 =head2 call_randlog(%args) -> [status, msg, result, meta]
 
@@ -1168,8 +1162,6 @@ Number of log messages to produce.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1179,8 +1171,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 delay(%args) -> [status, msg, result, meta]
 
@@ -1202,8 +1193,6 @@ Whether to sleep(1) for n times instead of sleep(n).
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1213,8 +1202,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 dies() -> [status, msg, result, meta]
 
@@ -1224,8 +1212,6 @@ Can be used to test exception handling.
 
 No arguments.
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1235,8 +1221,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 err(%args) -> [status, msg, result, meta]
 
@@ -1252,8 +1237,6 @@ Error code to return.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1263,8 +1246,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 gen_array(%args) -> [status, msg, result, meta]
 
@@ -1282,8 +1264,6 @@ Array length.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1293,8 +1273,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (array)
-
+Return value:  (array[int])
 
 =head2 gen_hash(%args) -> [status, msg, result, meta]
 
@@ -1312,8 +1291,6 @@ Number of pairs.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1323,8 +1300,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (array)
-
+Return value:  (array[int])
 
 =head2 gen_random_bytes(%args) -> [status, msg, result, meta]
 
@@ -1342,8 +1318,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1353,8 +1327,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (buf)
-
+Return value:  (buf)
 
 =head2 gen_sample_data(%args) -> [status, msg, result, meta]
 
@@ -1387,8 +1360,6 @@ The C<aoaos> and C<aohos> forms are commonly used for table data.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1398,8 +1369,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 merge_hash(%args) -> [status, msg, result, meta]
 
@@ -1428,8 +1398,6 @@ First hash (right-hand side).
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1439,8 +1407,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (hash)
-
+Return value:  (hash)
 
 =head2 multi_status(%args) -> [status, msg, result, meta]
 
@@ -1458,8 +1425,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1469,8 +1434,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 noop(%args) -> [status, msg, result, meta]
 
@@ -1495,8 +1459,6 @@ Argument.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1506,8 +1468,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 randlog(%args) -> [status, msg, result, meta]
 
@@ -1531,8 +1492,6 @@ Number of log messages to produce.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1542,8 +1501,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 return_args(%args) -> [status, msg, result, meta]
 
@@ -1563,8 +1521,6 @@ Argument.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1574,8 +1530,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 sum(%args) -> [status, msg, result, meta]
 
@@ -1619,7 +1574,7 @@ Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<array>* => I<array>
+=item * B<array>* => I<array[float]>
 
 Array.
 
@@ -1628,8 +1583,6 @@ Array.
 Whether to round result to integer.
 
 =back
-
-Return value:
 
 Returns an enveloped result (an array).
 
@@ -1640,8 +1593,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 test_args_as_array($a0, $a1, $a2) -> [status, msg, result, meta]
 
@@ -1661,8 +1613,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1672,8 +1622,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 test_args_as_arrayref([$a0, $a1, $a2]) -> [status, msg, result, meta]
 
@@ -1692,8 +1641,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1703,8 +1650,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 test_args_as_hashref(\%args) -> [status, msg, result, meta]
 
@@ -1721,8 +1667,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1732,8 +1676,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 test_binary(%args) -> [status, msg, result, meta]
 
@@ -1777,8 +1720,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1788,8 +1729,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (buf)
-
+Return value:  (buf)
 
 =head2 test_common_opts(%args) -> [status, msg, result, meta]
 
@@ -1831,8 +1771,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1842,8 +1780,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 test_completion(%args) -> [status, msg, result, meta]
 
@@ -1855,7 +1792,7 @@ Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<a1> => I<array>
+=item * B<a1> => I<array[str]>
 
 Array of strings, where the string has "in" schema clause.
 
@@ -1873,11 +1810,11 @@ it can exclude C<apple> from the completion candidate.
 Currently the completion library C<Perinci::Sub::Complete> does not do this
 though. Perhaps there can be an option to toggle this behavior.
 
-=item * B<a2> => I<array>
+=item * B<a2> => I<array[str]>
 
 Array with element_completion routine that generate random letter.
 
-=item * B<a3> => I<array>
+=item * B<a3> => I<array[str]>
 
 Array with element_completion routine that dies.
 
@@ -1941,8 +1878,6 @@ just provide no completion.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1952,8 +1887,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 test_dry_run() -> [status, msg, result, meta]
 
@@ -1977,8 +1911,6 @@ Pass -dry_run=>1 to enable simulation mode.
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -1988,8 +1920,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 test_result_naked(%args) -> any
 
@@ -2009,10 +1940,7 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
- (any)
-
+Return value:  (any)
 
 =head2 test_validate_args(%args) -> [status, msg, result, meta]
 
@@ -2030,8 +1958,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -2041,8 +1967,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (str)
-
+Return value:  (str)
 
 =head2 undescribed_args(%args) -> [status, msg, result, meta]
 
@@ -2065,8 +1990,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -2076,8 +1999,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 =head1 SEE ALSO
 
 L<Perinci>
@@ -2090,7 +2012,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Ex
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
 
 =head1 BUGS
 
@@ -2106,7 +2028,7 @@ perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by perlancar@cpan.org.
+This software is copyright (c) 2015 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

@@ -1,7 +1,7 @@
 package Perinci::Examples::CmdLineResMeta;
 
-our $DATE = '2014-12-03'; # DATE
-our $VERSION = '0.44'; # VERSION
+our $DATE = '2015-01-04'; # DATE
+our $VERSION = '0.45'; # VERSION
 
 use 5.010;
 use strict;
@@ -88,7 +88,7 @@ Perinci::Examples::CmdLineResMeta - Functions in this package contains cmdline.*
 
 =head1 VERSION
 
-This document describes version 0.44 of Perinci::Examples::CmdLineResMeta (from Perl distribution Perinci-Examples), released on 2014-12-03.
+This document describes version 0.45 of Perinci::Examples::CmdLineResMeta (from Perl distribution Perinci-Examples), released on 2015-01-04.
 
 =head1 FUNCTIONS
 
@@ -99,8 +99,6 @@ Set cmdline.default_format json.
 
 No arguments.
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -110,8 +108,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 exit_code() -> [status, msg, result, meta]
 
@@ -119,8 +116,6 @@ Returns cmdline exit code 7, even though status is 200.
 
 No arguments.
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -130,8 +125,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 is_palindrome(%args) -> [status, msg, result, meta]
 
@@ -145,8 +139,6 @@ Arguments ('*' denotes required arguments):
 
 =back
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -156,8 +148,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 result() -> [status, msg, result, meta]
 
@@ -165,8 +156,6 @@ Returns false, but cmdline.result the string "false".
 
 No arguments.
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -176,8 +165,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 
 =head2 skip_format() -> [status, msg, result, meta]
 
@@ -185,8 +173,6 @@ Set cmdline.skip_format => 1.
 
 No arguments.
 
-Return value:
-
 Returns an enveloped result (an array).
 
 First element (status) is an integer containing HTTP status code
@@ -196,15 +182,14 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 =head1 HOMEPAGE
 
 Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Examples>.
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
 
 =head1 BUGS
 
@@ -220,7 +205,7 @@ perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by perlancar@cpan.org.
+This software is copyright (c) 2015 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

@@ -1,5 +1,8 @@
 package Perinci::Examples::Completion;
 
+our $DATE = '2015-01-04'; # DATE
+our $VERSION = '0.45'; # VERSION
+
 use 5.010;
 use strict;
 use warnings;
@@ -7,8 +10,10 @@ use experimental 'smartmatch';
 
 our %SPEC;
 
-our $VERSION = '0.44'; # VERSION
-our $DATE = '2014-12-03'; # DATE
+$SPEC{':package'} = {
+    v => 1.1,
+    summary => 'More completion examples',
+};
 
 $SPEC{fruits} = {
     v => 1.1,
@@ -17,12 +22,22 @@ $SPEC{fruits} = {
             schema => [array => of => 'str'],
             element_completion => sub {
                 my %args = @_;
+                my $word = $args{word} // '';
+
                 # complete with unmentioned fruits
-                my @allfruits = qw(apple apricot banana cherry durian);
+                my %allfruits = (
+                    apple => "One a day of this and you keep the doctor away",
+                    apricot => "Another fruit that starts with the letter A",
+                    banana => "A tropical fruit",
+                    cherry => "Often found on cakes or drinks",
+                    durian => "Lots of people hate this, but it's popular in Asia",
+                );
                 my $ary = $args{args}{fruits};
                 my $res = [];
-                for (@allfruits) {
-                    push @$res, $_ unless $_ ~~ @$ary;
+                for (keys %allfruits) {
+                    next unless /\A\Q$word\E/i;
+                    push @$res, {word=>$_, description=>$allfruits{$_}}
+                        unless $_ ~~ @$ary;
                 }
                 $res;
             },
@@ -33,7 +48,7 @@ $SPEC{fruits} = {
     },
     description => <<'_',
 
-Demonstrates completion of array elements.
+Demonstrates completion of array elements, with description for each .
 
 _
 };
@@ -42,7 +57,7 @@ sub fruits {
 }
 
 1;
-#ABSTRACT: More completion examples
+# ABSTRACT: More completion examples
 
 __END__
 
@@ -56,24 +71,22 @@ Perinci::Examples::Completion - More completion examples
 
 =head1 VERSION
 
-This document describes version 0.44 of Perinci::Examples::Completion (from Perl distribution Perinci-Examples), released on 2014-12-03.
+This document describes version 0.45 of Perinci::Examples::Completion (from Perl distribution Perinci-Examples), released on 2015-01-04.
 
 =head1 FUNCTIONS
 
 
 =head2 fruits(%args) -> [status, msg, result, meta]
 
-Demonstrates completion of array elements.
+Demonstrates completion of array elements, with description for each .
 
 Arguments ('*' denotes required arguments):
 
 =over 4
 
-=item * B<fruits> => I<array>
+=item * B<fruits> => I<array[str]>
 
 =back
-
-Return value:
 
 Returns an enveloped result (an array).
 
@@ -84,8 +97,7 @@ First element (status) is an integer containing HTTP status code
 element (meta) is called result metadata and is optional, a hash
 that contains extra information.
 
- (any)
-
+Return value:  (any)
 =for Pod::Coverage .*
 
 =head1 HOMEPAGE
@@ -94,7 +106,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Ex
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/perlancar/perl-Perinci-Examples>.
+Source repository is at L<https://github.com/sharyanto/perl-Perinci-Examples>.
 
 =head1 BUGS
 
@@ -110,7 +122,7 @@ perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by perlancar@cpan.org.
+This software is copyright (c) 2015 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

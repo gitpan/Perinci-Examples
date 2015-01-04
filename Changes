@@ -1,5 +1,11 @@
 Revision history for Perinci-Examples
 
+0.45    2015-01-04 (PERLANCAR)
+
+	- Fix/tweak completion example: add description to each answer
+	  entry.
+
+
 0.44    2014-12-03 (PERLANCAR)
 
 	- Add function: demo_cli_opts_shorter.
